@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
 
@@ -11,9 +11,13 @@
 </head>
 <body>
 <div class="container">
-    <h3 th:text="${main}"></h3>
-    <hr>
-
+    <h1 class="title">OAuth 2.0 Spring Security Cognito Demo</h1>
+    <div>
+        <div class="box">
+            Hello, <strong th:text="${username}"></strong>!
+        </div>
+        <a th:href="@{/logout}" class="btn btn-primary">Logout</a>
+    </div>
 </div>
 </body>
 </html>
