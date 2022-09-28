@@ -3,8 +3,8 @@ package com.rmrfroot.tasktracker222.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name="User")
-public class User{
+@Table(name="users")
+public class Users{
 
     @Id
     @GeneratedValue(strategy =GenerationType.IDENTITY)
@@ -26,10 +26,10 @@ public class User{
     @Column(name="update_date")
     private String update_date;
 
-    public User() {
+    public Users() {
     }
 
-    public User(String email, String firstName, String lastName, String register_date, String update_date) {
+    public Users(String email, String firstName, String lastName, String register_date, String update_date) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
