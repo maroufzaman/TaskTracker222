@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Drill</title>
+
+    <script src="https://kit.fontawesome.com/a665c629bb.js" crossorigin="anonymous"></script>
+</head>
+<body class="body-container">
+
+<div id="main-container" class="main-container">
+
+<!--    <div id="navbar">-->
+<!--    </div>-->
+
+    <divid="context-container" class="context-container">
+
+        <div id="fields">
+
+            <form th:action="@{/create-drill}" th:object="${newDrill}" method="post" id="drill-creation-form" class="drill-create-form">
+                <label for="drill-date">Date</label><br>
+                <input type="date" id="drill-date" th:name="date">
+
+                <br><br>
+
+                <label for="drill-start-time">Start time</label><br>
+                <input type="time" id="drill-start-time" th:name="startTime">
+
+                <br><br>
+
+                <label for="drill-end-time">End time</label><br>
+                <input type="time" id="drill-end-time" th:name="endTime">
+
+                <br><br>
+
+                <label for="drill-location">Location</label><br>
+                <input id='drill-location' type="text" placeholder="Drill location" th:name="location">
+
+                <br><br>
+
+                <label for="add-drill-officers">Add officers</label><br>
+                <input id='add-drill-officers' type="text" placeholder="Officer name" th:name="officers">
+
+                <br><br>
+
+                <label for="add-drill-participants">Add participants</label><br>
+                <input id='add-drill-participants' type="text" placeholder="Participant name" th:name="participants">
+
+                <br><br>
+
+                <label for="drill-description">Description</label><br>
+                <input id='drill-description' type="text" placeholder="Drill Description" th:name="description">
+            </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

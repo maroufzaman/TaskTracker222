@@ -392,3 +392,11 @@ span {
     font-size: 2vh;
     font-family: Poppins, serif;
 }
+
+.drill-create-form {
+    display: flex;
+
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+}
