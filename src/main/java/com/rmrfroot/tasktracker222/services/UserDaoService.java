@@ -4,7 +4,7 @@ import com.rmrfroot.tasktracker222.entities.Users;
 
 import java.util.List;
 
-public interface UserService {
+public interface UserDaoService {
 
     public List<Users> findAll();
 
