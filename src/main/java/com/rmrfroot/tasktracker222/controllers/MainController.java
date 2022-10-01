@@ -21,7 +21,7 @@ public class MainController {
     public String home(Model model, Principal principal)
     {
         model.addAttribute("username", principal.getName());
-        CreateUserPool createUserPool=new CreateUserPool(principal.getName());
+
         return "main";
     }
 }
