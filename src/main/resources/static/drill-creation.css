@@ -1,0 +1,78 @@
+/* latin */
+@font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://fonts.gstatic.com/s/poppins/v19/pxiEyp8kv8JHgFVrJJfecg.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+body {
+    min-height: 100%;
+    margin: 0;
+}
+
+i {
+    transition: all 0.3s;
+}
+
+a {
+    transition: all 0.3s;
+    user-select: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
+div {
+    transition: all 0.3s;
+}
+
+span {
+    transition: all 0.3s;
+}
+
+label {
+    font-family: Poppins, serif;
+    font-size: 3vh;
+}
+
+input {
+    margin-bottom: 2vh;
+
+    font-family: Poppins, serif;
+}
+
+textarea {
+    resize: none;
+
+    font-family: Poppins, serif;
+}
+
+.body-container{
+    background-color: white;
+}
+
+.main-container {
+    overflow: hidden;
+    display: flex;
+
+    height: 100%;
+}
+
+.context-container {
+    width: 95%;
+    height: 90vh;
+    margin: 0;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.drill-create-form {
+    display: flex;
+
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+}
