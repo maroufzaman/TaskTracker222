@@ -14,66 +14,75 @@
 <body class="body-container">
 
 <div id="main-container" class="main-container">
+<!--    <div id="context-container" class="context-container">-->
 
-<!--    <div id="navbar">-->
-<!--    </div>-->
+            <form th:action="@{/create-drill}" th:object="${newDrill}" method="post" id="drill-creation-form"
+                  class="drill-create-form">
 
-    <div id="context-container" class="context-container">
-        <div id="fields">
+                <div class="drill-create-input-div drill-create-form-30-field">
+                    <label for="drill-date">Date</label>
+                    <input type="date" id="drill-date" th:name="date">
+                </div>
 
-            <form th:action="@{/create-drill}" th:object="${newDrill}" method="post" id="drill-creation-form" class="drill-create-form">
-                <label for="drill-date">Date</label><br>
-                <input type="date" id="drill-date" th:name="date">
+                <div class="spacing-5-div"></div>
 
-                <br><br>
-
-                <label for="drill-start-time">Start time</label><br>
-                <input type="text" required id="drill-start-time" th:name="startTime">
-                <script>
-                    $(document).ready(function(){
-                        $("#drill-start-time").timepicker({
-                            timeFormat: 'HH:mm:ss',
-                            interval: 15,
+                <div class="drill-create-input-div drill-create-form-30-field">
+                    <label for="drill-start-time">Start time</label>
+                    <input type="text" required id="drill-start-time" th:name="startTime">
+                    <script>
+                        $(document).ready(function () {
+                            $("#drill-start-time").timepicker({
+                                timeFormat: 'HH:mm:ss',
+                                interval: 15,
+                            });
                         });
-                    });
-                </script>
+                    </script>
+                </div>
 
-                <br><br>
+                <div class="spacing-5-div"></div>
 
-                <label for="drill-end-time">End time</label><br>
-                <input type="text" required id="drill-end-time" th:name="endTime">
-                <script>
-                    $(document).ready(function(){
-                        $("#drill-end-time").timepicker({
-                            timeFormat: 'HH:mm:ss',
-                            interval: 15,
+                <div class="drill-create-input-div drill-create-form-30-field">
+                    <label for="drill-end-time">End time</label>
+                    <input type="text" required id="drill-end-time" th:name="endTime">
+                    <script>
+                        $(document).ready(function () {
+                            $("#drill-end-time").timepicker({
+                                timeFormat: 'HH:mm:ss',
+                                interval: 15,
+                            });
                         });
-                    });
-                </script>
+                    </script>
+                </div>
 
-                <br><br>
 
-                <label for="drill-location">Location</label><br>
-                <input id='drill-location' type="text" placeholder="Drill location" th:name="location">
+                <div class="drill-create-input-div drill-create-form-100-field">
+                    <label for="drill-location">Location</label>
+                    <input id='drill-location' type="text" placeholder="Drill location" th:name="location">
+                </div>
 
-                <br><br>
 
-                <label for="add-drill-officers">Report to</label><br>
-                <input id='add-drill-officers' type="text" placeholder="Officer name" th:name="officers">
+                <div class="drill-create-input-div drill-create-form-50-field">
+                    <label for="add-drill-officers">Report to</label>
+                    <input id='add-drill-officers' type="text" placeholder="Officer name" th:name="officers">
+                </div>
 
-                <br><br>
+                <div class="spacing-5-div"></div>
 
-                <label for="add-drill-participants">Participants</label><br>
-                <input id='add-drill-participants' type="text" placeholder="Participant name" th:name="participants">
+                <div class="drill-create-input-div drill-create-form-50-field">
+                    <label for="add-drill-participants">Participants</label>
+                    <input id='add-drill-participants' type="text" placeholder="Participant name"
+                           th:name="participants">
+                </div>
 
-                <br><br>
 
-                <label for="drill-description">Description</label><br>
-                <textarea id='drill-description' type="text" rows="2" cols="20" placeholder="Drill Description" th:name="description"></textarea>
+                <div class="drill-create-input-div drill-create-form-100-field">
+                    <label for="drill-description">Description</label>
+                    <textarea id='drill-description' type="text" rows="2" cols="20" placeholder="Drill Description"
+                              th:name="description"></textarea>
+                </div>
             </form>
 
-        </div>
-    </div>
+<!--    </div>-->
 </div>
 
 </body>
