@@ -1,8 +1,7 @@
 package com.rmrfroot.tasktracker222.controllers;
 
-import com.rmrfroot.tasktracker222.entities.Drill;
 import com.rmrfroot.tasktracker222.entities.Users;
-import com.rmrfroot.tasktracker222.services.UserDaoService;
+import com.rmrfroot.tasktracker222.services.UsersDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,15 +15,15 @@ import java.util.List;
 public class UserCollectionController {
 
     @Autowired
-    private UserDaoService userDaoService;
+    private UsersDaoService usersDaoService;
 
-    public UserCollectionController(UserDaoService userDaoService) {
+    public UserCollectionController(UsersDaoService usersDaoService) {
         super();
-        this.userDaoService = userDaoService;
+        this.usersDaoService = usersDaoService;
     }
 
     public String main(Model model) {
-        List<Users> userList = userDaoService.findAll();
+        List<Users> userList = usersDaoService.findAll();
 
         model.addAttribute("users", userList);
         return "userCollection";
@@ -32,24 +31,24 @@ public class UserCollectionController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Users> findById(@PathVariable("id") int id) {
-        return new ResponseEntity<>(userDaoService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(usersDaoService.findById(id), HttpStatus.OK);
     }
 
 
     @PostMapping
     public ResponseEntity<Users> save(@RequestBody Users user) {
-        return new ResponseEntity<>(userDaoService.save(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(usersDaoService.save(user), HttpStatus.CREATED);
     }
 
 
 
     @PutMapping("/{id}")
     public ResponseEntity<Users> update(@PathVariable("id") int id, @RequestBody Users user) {
-        return new ResponseEntity<>(userDaoService.update(id,user), HttpStatus.OK);
+        return new ResponseEntity<>(usersDaoService.update(id,user), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable("id") int id) {
-        userDaoService.deleteById(id);
+        usersDaoService.deleteById(id);
     }
 }
