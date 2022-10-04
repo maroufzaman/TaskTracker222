@@ -85,10 +85,11 @@ textarea {
     display: flex;
 
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-content: space-between;
     flex-grow: 1;
 
+    text-align: center;
 }
 
 .spacing-5-div {
@@ -119,4 +120,23 @@ textarea {
     display: flex;
 
     flex-basis: 100%;
+}
+
+.drill-create-submit-button-text{
+    font-family: Poppins, serif;
+    font-size: 4vh;
+    text-align: center;
+}
+
+.drill-create-submit-button {
+    margin-top: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    color: white;
+    background-color: #AEE583;
+    border: none;
+    border-radius: 4px;
 }

@@ -32,8 +32,12 @@
                     <script>
                         $(document).ready(function () {
                             $("#drill-start-time").timepicker({
-                                timeFormat: 'HH:mm:ss',
+                                timeFormat: 'HH:mm',
                                 interval: 15,
+                                minHour: 5,
+                                maxHour: 22,
+                                startHour: 5,
+                                dynamic: true
                             });
                         });
                     </script>
@@ -47,8 +51,12 @@
                     <script>
                         $(document).ready(function () {
                             $("#drill-end-time").timepicker({
-                                timeFormat: 'HH:mm:ss',
+                                timeFormat: 'HH:mm',
                                 interval: 15,
+                                minHour: 5,
+                                maxHour: 22,
+                                startHour: 5,
+                                dynamic: true
                             });
                         });
                     </script>
@@ -79,6 +87,10 @@
                     <label for="drill-description">Description</label>
                     <textarea id='drill-description' type="text" rows="2" cols="20" placeholder="Drill Description"
                               th:name="description"></textarea>
+                </div>
+
+                <div class="drill-create-input-div drill-create-form-100-field">
+                    <input id="drill-submit" class="drill-create-submit-button drill-create-submit-button-text" type="submit">
                 </div>
             </form>
 
