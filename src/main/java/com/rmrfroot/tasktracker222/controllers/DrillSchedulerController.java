@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -88,13 +90,20 @@ public class DrillSchedulerController {
         return "drills";
     }
 
-    /*
-        @PostMapping("/drill-schedule-recipient")
-        public String save(@ModelAttribute("drills") Drill drill) {
-            drillDaoService.save(drill);
-            return "redirect:/drill-schedule-recipient";
-        }
-    */
+    @GetMapping("/drill-schedule-manager/createDrill")
+    public String createDrill(Model model) {
+        Drill drill = new Drill();
+        model.addAttribute("drills", drill);
+        return "CreateDrill";
+    }
+
+
+    @PostMapping("/create-drill")
+    public String save(@ModelAttribute("drills") Drill drill) {
+        drillDaoService.save(drill);
+        return "redirect:/drill-schedule-recipient/drills";
+    }
+
     @PutMapping()
     public ResponseEntity<Drill> update(@PathVariable("id") int id, Drill drill) {
 

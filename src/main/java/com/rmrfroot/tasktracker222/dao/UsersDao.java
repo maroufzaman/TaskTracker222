@@ -1,4 +1,5 @@
-package com.rmrfroot.tasktracker222.DAO;
+package com.rmrfroot.tasktracker222.dao;
+
 
 import com.rmrfroot.tasktracker222.entities.Users;
 import org.springframework.data.jpa.repository.JpaRepository;

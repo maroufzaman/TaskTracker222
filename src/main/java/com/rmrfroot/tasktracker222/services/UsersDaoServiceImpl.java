@@ -1,12 +1,15 @@
 package com.rmrfroot.tasktracker222.services;
 
-import com.rmrfroot.tasktracker222.DAO.UsersDao;
+import com.rmrfroot.tasktracker222.dao.UsersDao;
 import com.rmrfroot.tasktracker222.entities.Users;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+
+@Service
 public class UsersDaoServiceImpl implements UsersDaoService {
     @Autowired
     private UsersDao usersDAO;
@@ -20,7 +23,9 @@ public class UsersDaoServiceImpl implements UsersDaoService {
     @Override
     public Users findById(int theId) {
         Optional<Users> result = usersDAO.findById(theId);
-        Users acc=null;
+
+        Users acc;
+        
         if(result.isPresent()) {
             acc=result.get();
         }
@@ -45,7 +50,9 @@ public class UsersDaoServiceImpl implements UsersDaoService {
     @Override
     public Users update(int id, Users user) {
         Optional<Users> result = usersDAO.findById(id);
-        Users updatedUser = null;
+
+        Users updatedUser;
+
         if (result.isPresent()) {
             updatedUser = result.get();
             usersDAO.deleteById(id);
@@ -62,5 +69,5 @@ public class UsersDaoServiceImpl implements UsersDaoService {
         usersDAO.save(updatedUser);
         return updatedUser;
     }
-}
 
+}
