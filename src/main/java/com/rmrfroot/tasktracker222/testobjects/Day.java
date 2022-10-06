@@ -11,9 +11,6 @@ public class Day {
 
         private int year;
 
-        private String task;
-
-
         //constructor
         public Day() {
 
@@ -22,18 +19,6 @@ public class Day {
 
         }
 
-
-        //set the assigned task
-        public void setTask() {
-
-
-                System.out.println("Enter the task : ");
-
-                Scanner input = new Scanner(System.in);
-
-                task = input.nextLine();
-
-        }
 
         // set the  day for the assigned task
         public void setDayOfWeek() {

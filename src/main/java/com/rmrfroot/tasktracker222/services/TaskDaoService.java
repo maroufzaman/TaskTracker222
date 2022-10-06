@@ -1,10 +1,9 @@
 package com.rmrfroot.tasktracker222.services;
 
 
-import com.rmrfroot.tasktracker222.entities.Task;
+import com.rmrfroot.tasktracker222.entities.deprecated.Task;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface TaskDaoService {
 

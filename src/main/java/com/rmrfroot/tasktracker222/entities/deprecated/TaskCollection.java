@@ -1,4 +1,4 @@
-package com.rmrfroot.tasktracker222.entities;
+package com.rmrfroot.tasktracker222.entities.deprecated;
 
 import java.util.ArrayList;
 import java.util.List;

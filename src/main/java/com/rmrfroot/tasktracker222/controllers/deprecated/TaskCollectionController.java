@@ -1,6 +1,6 @@
-package com.rmrfroot.tasktracker222.controllers;
+package com.rmrfroot.tasktracker222.controllers.deprecated;
 
-import com.rmrfroot.tasktracker222.entities.Task;
+import com.rmrfroot.tasktracker222.entities.deprecated.Task;
 import com.rmrfroot.tasktracker222.services.TaskDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
