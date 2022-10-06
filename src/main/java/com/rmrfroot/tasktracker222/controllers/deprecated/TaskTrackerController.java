@@ -1,4 +1,4 @@
-package com.rmrfroot.tasktracker222.controllers;
+package com.rmrfroot.tasktracker222.controllers.deprecated;
 
 
 import org.springframework.stereotype.Controller;
