@@ -2,7 +2,6 @@ package com.rmrfroot.tasktracker222.services;
 
 import com.rmrfroot.tasktracker222.entities.Drill;
 
-import java.util.Date;
 import java.util.List;
 
 //drill dao service

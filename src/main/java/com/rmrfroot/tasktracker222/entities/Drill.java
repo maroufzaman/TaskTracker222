@@ -1,5 +1,7 @@
 package com.rmrfroot.tasktracker222.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,6 +19,7 @@ public class Drill {
     private String title;
 
     @Column(name="start_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 
     @Column(name="deadline_date")
