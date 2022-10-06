@@ -22,7 +22,6 @@ public class UsersController {
     }
 
 
-
     @GetMapping("/users")
     public String getUsersCollection(Model model) {
         model.addAttribute("users", usersDaoService.findAll());
@@ -33,6 +32,24 @@ public class UsersController {
     public String findById(@PathVariable("id") int id, Model model) {
         model.addAttribute("users", usersDaoService.findById(id));
         return "users";
+    }
+
+    /**
+     *
+     * Skeleton Code for controller access after user login
+     * depending on the role of user (officer or not)
+     *
+     * With having no way of differentiating user from another
+     * can't be used
+     */
+    @GetMapping("users/accessControl")
+    public String accessControl(Model model) {
+        Users user = new Users();
+        model.addAttribute("users", user);
+        // if user is admin
+        //    return "redirect:/drill-schedule-manager";
+        // if not
+        return "redirect:/drill-schedule-recipient";
     }
 
     @GetMapping("/users/addUser")
