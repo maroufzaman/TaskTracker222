@@ -300,7 +300,7 @@ span {
     padding: 10px;
 
     display: flex;
-    align-content: left;
+    align-content: flex-start;
     justify-items: flex-start;
     flex-direction: column;
     flex-wrap: wrap;

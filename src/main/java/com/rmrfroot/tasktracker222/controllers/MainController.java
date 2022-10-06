@@ -6,18 +6,22 @@
 
 package com.rmrfroot.tasktracker222.controllers;
 
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@RestController
-@CrossOrigin
+import java.security.Principal;
+
+@Controller
 public class MainController {
     // missing: .getInstance();
 
     @GetMapping("/")
-    public String MainController() { //missing: parameter for MainController()
-        // missing: .addAttribute(); multiple times to argument
-        return "This is a test string";
+    public String home(Model model, Principal principal)
+    {
+        model.addAttribute("username", principal.getName());
+
+        return "main";
     }
 }

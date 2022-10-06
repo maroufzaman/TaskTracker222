@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class UsersDaoServiceImpl implements UsersDaoService {
-
     @Autowired
     private UsersDao usersDAO;
 
@@ -23,7 +23,9 @@ public class UsersDaoServiceImpl implements UsersDaoService {
     @Override
     public Users findById(int theId) {
         Optional<Users> result = usersDAO.findById(theId);
+
         Users acc;
+        
         if(result.isPresent()) {
             acc=result.get();
         }
@@ -48,7 +50,9 @@ public class UsersDaoServiceImpl implements UsersDaoService {
     @Override
     public Users update(int id, Users user) {
         Optional<Users> result = usersDAO.findById(id);
+
         Users updatedUser;
+
         if (result.isPresent()) {
             updatedUser = result.get();
             usersDAO.deleteById(id);
@@ -65,4 +69,5 @@ public class UsersDaoServiceImpl implements UsersDaoService {
         usersDAO.save(updatedUser);
         return updatedUser;
     }
+
 }
