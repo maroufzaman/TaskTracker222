@@ -1,8 +1,7 @@
 package com.rmrfroot.tasktracker222.services;
 
-import com.rmrfroot.tasktracker222.dao.TaskDao;
-import com.rmrfroot.tasktracker222.entities.Task;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.rmrfroot.tasktracker222.dao.deprecated.TaskDao;
+import com.rmrfroot.tasktracker222.entities.deprecated.Task;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 

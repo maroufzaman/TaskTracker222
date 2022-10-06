@@ -1,6 +1,6 @@
-package com.rmrfroot.tasktracker222.controllers;
+package com.rmrfroot.tasktracker222.controllers.deprecated;
 
-import com.rmrfroot.tasktracker222.entities.Task;
+import com.rmrfroot.tasktracker222.entities.deprecated.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
