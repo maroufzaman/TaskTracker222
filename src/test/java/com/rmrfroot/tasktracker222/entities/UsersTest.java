@@ -19,7 +19,6 @@ class UsersTest {
     String workCenter = "work center";
     String flight = "flight";
     ArrayList<String> teamList = new ArrayList<String>();
-    //teamList.add("Dave");
 
     Users user = new Users(email, fname, lname,
           reg_date, up_date,
