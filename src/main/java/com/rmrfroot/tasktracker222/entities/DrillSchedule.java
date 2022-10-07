@@ -17,7 +17,14 @@ public class DrillSchedule {
     public DrillSchedule(int id, String officer_name,
                   String officer_email, String event_title, String location,
                          String note, LocalDate start_date, LocalDate deadline_date) {
-        this(officer_name, officer_email, event_title, location, note, start_date, deadline_date);
+        //this(officer_name, officer_email, event_title, location, note, start_date, deadline_date);
+        this.officer_name = officer_name;
+        this.officer_email = officer_email;
+        this.event_title = event_title;
+        this.location = location;
+        this.note = note;
+        this.start_date = start_date;
+        this.deadline_date = deadline_date;
         this.id = id;
     }
     public DrillSchedule(String firstName, String lastName, LocalDate dob) {
