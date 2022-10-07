@@ -9,6 +9,25 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
     <!-- stylesheet -->
     <link rel="stylesheet" href="style.css">
+
+    <script>
+        function clicked_on1(){
+            document.getElementById('title').innerHTML = 'Event 1';
+            document.getElementById('time').innerHTML = 'Mon 9:00am - 11:00am';
+            document.getElementById('place').innerHTML = 'Place 1';
+            document.getElementById('admin').innerHTML = 'Person 1';
+            document.getElementById('group').innerHTML = 'Group 1';
+        }
+    </script>
+    <script>
+        function clicked_on2(){
+            document.getElementById('title').innerHTML = 'Event 2';
+            document.getElementById('time').innerHTML = 'Thu 12:00pm - 3:00pm';
+            document.getElementById('place').innerHTML = 'Place 2';
+            document.getElementById('admin').innerHTML = 'Person 2';
+            document.getElementById('group').innerHTML = 'Group 2';
+        }
+    </script>
 </head>
 
 <body>
@@ -181,15 +200,31 @@
                         <div class="q3" id="Mon830a"></div>
                         <div class="q4" id="Mon845a"></div>
                         
-                        <div class="q1" id="Mon900a"></div>
-                        <div class="q2" id="Mon915a"></div>
-                        <div class="q3" id="Mon930a"></div>
-                        <div class="q4" id="Mon945a"></div>
+                        <div class="q1" id="Mon900a">
+                            <div class="event1" onclick="clicked_on1()" title="Event 1"></div>
+                        </div>
+                        <div class="q2" id="Mon915a">
+                            <div class="event1" onclick="clicked_on1()" title="Event 1"></div>
+                        </div>
+                        <div class="q3" id="Mon930a">
+                            <div class="event1" onclick="clicked_on1()" title="Event 1"></div>
+                        </div>
+                        <div class="q4" id="Mon945a">
+                            <div class="event1" onclick="clicked_on1()" title="Event 1"></div>
+                        </div>
                         
-                        <div class="q1" id="Mon1000a"></div>
-                        <div class="q2" id="Mon1015a"></div>
-                        <div class="q3" id="Mon1030a"></div>
-                        <div class="q4" id="Mon1045a"></div>
+                        <div class="q1" id="Mon1000a">                            
+                            <div class="event1" onclick="clicked_on1()" title="Event 1"></div>
+                        </div>
+                        <div class="q2" id="Mon1015a">                            
+                            <div class="event1" onclick="clicked_on1()" title="Event 1"></div>
+                        </div>
+                        <div class="q3" id="Mon1030a">
+                            <div class="event1" onclick="clicked_on1()" title="Event 1"></div>
+                        </div>
+                        <div class="q4" id="Mon1045a">
+                            <div class="event1" onclick="clicked_on1()" title="Event 1"></div>
+                        </div>
                         
                         <div class="q1" id="Mon1100a"></div>
                         <div class="q2" id="Mon1115a"></div>
@@ -382,20 +417,44 @@
                         <div class="q3" id="Thu1130a"></div>
                         <div class="q4" id="Thu1145a"></div>
                         
-                        <div class="q1" id="Thu1200p"></div>
-                        <div class="q2" id="Thu1215p"></div>
-                        <div class="q3" id="Thu1230p"></div>
-                        <div class="q4" id="Thu1245p"></div>
+                        <div class="q1" id="Thu1200p">                            
+                            <div class="event2" onclick="clicked_on2()" title="Event 2"></div>
+                        </div>
+                        <div class="q2" id="Thu1215p">                            
+                            <div class="event2" onclick="clicked_on2()" title="Event 2"></div>
+                        </div>
+                        <div class="q3" id="Thu1230p">                            
+                            <div class="event2" onclick="clicked_on2()" title="Event 2"></div>
+                        </div>
+                        <div class="q4" id="Thu1245p">                            
+                            <div class="event2" onclick="clicked_on2()" title="Event 2"></div>
+                        </div>
                         
-                        <div class="q1" id="Thu100p"></div>
-                        <div class="q2" id="Thu115p"></div>
-                        <div class="q3" id="Thu130p"></div>
-                        <div class="q4" id="Thu145p"></div>
+                        <div class="q1" id="Thu100p">                            
+                            <div class="event2" onclick="clicked_on2()" title="Event 2"></div>
+                        </div>
+                        <div class="q2" id="Thu115p">                            
+                            <div class="event2" onclick="clicked_on2()" title="Event 2"></div>
+                        </div>
+                        <div class="q3" id="Thu130p">                            
+                            <div class="event2" onclick="clicked_on2()" title="Event 2"></div>
+                        </div>
+                        <div class="q4" id="Thu145p">                            
+                            <div class="event2" onclick="clicked_on2()" title="Event 2"></div>
+                        </div>
                         
-                        <div class="q1" id="Thu200p"></div>
-                        <div class="q2" id="Thu215p"></div>
-                        <div class="q3" id="Thu230p"></div>
-                        <div class="q4" id="Thu245p"></div>
+                        <div class="q1" id="Thu200p">                            
+                            <div class="event2" onclick="clicked_on2()" title="Event 2"></div>
+                        </div>
+                        <div class="q2" id="Thu215p">                            
+                            <div class="event2" onclick="clicked_on2()" title="Event 2"></div>
+                        </div>
+                        <div class="q3" id="Thu230p">                            
+                            <div class="event2" onclick="clicked_on2()" title="Event 2"></div>
+                        </div>
+                        <div class="q4" id="Thu245p">                            
+                            <div class="event2" onclick="clicked_on2()" title="Event 2"></div>
+                        </div>
                         
                         <div class="q1" id="Thu600a"></div>
                         <div class="q2" id="Thu615a"></div>
@@ -553,7 +612,7 @@
                 <div class="summaryDiv">
                     <div>
                         <h2>Time: </h2>
-                        <h3 id="time">H1:M1 - H2:M2</h3>
+                        <h3 id="time">Mon 9:00am - 11:00am</h3>
                     </div>
                     <div>
                         <h2>Location: </h2>
@@ -572,7 +631,7 @@
                 <hr>
                 
                 <div class="detailsDiv">
-                    <p id="detailsMain">Lorem ipsum 1; this is example detail text for event 1.
+                    <p id="detailsMain">Lorem ipsum; this is example detail text for an event.
                         There will likely be more sentences or details here,
                         but this is just an example for the sake of demonstration.  Again,
                         this is for the sake of demonstration.  Again,
@@ -581,7 +640,7 @@
                         Some sentences may repeat, for the sake of showcasing
                         how information may be displayed.
 
-                        Lorem ipsum 1; this is example detail text for event 1.
+                        Lorem ipsum; this is example detail text for an event.
                         There will likely be more sentences or details here,
                         but this is just an example for the sake of demonstration.  Again,
                         this is for the sake of demonstration.  Again,
