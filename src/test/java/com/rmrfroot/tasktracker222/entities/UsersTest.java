@@ -43,7 +43,7 @@ class UsersTest {
 
     @Test
     void setEmail() {
-        String newEmail = new String("new@csus.edu");
+        String newEmail = new String("newuser@csus.edu");
         user.setEmail(newEmail);
         assertEquals(newEmail,user.getEmail());
     }

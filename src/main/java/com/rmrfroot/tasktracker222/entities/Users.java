@@ -81,10 +81,10 @@ public class Users {
 
     public void setEmail(String email) {
         if (email.indexOf('@')<0 || email.indexOf('.')<0) {
-            this.email = email;
+            throw new IllegalArgumentException("Not a valid email");
         }
         else {
-            throw new IllegalArgumentException("Not a valid email");
+            this.email = email;
         }
 
     }
