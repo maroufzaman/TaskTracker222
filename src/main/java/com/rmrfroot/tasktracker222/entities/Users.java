@@ -43,9 +43,9 @@ public class Users {
     @Column(name = "flight")
     private String flight;
 
-    @ElementCollection
-    @Column(name = "teams")
-    private ArrayList<String> teamList = new ArrayList<String>();
+    //@ElementCollection
+    //@Column(name = "teams")
+    //private ArrayList<String> teamList;
 
     public Users() {
 
@@ -64,7 +64,7 @@ public class Users {
         this.rank = rank;
         this.workCenter = workCenter;
         this.flight = flight;
-        this.teamList = teamList;
+        //this.teamList = teamList;
     }
 
     public int getId() {
@@ -179,13 +179,13 @@ public class Users {
         this.flight = flight;
     }
 
-    public ArrayList<String> getTeamList() {
-        return teamList;
-    }
-
-    public void setTeamList(ArrayList<String> teamList) {
-        this.teamList = teamList;
-    }
+//    public ArrayList<String> getTeamList() {
+//        return teamList;
+//    }
+//
+//    public void setTeamList(ArrayList<String> teamList) {
+//        this.teamList = teamList;
+//    }
 
     //not used yet, ready to implement when needed
     //    random uuid

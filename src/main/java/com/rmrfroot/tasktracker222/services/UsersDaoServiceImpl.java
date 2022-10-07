@@ -62,8 +62,8 @@ public class UsersDaoServiceImpl implements UsersDaoService {
         }
         updatedUser.setId(user.getId());
         updatedUser.setEmail(user.getEmail());
-        updatedUser.setFirstName(user.getFirstName());
-        updatedUser.setLastName(user.getLastName());
+        updatedUser.setFirst_name(user.getFirst_name());
+        updatedUser.setLast_name(user.getLast_name());
         updatedUser.setRegister_date(user.getRegister_date());
         updatedUser.setUpdate_date(user.getUpdate_date());
         usersDAO.save(updatedUser);
