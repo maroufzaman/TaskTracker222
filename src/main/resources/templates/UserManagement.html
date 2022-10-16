@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+
+    <link rel="shortcut icon" href="#">
+
+    <link rel="stylesheet" th:href="@{/drill-creation.css}">
+    <link rel="stylesheet" th:href="@{/user-management.css}">
+    <link rel="stylesheet" th:href="@{/style.css}">
+
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
+
+    <script type="text/javascript" th:src="@{/js/user-management.js}"></script>
+    <script src="https://kit.fontawesome.com/a665c629bb.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body onload="selectInitialUser()">
+
+<aside class="sidebar">
+    <ul class="sidebar-list">
+        <li class="sidebar-item">
+            <a href="#" class="item-link">
+                <span class="material-symbols-outlined">logout</span>
+                <span class="item-text">Log Out</span>
+            </a>
+        </li>
+    </ul>
+</aside>
+
+<main class="user-management-main">
+    <div class="left user-table-div">
+        <div class="top-left">
+            <h1>User List</h1>
+        </div>
+        <div class="bottom-left">
+
+            <table class="user-table">
+                <thead class="user-table-header">
+                <tr>
+                    <th class="user-table-header-entry">Name</th>
+                    <th class="user-table-header-entry">Rank</th>
+                    <th class="user-table-header-entry">Workcenter</th>
+                    <th class="user-table-header-entry">Flight</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="user: ${users}" th:onclick="'updateSelectedUser(' + ${user.id} + ');'"
+                    class="user-table-row"
+                    th:id="'user-list-row-' + ${user.id}">
+                    <script th:inline="javascript">
+                        users = /*[[${users}]]*/ [];
+                        userManagementSetup();
+                    </script>
+
+
+                    <td th:text="${user.first_name} + ' ' + ${user.last_name}"
+                        class="user-table-entry"></td>
+                    <td th:text="${user.rank}"
+                        class="user-table-entry"></td>
+                    <td th:text="${user.workCenter}"
+                        class="user-table-entry"></td>
+                    <td th:text="${user.flight}"
+                        class="user-table-entry"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <div class="right">
+        <div class="top-right">
+            <h1>User Editor</h1>
+        </div>
+        <div class="bottom-right user-editor-div">
+            <div class="user-management-editor-div">
+
+                <form class="user-management-table-form" th:action="@{/users}" th:object="${userEditRequest}"
+                      method="post">
+                    <table class="user-management-table">
+                        <tr>
+                            <th class="user-management-entry">First Name</th>
+                            <td class="user-management-value-cell">
+                                <input id="input-first_name" class="user-management-value" type="text"
+                                       th:field="*{first_name}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="user-management-entry">Last Name</th>
+                            <td class="user-management-value-cell">
+                                <input id="input-last_name" class="user-management-value" type="text"
+                                       th:field="*{last_name}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="user-management-entry">Account Email</th>
+                            <td class="user-management-value-cell">
+                                <input id="input-account_email" class="user-management-value" type="text"
+                                       th:field="*{email}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="user-management-entry">Mil Email</th>
+                            <td class="user-management-value-cell">
+                                <input id="input-mil_email" class="user-management-value" type="text"
+                                       th:field="*{mil_email}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="user-management-entry">Civ Email</th>
+                            <td class="user-management-value-cell">
+                                <input id="input-civ_email" class="user-management-value" type="text"
+                                       th:field="*{civ_email}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="user-management-entry">Personal Phone</th>
+                            <td class="user-management-value-cell">
+                                <input id="input-personal_phone" class="user-management-value" type="text"
+                                       th:field="*{personal_phone}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="user-management-entry">Office Phone</th>
+                            <td class="user-management-value-cell">
+                                <input id="input-office_phone" class="user-management-value" type="text"
+                                       th:field="*{office_phone}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="user-management-entry">Rank</th>
+                            <td class="user-management-value-cell">
+                                <input id="input-rank" class="user-management-value" type="text"
+                                       th:field="*{rank}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="user-management-entry">Workcenter</th>
+                            <td class="user-management-value-cell">
+                                <input id="input-workcenter" class="user-management-value" type="text"
+                                       th:field="*{workcenter}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="user-management-entry">Flight</th>
+                            <td class="user-management-value-cell">
+                                <input id="input-flight" class="user-management-value" type="text"
+                                       th:field="*{flight}">
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="user-management-entry">Teams</th>
+                            <td class="user-management-value-cell">
+                                <input id="input-teams" class="user-management-value" type="text"
+                                       th:field="*{teams}">
+                            </td>
+                        </tr>
+                    </table>
+
+                    <div class="user-edit-button-div">
+                        <input class="user-edit-submit" type="submit" name="submit" value="Submit">
+                        <input class="user-edit-submit user-edit-delete" type="submit" name="delete" value="Delete"
+                               onclick="return confirm('Are you sure you want to delete this user?')">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</main>
+</body>
+
+</html>
