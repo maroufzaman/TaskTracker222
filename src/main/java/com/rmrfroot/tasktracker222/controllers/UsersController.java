@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
 
 
 @Controller
@@ -46,20 +47,20 @@ public class UsersController {
     public String accessControl(Model model) {
         Users user = new Users();
         model.addAttribute("users", user);
-        // if user is admin
-        //    return "redirect:/drill-schedule-manager";
-        // if not
-        return "redirect:/drill-schedule-recipient";
+    /*  if(user.isAdmin())
+            return "redirect:/drill-schedule-manager";
+        else*/
+            return "redirect:/drill-schedule-recipient";
     }
 
-    @GetMapping("/users/addUser")
+    @GetMapping("/users/newUser")
     public String addUser(Model model) {
         Users user = new Users();
-        model.addAttribute("users");
-        return "users";
+        model.addAttribute("users", user);
+        return "registration_form";
 
     }
-    @PostMapping("/addUser")
+    @PostMapping("/register")
         public String save(@ModelAttribute("users") Users users) {
             usersDaoService.save(users);
             return "redirect:/users";

@@ -15,9 +15,14 @@
                 <tr>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Register Date</th>
-                    <th>Update Date</th>
+                    <th>Mil Email</th>
+                    <th>Civ Email</th>
+                    <th>Phone Number</th>
+                    <th>Office Number</th>
+                    <th>Rank</th>
+                    <th>Work Center</th>
+                    <th>Flight</th>
+                    <th>Teams</th>
                 </tr>
             </thead>
 
@@ -25,9 +30,14 @@
                 <tr th:each="user: ${users}">
                     <td th:text="${user.firstName}"></td>
                     <td th:text="${user.lastName}"></td>
-                    <td th:text="${user.email}"></td>
-                    <td th:text="${user.register_date}"></td>
-                    <td th:text="${user.update_date}"></td>
+                    <td th:text="${user.militaryEmail}"></td>
+                    <td th:text="${user.civilianEmail}"></td>
+                    <td th:text="${user.phoneNumber}"></td>
+                    <td th:text="${user.officeNumber}"></td>
+                    <td th:text="${user.rank}"></td>
+                    <td th:text="${user.workCenter}"></td>
+                    <td th:text="${user.flight}"></td>
+                    <td th:text="${user.teams}"></td>
                 </tr>
             </tbody>
         </table>
