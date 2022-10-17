@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,20 +45,35 @@ public class UsersController {
     }
 
     @PostMapping(value = "/users", params = "submit")
-    public RedirectView userEditSubmit(@ModelAttribute("userEditRequest") UserEditRequest request) {
-        System.out.println(request.getFirst_name());
+    public String userEditSubmit(@ModelAttribute("userEditRequest") UserEditRequest request) {
+        Users u = usersDaoService.findById(Integer.parseInt(request.getId()));
 
+        u.setFirstName(request.getFirstName());
+        u.setLastName(request.getLastName());
+        u.setMilitaryEmail(request.getMilitaryEmail());
+        u.setCivilianEmail(request.getCivilianEmail());
+        u.setPhoneNumber(request.getPhoneNumber());
+        u.setOfficeNumber(request.getOfficeNumber());
+        u.setRank(request.getRank());
+        u.setWorkCenter(request.getWorkCenter());
+        u.setFlight(request.getFlight());
+//        u.setTeams(request.getTeams());   //TODO - Integrate ArrayList-style team list
 
-        return new RedirectView("users");
+        usersDaoService.update(u.getId(), u);
+
+        return "redirect:/users";
     }
 
     @PostMapping(value = "/users", params = "delete")
-    public RedirectView userEditDelete(Model model) {
+    public String userEditDelete(@ModelAttribute("userEditRequest") UserEditRequest request) {
         System.out.println("delete");
+        Users u = usersDaoService.findById(Integer.parseInt(request.getId()));
 
+
+        usersDaoService.deleteById(u.getId());
         //TODO - Add functionality to delete user from database and cognito
 
-        return new RedirectView("users");
+        return "redirect:/users";
     }
 
 
@@ -69,9 +84,10 @@ public class UsersController {
     }
 
     /**
+     *
      * Skeleton Code for controller access after user login
      * depending on the role of user (officer or not)
-     * <p>
+     *
      * With having no way of differentiating user from another
      * can't be used
      */
@@ -79,25 +95,24 @@ public class UsersController {
     public String accessControl(Model model) {
         Users user = new Users();
         model.addAttribute("users", user);
-        // if user is admin
-        //    return "redirect:/drill-schedule-manager";
-        // if not
-        return "redirect:/drill-schedule-recipient";
+    /*  if(user.isAdmin())
+            return "redirect:/drill-schedule-manager";
+        else*/
+            return "redirect:/drill-schedule-recipient";
     }
 
-    @GetMapping("/users/addUser")
+    @GetMapping("/users/newUser")
     public String addUser(Model model) {
         Users user = new Users();
-        model.addAttribute("users");
-        return "users";
+        model.addAttribute("users", user);
+        return "registration_form";
 
     }
-
-    @PostMapping("/addUser")
-    public String save(@ModelAttribute("users") Users users) {
-        usersDaoService.save(users);
-        return "redirect:/users";
-    }
+    @PostMapping("/register")
+        public String save(@ModelAttribute("users") Users users) {
+            usersDaoService.save(users);
+            return "redirect:/users";
+        }
 
     @PutMapping("users/{id}")
     public ResponseEntity<Users> update(@PathVariable("id") int id, Users users) {

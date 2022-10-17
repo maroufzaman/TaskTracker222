@@ -58,7 +58,7 @@
                     </script>
 
 
-                    <td th:text="${user.first_name} + ' ' + ${user.last_name}"
+                    <td th:text="${user.firstName} + ' ' + ${user.lastName}"
                         class="user-table-entry"></td>
                     <td th:text="${user.rank}"
                         class="user-table-entry"></td>
@@ -87,49 +87,49 @@
                             <th class="user-management-entry">First Name</th>
                             <td class="user-management-value-cell">
                                 <input id="input-first_name" class="user-management-value" type="text"
-                                       th:field="*{first_name}">
+                                       th:field="*{firstName}">
                             </td>
                         </tr>
                         <tr>
                             <th class="user-management-entry">Last Name</th>
                             <td class="user-management-value-cell">
                                 <input id="input-last_name" class="user-management-value" type="text"
-                                       th:field="*{last_name}">
+                                       th:field="*{lastName}">
                             </td>
                         </tr>
-                        <tr>
-                            <th class="user-management-entry">Account Email</th>
-                            <td class="user-management-value-cell">
-                                <input id="input-account_email" class="user-management-value" type="text"
-                                       th:field="*{email}">
-                            </td>
-                        </tr>
+<!--                        <tr>-->
+<!--                            <th class="user-management-entry">Account Email</th>-->
+<!--                            <td class="user-management-value-cell">-->
+<!--                                <input id="input-account_email" class="user-management-value" type="text"-->
+<!--                                       th:field="*{email}">-->
+<!--                            </td>-->
+<!--                        </tr>-->
                         <tr>
                             <th class="user-management-entry">Mil Email</th>
                             <td class="user-management-value-cell">
                                 <input id="input-mil_email" class="user-management-value" type="text"
-                                       th:field="*{mil_email}">
+                                       th:field="*{militaryEmail}">
                             </td>
                         </tr>
                         <tr>
                             <th class="user-management-entry">Civ Email</th>
                             <td class="user-management-value-cell">
                                 <input id="input-civ_email" class="user-management-value" type="text"
-                                       th:field="*{civ_email}">
+                                       th:field="*{civilianEmail}">
                             </td>
                         </tr>
                         <tr>
                             <th class="user-management-entry">Personal Phone</th>
                             <td class="user-management-value-cell">
                                 <input id="input-personal_phone" class="user-management-value" type="text"
-                                       th:field="*{personal_phone}">
+                                       th:field="*{phoneNumber}">
                             </td>
                         </tr>
                         <tr>
                             <th class="user-management-entry">Office Phone</th>
                             <td class="user-management-value-cell">
                                 <input id="input-office_phone" class="user-management-value" type="text"
-                                       th:field="*{office_phone}">
+                                       th:field="*{officeNumber}">
                             </td>
                         </tr>
                         <tr>
@@ -143,7 +143,7 @@
                             <th class="user-management-entry">Workcenter</th>
                             <td class="user-management-value-cell">
                                 <input id="input-workcenter" class="user-management-value" type="text"
-                                       th:field="*{workcenter}">
+                                       th:field="*{workCenter}">
                             </td>
                         </tr>
                         <tr>
@@ -159,6 +159,10 @@
                                 <input id="input-teams" class="user-management-value" type="text"
                                        th:field="*{teams}">
                             </td>
+                        </tr>
+
+                        <tr>
+                            <input id="input-id" th:field="*{id}" style="visibility: hidden; position: absolute">
                         </tr>
                     </table>
 

@@ -2,15 +2,16 @@ package com.rmrfroot.tasktracker222.entities;
 
 public class UserEditRequest {
 
-    public String first_name;
-    public String last_name;
+    public String id;
+    public String firstName;
+    public String lastName;
     public String email;
-    public String mil_email;
-    public String civ_email;
-    public String personal_phone;
-    public String office_phone;
+    public String militaryEmail;
+    public String civilianEmail;
+    public String phoneNumber;
+    public String officeNumber;
     public String rank;
-    public String workcenter;
+    public String workCenter;
     public String flight;
     public String teams;
 
@@ -18,20 +19,28 @@ public class UserEditRequest {
 
     }
 
-    public String getFirst_name() {
-        return first_name;
+
+    public String getId() {
+        return id;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setId(String id) {
+        this.id = id;
+    }
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -42,36 +51,36 @@ public class UserEditRequest {
         this.email = email;
     }
 
-    public String getMil_email() {
-        return mil_email;
+    public String getMilitaryEmail() {
+        return militaryEmail;
     }
 
-    public void setMil_email(String mil_email) {
-        this.mil_email = mil_email;
+    public void setMilitaryEmail(String militaryEmail) {
+        this.militaryEmail = militaryEmail;
     }
 
-    public String getCiv_email() {
-        return civ_email;
+    public String getCivilianEmail() {
+        return civilianEmail;
     }
 
-    public void setCiv_email(String civ_email) {
-        this.civ_email = civ_email;
+    public void setCivilianEmail(String civilianEmail) {
+        this.civilianEmail = civilianEmail;
     }
 
-    public String getPersonal_phone() {
-        return personal_phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPersonal_phone(String personal_phone) {
-        this.personal_phone = personal_phone;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public String getOffice_phone() {
-        return office_phone;
+    public String getOfficeNumber() {
+        return officeNumber;
     }
 
-    public void setOffice_phone(String office_phone) {
-        this.office_phone = office_phone;
+    public void setOfficeNumber(String officeNumber) {
+        this.officeNumber = officeNumber;
     }
 
     public String getRank() {
@@ -82,12 +91,12 @@ public class UserEditRequest {
         this.rank = rank;
     }
 
-    public String getWorkcenter() {
-        return workcenter;
+    public String getWorkCenter() {
+        return workCenter;
     }
 
-    public void setWorkcenter(String workcenter) {
-        this.workcenter = workcenter;
+    public void setWorkCenter(String workCenter) {
+        this.workCenter = workCenter;
     }
 
     public String getFlight() {

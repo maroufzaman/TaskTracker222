@@ -15,17 +15,18 @@ function updateSelectedUser(id) {
 
     selected_user = findUserById(selected_user_id);
 
-    updateFieldValue("input-first_name", selected_user.first_name);
-    updateFieldValue("input-last_name", selected_user.last_name);
-    updateFieldValue("input-account_email", selected_user.email);
-    updateFieldValue("input-mil_email", selected_user.mil_email);
-    updateFieldValue("input-civ_email", selected_user.civ_email);
-    updateFieldValue("input-personal_phone", selected_user.personal_phone);
-    updateFieldValue("input-office_phone", selected_user.office_phone);
+    updateFieldValue("input-first_name", selected_user.firstName);
+    updateFieldValue("input-last_name", selected_user.lastName);
+    // updateFieldValue("input-account_email", selected_user.email);
+    updateFieldValue("input-mil_email", selected_user.militaryEmail);
+    updateFieldValue("input-civ_email", selected_user.civilianEmail);
+    updateFieldValue("input-personal_phone", selected_user.phoneNumber);
+    updateFieldValue("input-office_phone", selected_user.officeNumber);
     updateFieldValue("input-rank", selected_user.rank);
-    updateFieldValue("input-workcenter", selected_user.workcenter);
+    updateFieldValue("input-workcenter", selected_user.workCenter);
     updateFieldValue("input-flight", selected_user.flight);
     updateFieldValue("input-teams", selected_user.teams);
+    updateFieldValue("input-id", selected_user.id);
 
     if (users !== null) {
         for (let index in users) {
