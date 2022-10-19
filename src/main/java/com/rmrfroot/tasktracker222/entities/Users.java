@@ -289,4 +289,14 @@ public class Users {
         }
         drillSchedulesList.add(drillSchedules);
     }
+    public boolean findDrillScheduleById(int id){
+        boolean check=false;
+        for(DrillSchedules drillSchedules:getDrillSchedulesList()){
+            if(drillSchedules.getId()==id){
+                check=true;
+                break;
+            }
+        }
+        return check;
+    }
 }

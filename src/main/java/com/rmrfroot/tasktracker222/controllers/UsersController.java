@@ -9,6 +9,7 @@ import com.rmrfroot.tasktracker222.services.UsersDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -103,12 +104,15 @@ public class UsersController {
      * can't be used
      */
     @GetMapping("users/accessControl")
-    public String accessControl(Model model) {
-        Users user = new Users();
-        model.addAttribute("users", user);
+    public String accessControl(Model model,Principal principal) {
         try {
+            Users user=usersDaoService.findUserByUsername(principal.getName());
+            model.addAttribute("users", user);
             DrillSchedules drillSchedules=drillScheduleService.findDrillSchedulesById(59);
-            if (usersDaoService.findUserByEmail(drillSchedules.getOfficer_email()).getEmail()!=null) {
+            if(!user.findDrillScheduleById(59)){
+                System.out.println("Something went wrong ");
+                return "redirect:/error";
+            }else if(user.getEmail().equals(drillSchedules.getOfficer_email())) {
                 System.out.println("manager-page");
                 return "redirect:/drill-schedule-manager";
             } else
