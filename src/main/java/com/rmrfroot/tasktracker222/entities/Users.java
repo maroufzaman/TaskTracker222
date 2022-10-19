@@ -3,8 +3,12 @@ package com.rmrfroot.tasktracker222.entities;
 
 import javax.persistence.*;
 //import java.time.LocalDate;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 import java.util.UUID;
 
 @Entity
@@ -191,6 +195,36 @@ public class Users {
     //    random uuid
     private static void generateUUID() {
         UUID uuid = UUID.randomUUID();
+    }
+
+    //figured out a way to read user groups from text file, but not sure
+    //how to implement to the project.
+
+//    public static void main (String[] args) {
+//        String[] words = readGroup("group.txt");
+//        for (int i = 0; i < words.length; i = i + 1){
+//            System.out.println(words[i]);
+//        }
+//        System. out.println(Arrays.toString(words));
+//    }
+    public static String[] readGroup(String file) {
+        int ctr = 0;
+        try {
+            Scanner s1 = new Scanner(new File(file));
+            while (s1.hasNextLine()) {
+                ctr = ctr + 1;
+                s1.nextLine();
+            }
+            String[] words = new String[ctr];
+            Scanner s2 = new Scanner(new File(file));
+            for (int i = 0; i < ctr; i = i + 1) {
+                words[i] = s2.nextLine();
+            }
+            return words;
+        }
+        catch (FileNotFoundException e) {
+        }
+        return null;
     }
 
 }
