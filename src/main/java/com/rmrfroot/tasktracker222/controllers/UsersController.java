@@ -1,7 +1,9 @@
 package com.rmrfroot.tasktracker222.controllers;
 
+import com.rmrfroot.tasktracker222.entities.DrillSchedules;
 import com.rmrfroot.tasktracker222.entities.UserEditRequest;
 import com.rmrfroot.tasktracker222.entities.Users;
+import com.rmrfroot.tasktracker222.services.DrillScheduleService;
 import com.rmrfroot.tasktracker222.services.UsersDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,9 @@ public class UsersController {
 
     @Autowired
     private UsersDaoService usersDaoService;
+
+    @Autowired
+    private DrillScheduleService drillScheduleService;
 
     public UsersController(UsersDaoService usersDaoService) {
         super();
@@ -105,6 +110,93 @@ public class UsersController {
     public String addUser(Model model) {
         Users user = new Users();
         model.addAttribute("users", user);
+        DrillSchedules drillSchedules1=new DrillSchedules(
+               "lorem" ,
+                "start_date",
+                "deadline_date",
+                "location",
+                "admin_name",
+                "officer_email",
+                "note",
+                "create_timestamp"
+        );
+        DrillSchedules drillSchedules2=new DrillSchedules(
+                "lorem" ,
+                "start_date",
+                "deadline_date",
+                "location",
+                "admin_name",
+                "officer_email",
+                "note",
+                "create_timestamp"
+        );
+        ArrayList<String> team =new ArrayList<>();
+        team.add("team1");
+        team.add("team2");
+        Users addUser1=new Users(
+                "visoth99",
+                "visoth",
+                "cheam",
+                "visoth99@gmail.com",
+                "visothMili@gmail.com",
+                "912431234892349",
+                "23432",
+                "Lorem",
+                "Clafornia branch",
+                "f22",
+                team
+                );
+        Users addUser2=new Users(
+                "visoth99",
+                "visoth",
+                "cheam",
+                "visoth99@gmail.com",
+                "visothMili@gmail.com",
+                "912431234892349",
+                "23432",
+                "Lorem",
+                "Clafornia branch",
+                "f22",
+                team
+        );
+        Users addUserAdmin=new Users(
+                "adderUserAdmin",
+                "visoth",
+                "cheam",
+                "visoth99@gmail.com",
+                "visothMili@gmail.com",
+                "912431234892349",
+                "23432",
+                "Lorem",
+                "Clafornia branch",
+                "f22",
+                team
+        );
+        /*drillScheduleService.save(drillSchedules1);
+        drillSchedules1.addUsers(addUser1);
+        drillSchedules1.addUsers(addUser2);
+        usersDaoService.save(addUser1);
+        usersDaoService.save(addUser2);
+
+        //create new users and add to exist drill_schedules
+        DrillSchedules drillSchedules=drillScheduleService.findDrillSchedulesById(53);
+        drillSchedules.addUsers(addUser1);
+        drillSchedules.addUsers(addUser2);
+        usersDaoService.save(addUser1);
+        usersDaoService.save(addUser2);
+
+        //exist users with exist drill_schedules
+        DrillSchedules drillSchedules=drillScheduleService.findDrillSchedulesById(54);
+        Users usersExist=usersDaoService.findById(77);
+        drillSchedules.addUsers(usersExist);
+        usersDaoService.save(usersExist);
+
+        //a new drill_schedule with exists an admin user, and recipient users
+        Users usersExist=usersDaoService.findById(77);
+        drillSchedules1.addUsers(usersDaoService.findUsersById(78));
+        drillSchedules1.addUsers(usersDaoService.findUsersById(79));
+        usersExist.addDrillSchedule(drillSchedules1);
+        usersDaoService.save(usersExist);*/
         return "registration_form";
 
     }

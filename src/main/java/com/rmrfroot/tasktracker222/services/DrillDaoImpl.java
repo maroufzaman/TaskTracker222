@@ -2,7 +2,7 @@ package com.rmrfroot.tasktracker222.services;
 
 
 import com.rmrfroot.tasktracker222.dao.DrillDAO;
-import com.rmrfroot.tasktracker222.entities.Drill;
+import com.rmrfroot.tasktracker222.entities.deprecated.Drill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

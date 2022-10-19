@@ -35,10 +35,10 @@ public class UserCollectionController {
     }
 
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<Users> save(@RequestBody Users user) {
         return new ResponseEntity<>(usersDaoService.save(user), HttpStatus.CREATED);
-    }
+    }*/
 
 
 

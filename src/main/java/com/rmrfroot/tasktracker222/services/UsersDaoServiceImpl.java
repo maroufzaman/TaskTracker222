@@ -1,9 +1,11 @@
 package com.rmrfroot.tasktracker222.services;
 
+import com.rmrfroot.tasktracker222.dao.CustomUsersDAO;
 import com.rmrfroot.tasktracker222.dao.UsersDao;
 import com.rmrfroot.tasktracker222.entities.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,6 +15,8 @@ import java.util.Optional;
 public class UsersDaoServiceImpl implements UsersDaoService {
     @Autowired
     private UsersDao usersDAO;
+    @Autowired
+    private CustomUsersDAO customUsersDAO;
 
 
     @Override
@@ -35,11 +39,6 @@ public class UsersDaoServiceImpl implements UsersDaoService {
         return acc;
     }
 
-    @Override
-    public Users save(Users user) {
-        usersDAO.save(user);
-        return user;
-    }
 
     @Override
     public void deleteById(int theId) {
@@ -57,7 +56,7 @@ public class UsersDaoServiceImpl implements UsersDaoService {
             usersDAO.deleteById(id);
         } else {
             //day not found
-            throw new RuntimeException("Did not find day id - " + id);
+            throw new RuntimeException("Did not find user id - " + id);
         }
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
@@ -71,6 +70,27 @@ public class UsersDaoServiceImpl implements UsersDaoService {
         updatedUser.setTeams(user.getTeams());
         usersDAO.save(updatedUser);
         return updatedUser;
+    }
+    @Override
+    @Transactional
+    public void save(Users user) {
+        customUsersDAO.save(user);
+    }
+
+    @Override
+    @Transactional
+    public Boolean hasUserData(String email) {
+        return customUsersDAO.hasUserData(email);
+    }
+
+    @Override
+    @Transactional
+    public Users findUserByEmail(String email){return customUsersDAO.findUserByEmail(email);}
+
+    @Override
+    @Transactional
+    public Users findUsersById(int id) {
+        return customUsersDAO.findUsersById(id);
     }
 
 }

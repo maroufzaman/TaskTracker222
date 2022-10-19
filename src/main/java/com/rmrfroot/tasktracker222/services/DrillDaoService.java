@@ -1,6 +1,6 @@
 package com.rmrfroot.tasktracker222.services;
 
-import com.rmrfroot.tasktracker222.entities.Drill;
+import com.rmrfroot.tasktracker222.entities.deprecated.Drill;
 
 import java.util.List;
 

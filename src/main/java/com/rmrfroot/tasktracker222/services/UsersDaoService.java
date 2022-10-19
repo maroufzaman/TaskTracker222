@@ -10,9 +10,15 @@ public interface UsersDaoService {
 
     public Users findById(int theId);
 
-    public Users save(Users day);
+    public void save(Users users);
 
     public void deleteById(int theId);
 
     Users update(int id, Users day);
+
+    public Boolean hasUserData(String email);
+
+    public Users findUserByEmail(String email);
+    public Users findUsersById(int id);
+
 }

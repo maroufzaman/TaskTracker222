@@ -7,6 +7,7 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -31,9 +32,6 @@ public class Users {
 
     @Column(name = "last_name")
     private String lastName;
-
-    @Column(name = "admin")
-    private boolean admin;
 
     @Column(name = "mil_email")
     private String militaryEmail;
@@ -60,6 +58,20 @@ public class Users {
     @Column(name = "teams", columnDefinition = "text[]")
     private ArrayList<String> teams;
 
+    @ManyToMany(
+            fetch=FetchType.LAZY,
+            cascade = {CascadeType.PERSIST,
+                    CascadeType.MERGE,
+                    CascadeType.DETACH,
+                    CascadeType.REFRESH
+            })
+    @JoinTable(
+            name="users_drill_schedule",
+            joinColumns =@JoinColumn(name="users_id"),
+            inverseJoinColumns = @JoinColumn(name="drill_schedule_id")
+    )
+    private List<DrillSchedules> drillSchedulesList;
+
     public Users() {
 
     }
@@ -70,7 +82,6 @@ public class Users {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.admin = false;
         this.militaryEmail = militaryEmail;
         this.civilianEmail = civilianEmail;
         this.phoneNumber = phoneNumber;
@@ -181,13 +192,6 @@ public class Users {
 //        this.update_date = update_date;
 //    }
 
-    public boolean isAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
 
     public String getRank() {
         return rank;
@@ -257,5 +261,20 @@ public class Users {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public List<DrillSchedules> getDrillSchedulesList() {
+        return drillSchedulesList;
+    }
+
+    public void setDrillSchedulesList(List<DrillSchedules> drillSchedulesList) {
+        this.drillSchedulesList = drillSchedulesList;
+    }
+
+    public void addDrillSchedule(DrillSchedules drillSchedules){
+        if(drillSchedulesList ==null){
+            drillSchedulesList=new ArrayList<>();
+        }
+        drillSchedulesList.add(drillSchedules);
     }
 }
