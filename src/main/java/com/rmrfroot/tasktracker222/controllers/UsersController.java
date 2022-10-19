@@ -6,18 +6,21 @@ import com.rmrfroot.tasktracker222.entities.UserEditRequest;
 import com.rmrfroot.tasktracker222.entities.Users;
 import com.rmrfroot.tasktracker222.services.DrillScheduleService;
 import com.rmrfroot.tasktracker222.services.UsersDaoService;
+import com.rmrfroot.tasktracker222.validations.ValidateUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -125,7 +128,7 @@ public class UsersController {
     }
 
     @GetMapping("/users/newUser")
-    public String addUser(Model model) {
+    public String addUser(Model model,Principal principal) {
         Users user = new Users();
         model.addAttribute("users", user);
         DrillSchedules drillSchedules1=new DrillSchedules(
@@ -218,35 +221,49 @@ public class UsersController {
         drillSchedules1.addUsers(usersDaoService.findUsersById(79));
         usersExist.addDrillSchedule(drillSchedules1);
         usersDaoService.save(usersExist);*/
+        List<String> userInfoList = poolClientInterface.getUserInfo(principal.getName());
+        String email = userInfoList.get(3);
+        if (usersDaoService.hasUserData(email)) {
+            return "redirect:/";
+        }
         return "registration_form";
 
     }
-    @PostMapping("/register")
-        public String save(@ModelAttribute("users") Users users, Principal principal) {
 
-            /*List<String> userInfoList=poolClientInterface.getUserInfo(principal.getName());
-        String email=userInfoList.get(3);
-        if(!usersDaoService.hasUserData(email)) {
-            ArrayList<String> teams=new ArrayList<>();
-            teams.add("team1");
-            teams.add("team2");
-            usersDaoService.registerUserToDatabase(
-                    principal.getName(),
-                    "visoth",
-                    "cheam",
-                    "military@email.com",
-                    "civil@email.com",
-                    email,
-                    "234234",
-                    "21342314",
-                    "rank",
-                    "workcenter",
-                    "flight",
-                    teams
-            );
-            System.out.println("New users just added to database: "+ principal.getName());
+    @PostMapping("/register")
+        public String save(@Valid @ModelAttribute("users")ValidateUser validateUser, BindingResult errors, Model model, Principal principal) {
+        if(errors.hasErrors()){
+            return "registration_form";
         }
-        */
+        try {
+            List<String> userInfoList = poolClientInterface.getUserInfo(principal.getName());
+            String email = userInfoList.get(3);
+            if (!usersDaoService.hasUserData(email)) {
+                /*ArrayList<String> teams = new ArrayList<>();
+                teams.add("team1");
+                teams.add("team2");*/
+                usersDaoService.registerUserToDatabase(
+                        principal.getName(),
+                        validateUser.getFirstName(),
+                        validateUser.getLastName(),
+                        validateUser.getMilitaryEmail(),
+                        validateUser.getCivilianEmail(),
+                        email,
+                        validateUser.getPhoneNumber(),
+                        validateUser.getOfficeNumber(),
+                        validateUser.getRank(),
+                        validateUser.getWorkCenter(),
+                        validateUser.getFlight(),
+                        validateUser.getTeams()
+                );
+                System.out.println("New users just added to database: " + principal.getName());
+            }else{
+                return "redirect:/";
+            }
+        }catch (Exception e){
+            System.out.println("Something went wrong");
+            return "redirect:/error";
+        }
             return "redirect:/users";
         }
 
