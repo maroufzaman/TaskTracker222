@@ -39,6 +39,9 @@ public class Users {
     @Column(name = "civ_email")
     private String civilianEmail;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -76,7 +79,7 @@ public class Users {
 
     }
 
-    public Users(String userName, String firstName, String lastName, String militaryEmail, String civilianEmail,
+    public Users(String userName, String firstName, String lastName, String militaryEmail, String civilianEmail, String email,
                  String phoneNumber, String officeNumber, String rank, String workCenter,
                  String flight, ArrayList<String> teams) {
         this.userName = userName;
@@ -84,6 +87,7 @@ public class Users {
         this.lastName = lastName;
         this.militaryEmail = militaryEmail;
         this.civilianEmail = civilianEmail;
+        this.email = email;
         this.phoneNumber = phoneNumber;
         this.officeNumber = officeNumber;
         this.rank = rank;
@@ -269,6 +273,14 @@ public class Users {
 
     public void setDrillSchedulesList(List<DrillSchedules> drillSchedulesList) {
         this.drillSchedulesList = drillSchedulesList;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void addDrillSchedule(DrillSchedules drillSchedules){

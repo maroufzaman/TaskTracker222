@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -91,6 +92,17 @@ public class UsersDaoServiceImpl implements UsersDaoService {
     @Transactional
     public Users findUsersById(int id) {
         return customUsersDAO.findUsersById(id);
+    }
+
+    @Override
+    @Transactional
+    public void registerUserToDatabase(String userName, String firstName, String lastName, String militaryEmail, String civilianEmail,
+                                       String email,String phoneNumber, String officeNumber, String rank, String workCenter,
+                                       String flight, ArrayList<String> teams) {
+        Users user =new Users(userName, firstName, lastName, militaryEmail, civilianEmail,email,
+                phoneNumber, officeNumber, rank, workCenter,
+                flight, teams);
+        customUsersDAO.save(user);
     }
 
 }
