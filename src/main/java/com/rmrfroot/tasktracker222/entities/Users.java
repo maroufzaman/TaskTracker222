@@ -163,24 +163,66 @@ public class Users {
         return rank;
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
+    public void setRank(String rank) throws FileNotFoundException {
+        File fileText = new File("rank.txt");
+        Scanner s = new Scanner(fileText);
+        int r = 0;
+
+        while(s.hasNextLine()){
+            if(rank.equals(s.nextLine().trim())){
+                r += 1;
+            }
+        }
+        if (r == 1) {
+            this.rank = rank;
+        }
+        else {
+            throw new IllegalArgumentException("Not a valid Rank.");
+        }
     }
 
     public String getWorkCenter() {
         return workCenter;
     }
 
-    public void setWorkCenter(String workCenter) {
-        this.workCenter = workCenter;
+    public void setWorkCenter(String workCenter) throws FileNotFoundException {
+        File fileText = new File("workcenter.txt");
+        Scanner s = new Scanner(fileText);
+        int w = 0;
+
+        while(s.hasNextLine()){
+            if(workCenter.equals(s.nextLine().trim())){
+                w += 1;
+            }
+        }
+        if (w == 1) {
+            this.workCenter = workCenter;
+        }
+        else {
+            throw new IllegalArgumentException("Not a valid workcenter.");
+        }
     }
 
     public String getFlight() {
         return flight;
     }
 
-    public void setFlight(String flight) {
-        this.flight = flight;
+    public void setFlight(String flight) throws FileNotFoundException {
+        File fileText = new File("flight.txt");
+        Scanner s = new Scanner(fileText);
+        int f = 0;
+
+        while(s.hasNextLine()){
+            if(flight.equals(s.nextLine().trim())){
+                f += 1;
+            }
+        }
+        if (f == 1) {
+            this.flight = flight;
+        }
+        else {
+            throw new IllegalArgumentException("Not a valid flight.");
+        }
     }
 
 //    public ArrayList<String> getTeamList() {
@@ -199,8 +241,7 @@ public class Users {
 
     //figured out a way to read user groups from text file, but not sure
     //how to implement to the project.
-
-//    public static void main (String[] args) {
+    //    public static void main (String[] args) {
 //        String[] words = readGroup("group.txt");
 //        for (int i = 0; i < words.length; i = i + 1){
 //            System.out.println(words[i]);
@@ -223,8 +264,11 @@ public class Users {
             return words;
         }
         catch (FileNotFoundException e) {
+            System.out.println("File not found");
         }
         return null;
     }
+
+
 
 }
