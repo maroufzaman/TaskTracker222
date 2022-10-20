@@ -5,11 +5,7 @@ import javax.persistence.*;
 //import java.time.LocalDate;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -50,6 +46,8 @@ public class Users {
     //@ElementCollection
     //@Column(name = "teams")
     //private ArrayList<String> teamList;
+    @Column(name = "team")
+    private static String team;
 
     public Users() {
 
@@ -58,7 +56,7 @@ public class Users {
     public Users(String email, String first_name, String last_name,
                 String register_date, String update_date,
                 boolean admin, String rank, String workCenter,
-                String flight, ArrayList<String> teamList) {
+                String flight, String team) {
         this.email = email;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -69,6 +67,7 @@ public class Users {
         this.workCenter = workCenter;
         this.flight = flight;
         //this.teamList = teamList;
+        this.team = team;
     }
 
     public int getId() {
@@ -233,6 +232,35 @@ public class Users {
 //        this.teamList = teamList;
 //    }
 
+    public String getTeam() {
+        return team;
+    }
+    public void setTeam(String team) throws FileNotFoundException {
+        File fileText = new File("team.txt");
+        Scanner s = new Scanner(fileText);
+        int t = 0;
+
+        while(s.hasNextLine()){
+            if(team.equals(s.nextLine().trim())){
+                t += 1;
+            }
+        }
+        if (t <= 1) {
+            this.team = team;
+        }
+        else {
+            throw new IllegalArgumentException("Not a valid team.");
+        }
+    }
+
+    public static void addTeam() {
+        Scanner s = new Scanner(System.in);
+        String teams = s.nextLine();
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(teams.split("\\s*,\\s*")));
+        Set<String> aSet = new HashSet<>(list);
+        list.add(String.valueOf(aSet));
+    }
+
     //not used yet, ready to implement when needed
     //    random uuid
     private static void generateUUID() {
@@ -268,7 +296,4 @@ public class Users {
         }
         return null;
     }
-
-
-
 }
