@@ -34,28 +34,28 @@
             <div class="input-box">
                 <label for ="militaryEmail">Mil Email:</label>
                 <label id="asterisk">*</label>
-                <input type="email" th:name= "militaryEmail"  id="mail" placeholder="Enter your Military email" required minlength="8">
+                <input type="email" th:name= "militaryEmail"  id="mail" placeholder="Enter your military email" required minlength="8">
              <span>
                 <label for = "civilianEmail">Civ Email:</label>
                 <label id="asterisk">*</label>
-                <input type="email" th:name= "civilianEmail"  id="mail" placeholder="Enter your Civilian email" required minlength="8">
+                <input type="email" th:name= "civilianEmail"  id="mail" placeholder="Enter your civilian email" required minlength="8">
              </span>
             </div>
             
             <div class="input-box">
                 <label for ="phoneNumber" >Personal Phone: </label>
-                <input type="tel" id="phone" th:name="phoneNumber"  placeholder="Enter your Personal Phone number"  >
+                <input type="tel" id="phone" th:name="phoneNumber"  placeholder="Enter your personal phone number"  >
                 <span>
                     <label for ="officeNumber">Office Phone: </label>
-                    <input type="tel" id="phone" th:name="officeNumber" placeholder="Enter your Office Phone number" >
+                    <input type="tel" id="phone" th:name="officeNumber" placeholder="Enter your office phone number" >
                 </span>
             </div>
              <div class="input-box">
                     <label for ="rank" id="label">Rank:</label>
                     <label id="asterisk">*</label>
-                 <select id = "rank" th:name="rank" required>
-                    <option value = "">Select your Rank</option>
-                   <option value="AB">AB</option>
+                 <select id = "rank" th:name="rank"  style="color:gray" required>
+                    <option id="placeholder" value = "" >Select your rank</option>
+                   <option value="AB"> AB</option>
                    <option value="Amn">Amn</option>
                    <option value="A1C">A1C</option>
                    <option value ="SrA">SrA</option>
@@ -82,7 +82,7 @@
                      <div class="input-box">
                         <label for = "Workcenter">Workcenter:</label>
                         <label id="asterisk">*</label>
-                        <input type="text" id = "workCenter" th:name="workCenter" placeholder="Enter your Workcenter " required>
+                        <input type="text" id = "workCenter" th:name="workCenter" placeholder="Enter your workcenter " required>
                         <span>
                             <label for="flight">Flight:</label>
                             <label id="asterisk">*</label>
