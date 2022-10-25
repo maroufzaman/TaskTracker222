@@ -8,5 +8,5 @@ public interface DrillScheduleService {
     public DrillSchedules findDrillSchedulesById(int id);
     public void save(DrillSchedules drillSchedules);
 
-    DrillSchedules update(int id, DrillSchedules drillSchedules);
+    //DrillSchedules update(int id, DrillSchedules drillSchedules);
 }

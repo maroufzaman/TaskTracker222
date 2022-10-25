@@ -51,6 +51,9 @@ public class Drill {
     @Column(name = "participants", columnDefinition = "text[]")
     private ArrayList<String> participants;
 
+    public Drill(){
+
+    }
     public Drill(String title, Date date, Date startTime, Date endTime, String location, String officerName,
                  String description, ArrayList<String> participants) {
         this.title = title;

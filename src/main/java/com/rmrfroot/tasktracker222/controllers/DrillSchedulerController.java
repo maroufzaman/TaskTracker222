@@ -90,14 +90,15 @@ public class DrillSchedulerController {
     }
 
     @GetMapping("/drill-schedule-recipient/drills/{id}")
-    public String findById(@PathVariable("id") int id, Model model) {
+    public String findDrillById(@PathVariable("id") int id, Model model) {
         model.addAttribute("drills", drillDaoService.findById(id));
         return "drills";
     }
 
     @GetMapping("/drill-schedule-manager/createDrill")
-    public String createDrill(Model model) {
-        Drill drill = new Drill(event_title, start_date, deadline_date, location, admin_name, officer_email, note, created_timestamp);
+    public String createTestDrill(Model model) {
+        //Drill drill = new Drill(event_title, start_date, deadline_date, location, admin_name, officer_email, note, created_timestamp);
+        Drill drill = new Drill();
         drill.setTitle("Test title");
 
         drill.setOfficerName("Test officer");
@@ -139,19 +140,19 @@ public class DrillSchedulerController {
 
 
     @PostMapping("/create-drill")
-    public String save(@ModelAttribute("drills") Drill drill) {
+    public String createDrill(@ModelAttribute("drills") Drill drill) {
         //drillDaoService.save(drill);
         return "redirect:/drill-schedule-recipient/drills";
     }
 
     @PutMapping()
-    public ResponseEntity<Drill> update(@PathVariable("id") int id, Drill drill) {
+    public ResponseEntity<Drill> updateDrill(@PathVariable("id") int id, Drill drill) {
 
         return new ResponseEntity<>(drillDaoService.update(id, drill), HttpStatus.OK);
     }
 
     @DeleteMapping()
-    public void deleteById(@PathVariable("id") int id) {
+    public void deleteDrillById(@PathVariable("id") int id) {
         drillDaoService.deleteById(id);
     }
 
@@ -168,13 +169,14 @@ public class DrillSchedulerController {
         return null;
     }
 
-    @PostMapping("/register")
-    public String save(@Valid @ModelAttribute("drills") ValidateDrill validateDrill, BindingResult errors, Model model, Principal principal) {
+    @PostMapping("/register-drill")
+    public String saveDrill(@Valid @ModelAttribute("drills") ValidateDrill validateDrill, BindingResult errors, Model model, Principal principal) {
         if(errors.hasErrors()){
             return "registration_form";
         }
         try {
-            List<String> drillInfoList = poolClientInterface.getDrillInfo(principal.getName());
+            //List<String> drillInfoList = poolClientInterface.getDrillInfo(principal.getName());
+            List<String> drillInfoList = new ArrayList<>();
             String title = drillInfoList.get(0);
             if (!drillDaoService.hasDrillData(title)) {
                 drillDaoService.registerDrillToDatabase(

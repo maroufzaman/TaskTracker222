@@ -23,15 +23,15 @@ public class DrillEditController {
     private DrillScheduleService drillScheduleService;
 
     public DrillEditController(DrillDaoService drillDaoService){
-        super();
+        //super();
         this.drillDaoService = drillDaoService;
     }
 
-    @GetMapping("/drill-schedule-recipient/drills/{id}")
-    public String getDrillSchedules(@PathVariable("id") int id, Model model) {
-        model.addAttribute("drillSchedules", drillScheduleService.findDrillSchedulesById(id));
-        return "drillSchedules";
-    }
+//    @GetMapping("/drill-schedule-recipient/drills/{id}")
+//    public String getDrillSchedules(@PathVariable("id") int id, Model model) {
+//        model.addAttribute("drillSchedules", drillScheduleService.findDrillSchedulesById(id));
+//        return "drillSchedules";
+//    }
 
     @PostMapping
     public String editDrill(@ModelAttribute("drill_name") DrillSchedules drillSchedules) {
@@ -40,14 +40,14 @@ public class DrillEditController {
         return "redirect:/drill-schedule-recipient/drills";
     }
 
-    @PutMapping("/drill-schedule-recipient/drills/{id}")
-    public ResponseEntity<DrillSchedules> update(@PathVariable("id") int id, DrillSchedules drillSchedules) {
+//    @PutMapping("/drill-schedule-recipient/drills/{id}")
+//    public ResponseEntity<DrillSchedules> update(@PathVariable("id") int id, DrillSchedules drillSchedules) {
+//
+//        return new ResponseEntity<>(drillScheduleService.update(id, drillSchedules), HttpStatus.OK);
+//    }
 
-        return new ResponseEntity<>(drillScheduleService.update(id, drillSchedules), HttpStatus.OK);
-    }
-
-    @DeleteMapping("users/{id}")
-    public void deleteById(@PathVariable("id") int id) {
+    @DeleteMapping("drills/{id}")
+    public void deleteDrillById(@PathVariable("id") int id) {
         drillDaoService.deleteById(id);
     }
 

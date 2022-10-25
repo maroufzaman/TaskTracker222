@@ -61,22 +61,28 @@ public class UsersController {
 
     @PostMapping(value = "/users", params = "submit")
     public String userEditSubmit(@ModelAttribute("userEditRequest") UserEditRequest request) {
-        Users u = usersDaoService.findById(Integer.parseInt(request.getId()));
+        try {
+            Users u = usersDaoService.findById(Integer.parseInt(request.getId()));
 
-        u.setFirstName(request.getFirstName());
-        u.setLastName(request.getLastName());
-        u.setMilitaryEmail(request.getMilitaryEmail());
-        u.setCivilianEmail(request.getCivilianEmail());
-        u.setPhoneNumber(request.getPhoneNumber());
-        u.setOfficeNumber(request.getOfficeNumber());
-        u.setRank(request.getRank());
-        u.setWorkCenter(request.getWorkCenter());
-        u.setFlight(request.getFlight());
+            u.setFirstName(request.getFirstName());
+            u.setLastName(request.getLastName());
+            u.setMilitaryEmail(request.getMilitaryEmail());
+            u.setCivilianEmail(request.getCivilianEmail());
+            u.setPhoneNumber(request.getPhoneNumber());
+            u.setOfficeNumber(request.getOfficeNumber());
+            u.setRank(request.getRank());
+            u.setWorkCenter(request.getWorkCenter());
+            u.setFlight(request.getFlight());
 //        u.setTeams(request.getTeams());   //TODO - Integrate ArrayList-style team list
 
-        usersDaoService.update(u.getId(), u);
+            usersDaoService.update(u.getId(), u);
 
-        return "redirect:/users";
+            return "redirect:/users";
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @PostMapping(value = "/users", params = "delete")
@@ -231,7 +237,7 @@ public class UsersController {
     }
 
     @PostMapping("/register")
-        public String save(@Valid @ModelAttribute("users")ValidateUser validateUser, BindingResult errors, Model model, Principal principal) {
+        public String saveUser(@Valid @ModelAttribute("users")ValidateUser validateUser, BindingResult errors, Model model, Principal principal) {
         if(errors.hasErrors()){
             return "registration_form";
         }
@@ -268,13 +274,13 @@ public class UsersController {
         }
 
     @PutMapping("users/{id}")
-    public ResponseEntity<Users> update(@PathVariable("id") int id, Users users) {
+    public ResponseEntity<Users> updateUser(@PathVariable("id") int id, Users users) {
 
         return new ResponseEntity<>(usersDaoService.update(id, users), HttpStatus.OK);
     }
 
     @DeleteMapping("users/{id}")
-    public void deleteById(@PathVariable("id") int id) {
+    public void deleteUserById(@PathVariable("id") int id) {
         usersDaoService.deleteById(id);
     }
 }
