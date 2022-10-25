@@ -1,7 +1,10 @@
 package com.rmrfroot.tasktracker222.controllers;
 
+import com.rmrfroot.tasktracker222.awsCognito.PoolClientInterface;
 import com.rmrfroot.tasktracker222.entities.deprecated.Drill;
 import com.rmrfroot.tasktracker222.services.DrillDaoService;
+import com.rmrfroot.tasktracker222.validations.ValidateDrill;
+import com.rmrfroot.tasktracker222.validations.ValidateUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +13,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +31,9 @@ public class DrillSchedulerController {
     // because front end has no way of importing data into the database
     @Autowired
     private DrillDaoService drillDaoService;
+
+    @Autowired
+    private PoolClientInterface poolClientInterface;
 
     public DrillSchedulerController(DrillDaoService drillDaoService) {
         super();
@@ -159,4 +168,37 @@ public class DrillSchedulerController {
 
         return null;
     }
+
+    @PostMapping("/register")
+    public String save(@Valid @ModelAttribute("drills") ValidateDrill validateDrill, BindingResult errors, Model model, Principal principal) {
+        if(errors.hasErrors()){
+            return "registration_form";
+        }
+        try {
+            List<String> drillInfoList = poolClientInterface.getDrillInfo(principal.getName());
+            String title = drillInfoList.get(0);
+            if (!drillDaoService.hasDrillData(title)) {
+                drillDaoService.registerDrillToDatabase(
+                        principal.getName(),
+                        validateDrill.getEvent_title(),
+                        validateDrill.getStart_date(),
+                        validateDrill.getDeadline_date(),
+                        validateDrill.getLocation(),
+                        title,
+                        validateDrill.getAdmin_name(),
+                        validateDrill.getOfficer_email(),
+                        validateDrill.getCreated_timestamp(),
+                        validateDrill.getNote()
+                );
+                System.out.println("New drill just added to database: " + principal.getName());
+            }else{
+                return "redirect:/";
+            }
+        }catch (Exception e){
+            System.out.println("Something went wrong");
+            return "redirect:/error";
+        }
+        return "redirect:/drill";
+    }
+
 }
