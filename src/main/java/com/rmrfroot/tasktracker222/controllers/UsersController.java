@@ -1,5 +1,6 @@
 package com.rmrfroot.tasktracker222.controllers;
 
+import com.rmrfroot.tasktracker222.awsCognito.PoolClientInterface;
 import com.rmrfroot.tasktracker222.entities.DrillSchedules;
 import com.rmrfroot.tasktracker222.entities.UserEditRequest;
 import com.rmrfroot.tasktracker222.entities.Users;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 import java.util.ArrayList;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -25,6 +28,9 @@ public class UsersController {
 
     @Autowired
     private DrillScheduleService drillScheduleService;
+
+    @Autowired
+    private PoolClientInterface poolClientInterface;
 
     public UsersController(UsersDaoService usersDaoService) {
         super();
@@ -100,10 +106,18 @@ public class UsersController {
     public String accessControl(Model model) {
         Users user = new Users();
         model.addAttribute("users", user);
-    /*  if(user.isAdmin())
-            return "redirect:/drill-schedule-manager";
-        else*/
+        try {
+            DrillSchedules drillSchedules=drillScheduleService.findDrillSchedulesById(59);
+            if (usersDaoService.findUserByEmail(drillSchedules.getOfficer_email()).getEmail()!=null) {
+                System.out.println("manager-page");
+                return "redirect:/drill-schedule-manager";
+            } else
+                System.out.println("recipient-page");
             return "redirect:/drill-schedule-recipient";
+        }catch (Exception e){
+            System.out.println("Something went wrong ");
+            return "redirect:/error";
+        }
     }
 
     @GetMapping("/users/newUser")
@@ -139,6 +153,7 @@ public class UsersController {
                 "cheam",
                 "visoth99@gmail.com",
                 "visothMili@gmail.com",
+                "visothMili@gmail.com",
                 "912431234892349",
                 "23432",
                 "Lorem",
@@ -152,6 +167,7 @@ public class UsersController {
                 "cheam",
                 "visoth99@gmail.com",
                 "visothMili@gmail.com",
+                "visothMili@gmail.com",
                 "912431234892349",
                 "23432",
                 "Lorem",
@@ -164,6 +180,7 @@ public class UsersController {
                 "visoth",
                 "cheam",
                 "visoth99@gmail.com",
+                "visothMili@gmail.com",
                 "visothMili@gmail.com",
                 "912431234892349",
                 "23432",
@@ -201,8 +218,31 @@ public class UsersController {
 
     }
     @PostMapping("/register")
-        public String save(@ModelAttribute("users") Users users) {
-            usersDaoService.save(users);
+        public String save(@ModelAttribute("users") Users users, Principal principal) {
+
+            /*List<String> userInfoList=poolClientInterface.getUserInfo(principal.getName());
+        String email=userInfoList.get(3);
+        if(!usersDaoService.hasUserData(email)) {
+            ArrayList<String> teams=new ArrayList<>();
+            teams.add("team1");
+            teams.add("team2");
+            usersDaoService.registerUserToDatabase(
+                    principal.getName(),
+                    "visoth",
+                    "cheam",
+                    "military@email.com",
+                    "civil@email.com",
+                    email,
+                    "234234",
+                    "21342314",
+                    "rank",
+                    "workcenter",
+                    "flight",
+                    teams
+            );
+            System.out.println("New users just added to database: "+ principal.getName());
+        }
+        */
             return "redirect:/users";
         }
 
