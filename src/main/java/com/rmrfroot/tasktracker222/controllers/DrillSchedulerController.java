@@ -93,14 +93,49 @@ public class DrillSchedulerController {
     @GetMapping("/drill-schedule-manager/createDrill")
     public String createDrill(Model model) {
         Drill drill = new Drill();
-        model.addAttribute("drills", drill);
+        drill.setTitle("Test title");
+
+        drill.setOfficerName("Test officer");
+        drill.setDescription("Test description");
+
+        ArrayList<String> locationList = new ArrayList<>();
+        for(int i = 1; i < 10; i++){
+            locationList.add("Location " + i);
+        }
+
+        ArrayList<String> teamList = new ArrayList();
+        for (int i = 1; i < 5; i++) {
+            teamList.add("Team " + i);
+        }
+
+        model.addAttribute("drill", drill);
+        model.addAttribute("editing", false);
+
+        model.addAttribute("locations", locationList);
+        model.addAttribute("teams", teamList);
+        return "CreateDrill";
+    }
+
+    @GetMapping("/drill-schedule-manager/editDrill/{drill-id}")
+    public String editDrill(@PathVariable("drill-id") int id, Model model) {
+        ArrayList<String> locationList = new ArrayList<>();
+        for(int i = 1; i < 10; i++){
+            locationList.add("Location " + i);
+        }
+
+        Drill drill = drillDaoService.findById(id);
+
+        model.addAttribute("drill", drill);
+        model.addAttribute("editing", true);
+
+        model.addAttribute("locations", locationList);
         return "CreateDrill";
     }
 
 
     @PostMapping("/create-drill")
     public String save(@ModelAttribute("drills") Drill drill) {
-        drillDaoService.save(drill);
+        //drillDaoService.save(drill);
         return "redirect:/drill-schedule-recipient/drills";
     }
 
