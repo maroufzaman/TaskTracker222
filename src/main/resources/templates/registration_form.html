@@ -1,250 +1,102 @@
 <DOCTYPE html>
     <html>
         <head>
-
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
             <title>Registration page</title>
-
-
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
             <!-- stylesheet -->
             <link rel="stylesheet" href="style_for_registration_form.css">
             <!-- Add icon library -->
-           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
-    
       </head>
-
 <style>
 
-
-
-
 </style>
-
-
-
-            
-
-
-<form action="#" method="post" >
-   
-
-
+<form th:action="@{/register}" th:object="${newUser}" method="post" id="register-form" class="register-form" >
 
      <div class ="container">
 
       <h1> New User Registration</h1>
 
-         <div class = "user-details" id = "Scrollbar">
-
-
-
+         <div class = "user-details" id = "details">
             <div class="input-box">
+                <label for = "firstName">First Name:</label>
+                <label id="asterisk">*</label>
+                <input type="text" id="name" th:name = "firstName"  placeholder="Enter your first name" required>
+            <span>
+                <label for = "lastName">Last Name:</label>
+                <label id="asterisk">*</label>
+                <input type="text" id ="name" th:name="lastName"  placeholder="Enter your last name" required>
+            </span>
+          </div>
 
-
-                <label>Full name:</label>
-                <i class="fa fa-user" ></i>
-                <input type="text" placeholder="Enter your full name" required>
-
-
-
-
-            </div>
-
+        
             <div class="input-box">
-
-
-                <label>User name:</label>
-                <i class="fa fa-user" ></i>
-                <input type="text" placeholder="Enter your user name" required>
-                
-
-
-
+                <label for ="militaryEmail">Mil Email:</label>
+                <label id="asterisk">*</label>
+                <input type="email" th:name= "militaryEmail"  id="mail" placeholder="Enter your military email" required minlength="8">
+             <span>
+                <label for = "civilianEmail">Civ Email:</label>
+                <label id="asterisk">*</label>
+                <input type="email" th:name= "civilianEmail"  id="mail" placeholder="Enter your civilian email" required minlength="8">
+             </span>
             </div>
-
-            
-
-
-            <div class="input-box">
-
-
-                <span class ="details">Officer Id:</span>
-                <i class="fa fa-id-card" ></i>
-                <input type="number" id="quantity" name="quantity" min="1" max="100000" placeholder="Enter your id" required >
-                
-
-            </div>
-
-
-
-            <div class="input-box">
-
-
-                <span class ="details">Email:</span>
-                <i class="fa fa-envelope" ></i>
-                <input type="email" name= "mail" id="mail" placeholder="Enter your email" required minlength="8">
-                
-
-
-
-            </div>
-
-
             
             <div class="input-box">
-
-
-                <span class ="details">Phone number:</span>
-                <i class="fa fa-phone" ></i>
-                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" required>
-                
-
-
-
+                <label for ="phoneNumber" >Personal Phone: </label>
+                <input type="tel" id="phone" th:name="phoneNumber"  placeholder="Enter your personal phone number"  >
+                <span>
+                    <label for ="officeNumber">Office Phone: </label>
+                    <input type="tel" id="phone" th:name="officeNumber" placeholder="Enter your office phone number" >
+                </span>
             </div>
-
-
-
-
-            <div class="input-box">
-
-
-                <span class ="details">Rank:</span>
-                <i class="fa fa-info" aria-hidden="true"></i>
-                <input type="text"  placeholder="Enter your rank" required>
-                
-
-
-
-            </div>
-
-
-
-
-
-
-            <div class="input-box">
-
-
-                <span class ="details">Date of Birth:</span>
-                <i class="fa fa-calendar-times-o" aria-hidden="true"></i>
-                <input type="date" id="birthday" placeholder="Enter your Date of Birth" name="birthday"  required>
-                
-
-
-
-            </div>
-
-
-            
-            
-
-
-
-
-            <div class="input-box">
-
-
-                <span class ="details">Password:</span>
-                <i class="fa fa-lock"></i>
-                <input type="password" id=" psw" placeholder="Enter your password" name="psw" required>
-                
-
-
-
-            </div>
-
-
-
-            <div class="input-box">
-
-
-                <span class ="details">Confirm password:</span>
-                <i class="fa fa-lock" ></i>
-                <input type="password" id=" psw" placeholder="Confirm your password" name="psw" required>
-                
-
-
-
-            </div>
-
-
-
-            
-
-
-            
-
-
-
-
-
-
-
-            <div class="marital ">
-
-
-            <fieldset>
-
-                <legend>Your Marital Status </legend>
-  
-                  <input type="radio" id="married" name="drone" value="married" >
-                  <label for="married">Married</label>
-  
-                  <input type="radio" id="Single" name="drone" value="Single">
-                  <label for="Single">Single</label>
-  
-  
-              </fieldset>
-
-
-
-
-
-            </div>
-
-
-            <div class="input-box">
-
-            <br>
-                <label>Address:</label>
-                <i class = "fa fa-address-book" > </i>
-            </br>
-                <textarea class="textarea" placeholder="Enter  your Street address , City,  State and Zip code" rows="4" cols="25" required></textarea>
-                
-               
-
-
-            </div>
-
-            
-
-            
-
-
+             <div class="input-box">
+                    <label for ="rank" id="label">Rank:</label>
+                    <label id="asterisk">*</label>
+                 <select id = "rank" th:name="rank"  style="color:gray" required>
+                    <option id="placeholder" value = "" >Select your rank</option>
+                   <option value="AB"> AB</option>
+                   <option value="Amn">Amn</option>
+                   <option value="A1C">A1C</option>
+                   <option value ="SrA">SrA</option>
+                   <option value="SSgt">SSgt</option>
+                   <option value="TSgt">TSgt</option>
+                   <option value="MSgt">MSgt</option>
+                   <option value="SMSgt">SMSgt</option>
+                   <option value="CMSgt">CMSgt</option>
+                   <option value="CCM ">CCM</option>
+                   <option value="CMSAF">CMSAF</option>
+                   <option value="2d Lt">2d Lt</option>
+                   <option value="1st Lt">1st Lt</option>
+                   <option value="Capt">Capt</option>
+                   <option value="Maj">Maj</option>
+                   <option value="Lt Col">Lt Col</option>
+                   <option value="Col"> Col</option>
+                   <option value= "Brig Gen">Brig Gen</option>
+                   <option value="Maj Gen">Maj Gen</option>
+                   <option value="Lt Gen">Lt Gen</option>
+                   <option value="Gen">Gen</option>
+                   <option value=" GOAF">GOAF</option>
+                 </select>
+              </div>
+                     <div class="input-box">
+                        <label for = "Workcenter">Workcenter:</label>
+                        <label id="asterisk">*</label>
+                        <input type="text" id = "workCenter" th:name="workCenter" placeholder="Enter your workcenter " required>
+                        <span>
+                            <label for="flight">Flight:</label>
+                            <label id="asterisk">*</label>
+                             <input type="text" id="flight" th:name="flight" placeholder="Enter your flight" required>    
+                        </span>
+                    </div>           
          </div>
-
          <div>
-            <input type="submit" value="register">
-        </div>
-     
-
-    </div>
-
-
-
-
+            <input type="submit" value="Register">
+        </div>    
+</div>
 </form>
-
-    <script>
-
-        const email = document.getElementById("mail");
-
-
+ <script >
+ const email = document.getElementById("mail");
 email.addEventListener("input", (event) => {
   if (email.validity.typeMismatch) {
     email.setCustomValidity("I am expecting an e-mail address!");
@@ -253,16 +105,7 @@ email.addEventListener("input", (event) => {
     email.setCustomValidity("");
   }
 });
-
-
-
-
-
-
-
-
-
-    </script>
+  </script>
 
 
 
