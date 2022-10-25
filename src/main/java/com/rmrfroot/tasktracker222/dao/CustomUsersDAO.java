@@ -10,4 +10,5 @@ public interface CustomUsersDAO {
     public Users findUserByEmail(String email);
     public Users findUsersById(int id);
     public void save(Users users);
+    public Users findUserByUsername(String username);
 }

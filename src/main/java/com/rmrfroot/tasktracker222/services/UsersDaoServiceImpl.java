@@ -86,6 +86,12 @@ public class UsersDaoServiceImpl implements UsersDaoService {
 
     @Override
     @Transactional
+    public Users findUserByUsername(String username) {
+        return customUsersDAO.findUserByUsername(username);
+    }
+
+    @Override
+    @Transactional
     public Users findUserByEmail(String email){return customUsersDAO.findUserByEmail(email);}
 
     @Override

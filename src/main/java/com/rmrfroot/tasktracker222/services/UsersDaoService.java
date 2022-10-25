@@ -18,6 +18,7 @@ public interface UsersDaoService {
     Users update(int id, Users day);
 
     public Boolean hasUserData(String email);
+    public Users findUserByUsername(String username);
 
     public Users findUserByEmail(String email);
     public Users findUsersById(int id);

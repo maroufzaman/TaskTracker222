@@ -68,4 +68,19 @@ public class UsersDAOImpl implements CustomUsersDAO{
         cSession.saveOrUpdate(user);
     }
 
+    @Override
+    public Users findUserByUsername(String username) {
+        Session cSession=entityManager.unwrap(Session.class);
+        Query<Users> query=cSession.createQuery("from Users where username=:username",Users.class);
+        query.setParameter("username",username);
+
+        Users user=null;
+        try{
+            user=query.getSingleResult();
+        }catch (Exception e){
+            user=null;
+        }
+        return user;
+    }
+
 }
