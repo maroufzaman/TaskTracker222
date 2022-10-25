@@ -2,6 +2,7 @@ package com.rmrfroot.tasktracker222.services;
 
 import com.rmrfroot.tasktracker222.entities.Users;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface UsersDaoService {
@@ -20,5 +21,7 @@ public interface UsersDaoService {
 
     public Users findUserByEmail(String email);
     public Users findUsersById(int id);
-
+    public void registerUserToDatabase(String userName, String firstName, String lastName, String militaryEmail, String civilianEmail,
+                                       String email,String phoneNumber, String officeNumber, String rank, String workCenter,
+                                       String flight, ArrayList<String> teams);
 }
