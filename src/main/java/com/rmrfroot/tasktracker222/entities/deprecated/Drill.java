@@ -63,7 +63,7 @@ public class Drill {
         this.participants = participants;
     }
 
-    public Drill() {
+    public Drill(String event_title, String start_date, String deadline_date, String location, String admin_name, String officer_email, String note, String created_timestamp) {
     }
 
     public int getId() {
