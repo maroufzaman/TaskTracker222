@@ -1,4 +1,4 @@
-package com.rmrfroot.tasktracker222.entities;
+package com.rmrfroot.tasktracker222.entities.deprecated;
 
 import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import org.hibernate.annotations.Type;
