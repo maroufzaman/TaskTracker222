@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.time.format.DateTimeFormatter;
+import java.util.regex.Pattern;
 
 @Entity
 @Table(name = "users")
@@ -96,7 +97,7 @@ public class Users {
         this.workCenter = workCenter;
         this.flight = flight;
         //this.teamList = teamList;
-        this.team = team;
+        //this.team = team;
         this.teams = teams;
     }
 
@@ -275,26 +276,26 @@ public class Users {
 //        this.teamList = teamList;
 //    }
 
-    public String getTeam() {
-        return team;
-    }
-    public void setTeam(String team) throws FileNotFoundException {
-        File fileText = new File("team.txt");
-        Scanner s = new Scanner(fileText);
-        int t = 0;
-
-        while(s.hasNextLine()){
-            if(team.equals(s.nextLine().trim())){
-                t += 1;
-            }
-        }
-        if (t <= 1) {
-            this.team = team;
-        }
-        else {
-            throw new IllegalArgumentException("Not a valid team.");
-        }
-    }
+//    public String getTeam() {
+//        return team;
+//    }
+//    public void setTeam(String team) throws FileNotFoundException {
+//        File fileText = new File("team.txt");
+//        Scanner s = new Scanner(fileText);
+//        int t = 0;
+//
+//        while(s.hasNextLine()){
+//            if(team.equals(s.nextLine().trim())){
+//                t += 1;
+//            }
+//        }
+//        if (t <= 1) {
+//            this.team = team;
+//        }
+//        else {
+//            throw new IllegalArgumentException("Not a valid team.");
+//        }
+//    }
 
     public static void addTeam() {
         Scanner s = new Scanner(System.in);

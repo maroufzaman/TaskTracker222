@@ -48,29 +48,35 @@ public class UsersDaoServiceImpl implements UsersDaoService {
 
     @Override
     public Users update(int id, Users user) {
-        Optional<Users> result = usersDAO.findById(id);
+        try {
+            Optional<Users> result = usersDAO.findById(id);
 
-        Users updatedUser;
+            Users updatedUser;
 
-        if (result.isPresent()) {
-            updatedUser = result.get();
-            usersDAO.deleteById(id);
-        } else {
-            //day not found
-            throw new RuntimeException("Did not find user id - " + id);
+            if (result.isPresent()) {
+                updatedUser = result.get();
+                usersDAO.deleteById(id);
+            } else {
+                //day not found
+                throw new RuntimeException("Did not find user id - " + id);
+            }
+            updatedUser.setFirstName(user.getFirstName());
+            updatedUser.setLastName(user.getLastName());
+            updatedUser.setMilitaryEmail(user.getMilitaryEmail());
+            updatedUser.setCivilianEmail(user.getCivilianEmail());
+            updatedUser.setPhoneNumber(user.getPhoneNumber());
+            updatedUser.setOfficeNumber(user.getOfficeNumber());
+            updatedUser.setRank(user.getRank());
+            updatedUser.setWorkCenter(user.getWorkCenter());
+            updatedUser.setFlight(user.getFlight());
+            updatedUser.setTeams(user.getTeams());
+            usersDAO.save(updatedUser);
+            return updatedUser;
         }
-        updatedUser.setFirstName(user.getFirstName());
-        updatedUser.setLastName(user.getLastName());
-        updatedUser.setMilitaryEmail(user.getMilitaryEmail());
-        updatedUser.setCivilianEmail(user.getCivilianEmail());
-        updatedUser.setPhoneNumber(user.getPhoneNumber());
-        updatedUser.setOfficeNumber(user.getOfficeNumber());
-        updatedUser.setRank(user.getRank());
-        updatedUser.setWorkCenter(user.getWorkCenter());
-        updatedUser.setFlight(user.getFlight());
-        updatedUser.setTeams(user.getTeams());
-        usersDAO.save(updatedUser);
-        return updatedUser;
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
     @Override
     @Transactional
