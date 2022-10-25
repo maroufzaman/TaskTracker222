@@ -140,3 +140,11 @@ textarea {
     border: none;
     border-radius: 4px;
 }
+
+.drill-custom-location-text {
+    font-style: italic;
+}
+
+.drill-custom-location-field {
+    margin-top: 10px;
+}

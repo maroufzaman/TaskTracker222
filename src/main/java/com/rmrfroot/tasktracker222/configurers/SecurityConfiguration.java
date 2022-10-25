@@ -3,6 +3,7 @@ package com.rmrfroot.tasktracker222.configurers;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 
 
 @Configuration
@@ -17,6 +18,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .oauth2Login()
+                .defaultSuccessUrl("/",true)
                 .and()
                 .logout()
         ;

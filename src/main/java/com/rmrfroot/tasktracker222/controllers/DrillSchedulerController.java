@@ -1,21 +1,23 @@
 package com.rmrfroot.tasktracker222.controllers;
 
-import com.rmrfroot.tasktracker222.entities.Drill;
+import com.rmrfroot.tasktracker222.awsCognito.PoolClientInterface;
+import com.rmrfroot.tasktracker222.entities.deprecated.Drill;
 import com.rmrfroot.tasktracker222.services.DrillDaoService;
+import com.rmrfroot.tasktracker222.validations.ValidateDrill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
+import javax.validation.Valid;
+import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -28,6 +30,9 @@ public class DrillSchedulerController {
     // because front end has no way of importing data into the database
     @Autowired
     private DrillDaoService drillDaoService;
+
+    @Autowired
+    private PoolClientInterface poolClientInterface;
 
     public DrillSchedulerController(DrillDaoService drillDaoService) {
         super();
@@ -85,33 +90,69 @@ public class DrillSchedulerController {
     }
 
     @GetMapping("/drill-schedule-recipient/drills/{id}")
-    public String findById(@PathVariable("id") int id, Model model) {
+    public String findDrillById(@PathVariable("id") int id, Model model) {
         model.addAttribute("drills", drillDaoService.findById(id));
         return "drills";
     }
 
     @GetMapping("/drill-schedule-manager/createDrill")
-    public String createDrill(Model model) {
+    public String createTestDrill(Model model) {
+        //Drill drill = new Drill(event_title, start_date, deadline_date, location, admin_name, officer_email, note, created_timestamp);
         Drill drill = new Drill();
-        model.addAttribute("drills", drill);
+        drill.setTitle("Test title");
+
+        drill.setOfficerName("Test officer");
+        drill.setDescription("Test description");
+
+        ArrayList<String> locationList = new ArrayList<>();
+        for(int i = 1; i < 10; i++){
+            locationList.add("Location " + i);
+        }
+
+        ArrayList<String> teamList = new ArrayList();
+        for (int i = 1; i < 5; i++) {
+            teamList.add("Team " + i);
+        }
+
+        model.addAttribute("drill", drill);
+        model.addAttribute("editing", false);
+
+        model.addAttribute("locations", locationList);
+        model.addAttribute("teams", teamList);
+        return "CreateDrill";
+    }
+
+    @GetMapping("/drill-schedule-manager/editDrill/{drill-id}")
+    public String editDrill(@PathVariable("drill-id") int id, Model model) {
+        ArrayList<String> locationList = new ArrayList<>();
+        for(int i = 1; i < 10; i++){
+            locationList.add("Location " + i);
+        }
+
+        Drill drill = drillDaoService.findById(id);
+
+        model.addAttribute("drill", drill);
+        model.addAttribute("editing", true);
+
+        model.addAttribute("locations", locationList);
         return "CreateDrill";
     }
 
 
     @PostMapping("/create-drill")
-    public String save(@ModelAttribute("drills") Drill drill) {
-        //drillDaoService.save(drill);  TODO: Uncomment this when drill submission is worked out
-        return "redirect:/drill-schedule-manager";
+    public String createDrill(@ModelAttribute("drills") Drill drill) {
+        //drillDaoService.save(drill);
+        return "redirect:/drill-schedule-recipient/drills";
     }
 
     @PutMapping()
-    public ResponseEntity<Drill> update(@PathVariable("id") int id, Drill drill) {
+    public ResponseEntity<Drill> updateDrill(@PathVariable("id") int id, Drill drill) {
 
         return new ResponseEntity<>(drillDaoService.update(id, drill), HttpStatus.OK);
     }
 
     @DeleteMapping()
-    public void deleteById(@PathVariable("id") int id) {
+    public void deleteDrillById(@PathVariable("id") int id) {
         drillDaoService.deleteById(id);
     }
 
@@ -127,4 +168,38 @@ public class DrillSchedulerController {
 
         return null;
     }
+
+    @PostMapping("/register-drill")
+    public String saveDrill(@Valid @ModelAttribute("drills") ValidateDrill validateDrill, BindingResult errors, Model model, Principal principal) {
+        if(errors.hasErrors()){
+            return "registration_form";
+        }
+        try {
+            //List<String> drillInfoList = poolClientInterface.getDrillInfo(principal.getName());
+            List<String> drillInfoList = new ArrayList<>();
+            String title = drillInfoList.get(0);
+            if (!drillDaoService.hasDrillData(title)) {
+                drillDaoService.registerDrillToDatabase(
+                        principal.getName(),
+                        validateDrill.getEvent_title(),
+                        validateDrill.getStart_date(),
+                        validateDrill.getDeadline_date(),
+                        validateDrill.getLocation(),
+                        title,
+                        validateDrill.getAdmin_name(),
+                        validateDrill.getOfficer_email(),
+                        validateDrill.getCreated_timestamp(),
+                        validateDrill.getNote()
+                );
+                System.out.println("New drill just added to database: " + principal.getName());
+            }else{
+                return "redirect:/";
+            }
+        }catch (Exception e){
+            System.out.println("Something went wrong");
+            return "redirect:/error";
+        }
+        return "redirect:/drill";
+    }
+
 }
