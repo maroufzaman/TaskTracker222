@@ -9,7 +9,6 @@ package com.rmrfroot.tasktracker222.controllers;
 //import com.rmrfroot.tasktracker222.cognitoClasses.CreateUserPool;
 
 import com.rmrfroot.tasktracker222.awsCognito.PoolClientInterface;
-import com.rmrfroot.tasktracker222.entities.Users;
 import com.rmrfroot.tasktracker222.services.UsersDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class MainController {

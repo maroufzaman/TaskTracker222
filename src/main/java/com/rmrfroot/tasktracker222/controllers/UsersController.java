@@ -2,15 +2,14 @@ package com.rmrfroot.tasktracker222.controllers;
 
 import com.rmrfroot.tasktracker222.awsCognito.PoolClientInterface;
 import com.rmrfroot.tasktracker222.entities.DrillSchedules;
+import com.rmrfroot.tasktracker222.entities.User;
 import com.rmrfroot.tasktracker222.entities.UserEditRequest;
-import com.rmrfroot.tasktracker222.entities.Users;
 import com.rmrfroot.tasktracker222.services.DrillScheduleService;
 import com.rmrfroot.tasktracker222.services.UsersDaoService;
 import com.rmrfroot.tasktracker222.validations.ValidateUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -44,10 +42,10 @@ public class UsersController {
 
     @GetMapping("/users")
     public String getUsersCollection(Model model) {
-        List<Users> allUsers = usersDaoService.findAll();
-        List<Users> usersToAdd = new ArrayList<>();
+        List<User> allUsers = usersDaoService.findAll();
+        List<User> usersToAdd = new ArrayList<>();
 
-        for (Users u : allUsers) {
+        for (User u : allUsers) {
 //            System.out.println(u.getEmail());
             if (u.getId() >= 41 || u.getId() == 42) {
                 usersToAdd.add(u);
@@ -62,7 +60,7 @@ public class UsersController {
     @PostMapping(value = "/users", params = "submit")
     public String userEditSubmit(@ModelAttribute("userEditRequest") UserEditRequest request) {
         try {
-            Users u = usersDaoService.findById(Integer.parseInt(request.getId()));
+            User u = usersDaoService.findById(Integer.parseInt(request.getId()));
 
             u.setFirstName(request.getFirstName());
             u.setLastName(request.getLastName());
@@ -88,7 +86,7 @@ public class UsersController {
     @PostMapping(value = "/users", params = "delete")
     public String userEditDelete(@ModelAttribute("userEditRequest") UserEditRequest request) {
         System.out.println("delete");
-        Users u = usersDaoService.findById(Integer.parseInt(request.getId()));
+        User u = usersDaoService.findById(Integer.parseInt(request.getId()));
 
 
         usersDaoService.deleteById(u.getId());
@@ -115,7 +113,7 @@ public class UsersController {
     @GetMapping("users/accessControl")
     public String accessControl(Model model,Principal principal) {
         try {
-            Users user=usersDaoService.findUserByUsername(principal.getName());
+            User user=usersDaoService.findUserByUsername(principal.getName());
             model.addAttribute("users", user);
             DrillSchedules drillSchedules=drillScheduleService.findDrillSchedulesById(59);
             if(!user.findDrillScheduleById(59)){
@@ -135,7 +133,7 @@ public class UsersController {
 
     @GetMapping("/users/newUser")
     public String addUser(Model model,Principal principal) {
-        Users user = new Users();
+        User user = new User();
         model.addAttribute("users", user);
         DrillSchedules drillSchedules1=new DrillSchedules(
                "lorem" ,
@@ -160,7 +158,7 @@ public class UsersController {
         ArrayList<String> team =new ArrayList<>();
         team.add("team1");
         team.add("team2");
-        Users addUser1=new Users(
+        User addUser1=new User(
                 "visoth99",
                 "visoth",
                 "cheam",
@@ -174,7 +172,7 @@ public class UsersController {
                 "f22",
                 team
                 );
-        Users addUser2=new Users(
+        User addUser2=new User(
                 "visoth99",
                 "visoth",
                 "cheam",
@@ -188,7 +186,7 @@ public class UsersController {
                 "f22",
                 team
         );
-        Users addUserAdmin=new Users(
+        User addUserAdmin=new User(
                 "adderUserAdmin",
                 "visoth",
                 "cheam",
@@ -274,9 +272,9 @@ public class UsersController {
         }
 
     @PutMapping("users/{id}")
-    public ResponseEntity<Users> updateUser(@PathVariable("id") int id, Users users) {
+    public ResponseEntity<User> updateUser(@PathVariable("id") int id, User user) {
 
-        return new ResponseEntity<>(usersDaoService.update(id, users), HttpStatus.OK);
+        return new ResponseEntity<>(usersDaoService.update(id, user), HttpStatus.OK);
     }
 
     @DeleteMapping("users/{id}")

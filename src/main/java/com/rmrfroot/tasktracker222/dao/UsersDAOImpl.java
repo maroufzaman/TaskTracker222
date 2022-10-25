@@ -1,7 +1,6 @@
 package com.rmrfroot.tasktracker222.dao;
 
-import com.rmrfroot.tasktracker222.entities.DrillSchedules;
-import com.rmrfroot.tasktracker222.entities.Users;
+import com.rmrfroot.tasktracker222.entities.User;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +18,10 @@ public class UsersDAOImpl implements CustomUsersDAO{
     @Override
     public Boolean hasUserData(String email) {
         Session cSession=entityManager.unwrap(Session.class);
-        Query<Users> query=cSession.createQuery("from Users where email=:email",Users.class);
+        Query<User> query=cSession.createQuery("from Users where email=:email", User.class);
         query.setParameter("email",email);
         Boolean check=false;
-        List<Users> list=query.getResultList();
+        List<User> list=query.getResultList();
         try{
             if(list.size()>0) {
                 check=true;
@@ -35,12 +34,12 @@ public class UsersDAOImpl implements CustomUsersDAO{
 
 
     @Override
-    public Users findUserByEmail(String email) {
+    public User findUserByEmail(String email) {
         Session cSession=entityManager.unwrap(Session.class);
-        Query<Users> query=cSession.createQuery("from Users where email=:email",Users.class);
+        Query<User> query=cSession.createQuery("from Users where email=:email", User.class);
         query.setParameter("email",email);
 
-        Users user=null;
+        User user=null;
         try{
             user=query.getSingleResult();
         }catch (Exception e){
@@ -49,12 +48,12 @@ public class UsersDAOImpl implements CustomUsersDAO{
         return user;
     }
     @Override
-    public Users findUsersById(int id){
+    public User findUsersById(int id){
         Session cSession=entityManager.unwrap(Session.class);
-        Query<Users> query=cSession.createQuery("from Users where id=:id",Users.class);
+        Query<User> query=cSession.createQuery("from Users where id=:id", User.class);
         query.setParameter("id",id);
 
-        Users user=null;
+        User user=null;
         try{
             user=query.getSingleResult();
         }catch (Exception e){
@@ -63,18 +62,18 @@ public class UsersDAOImpl implements CustomUsersDAO{
         return user;
     }
     @Override
-    public void save(Users user) {
+    public void save(User user) {
         Session cSession=entityManager.unwrap(Session.class);
         cSession.saveOrUpdate(user);
     }
 
     @Override
-    public Users findUserByUsername(String username) {
+    public User findUserByUsername(String username) {
         Session cSession=entityManager.unwrap(Session.class);
-        Query<Users> query=cSession.createQuery("from Users where username=:username",Users.class);
+        Query<User> query=cSession.createQuery("from Users where username=:username", User.class);
         query.setParameter("username",username);
 
-        Users user=null;
+        User user=null;
         try{
             user=query.getSingleResult();
         }catch (Exception e){

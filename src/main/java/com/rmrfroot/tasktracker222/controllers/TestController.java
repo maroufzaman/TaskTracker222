@@ -7,7 +7,7 @@
 package com.rmrfroot.tasktracker222.controllers;
 
 import com.rmrfroot.tasktracker222.Officer;
-import com.rmrfroot.tasktracker222.entities.Users;
+import com.rmrfroot.tasktracker222.entities.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -39,7 +39,7 @@ class TestObject  {
     public String location;
 
     public ArrayList<Officer> officers;
-    public ArrayList<Users> participants;
+    public ArrayList<User> participants;
 
     public String description;
 

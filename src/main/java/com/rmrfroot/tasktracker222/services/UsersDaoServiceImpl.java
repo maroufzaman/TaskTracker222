@@ -2,7 +2,7 @@ package com.rmrfroot.tasktracker222.services;
 
 import com.rmrfroot.tasktracker222.dao.CustomUsersDAO;
 import com.rmrfroot.tasktracker222.dao.UsersDao;
-import com.rmrfroot.tasktracker222.entities.Users;
+import com.rmrfroot.tasktracker222.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,15 +21,15 @@ public class UsersDaoServiceImpl implements UsersDaoService {
 
 
     @Override
-    public List<Users> findAll() {
+    public List<User> findAll() {
         return usersDAO.findAll();
     }
 
     @Override
-    public Users findById(int theId) {
-        Optional<Users> result = usersDAO.findById(theId);
+    public User findById(int theId) {
+        Optional<User> result = usersDAO.findById(theId);
 
-        Users acc;
+        User acc;
 
         if (result.isPresent()) {
             acc = result.get();
@@ -47,11 +47,11 @@ public class UsersDaoServiceImpl implements UsersDaoService {
     }
 
     @Override
-    public Users update(int id, Users user) {
+    public User update(int id, User user) {
         try {
-            Optional<Users> result = usersDAO.findById(id);
+            Optional<User> result = usersDAO.findById(id);
 
-            Users updatedUser;
+            User updatedUser;
 
             if (result.isPresent()) {
                 updatedUser = result.get();
@@ -80,7 +80,7 @@ public class UsersDaoServiceImpl implements UsersDaoService {
     }
     @Override
     @Transactional
-    public void save(Users user) {
+    public void save(User user) {
         customUsersDAO.save(user);
     }
 
@@ -92,17 +92,17 @@ public class UsersDaoServiceImpl implements UsersDaoService {
 
     @Override
     @Transactional
-    public Users findUserByUsername(String username) {
+    public User findUserByUsername(String username) {
         return customUsersDAO.findUserByUsername(username);
     }
 
     @Override
     @Transactional
-    public Users findUserByEmail(String email){return customUsersDAO.findUserByEmail(email);}
+    public User findUserByEmail(String email){return customUsersDAO.findUserByEmail(email);}
 
     @Override
     @Transactional
-    public Users findUsersById(int id) {
+    public User findUsersById(int id) {
         return customUsersDAO.findUsersById(id);
     }
 
@@ -111,7 +111,7 @@ public class UsersDaoServiceImpl implements UsersDaoService {
     public void registerUserToDatabase(String userName, String firstName, String lastName, String militaryEmail, String civilianEmail,
                                        String email,String phoneNumber, String officeNumber, String rank, String workCenter,
                                        String flight, ArrayList<String> teams) {
-        Users user =new Users(userName, firstName, lastName, militaryEmail, civilianEmail,email,
+        User user =new User(userName, firstName, lastName, militaryEmail, civilianEmail,email,
                 phoneNumber, officeNumber, rank, workCenter,
                 flight, teams);
         customUsersDAO.save(user);

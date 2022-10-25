@@ -1,10 +1,6 @@
 package com.rmrfroot.tasktracker222.validations;
 
-import com.rmrfroot.tasktracker222.entities.Users;
-
 import javax.validation.constraints.NotEmpty;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ValidateDrill {
     @NotEmpty()

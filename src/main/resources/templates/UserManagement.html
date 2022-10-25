@@ -49,11 +49,11 @@
                 </thead>
 
                 <tbody>
-                <tr th:each="user: ${users}" th:onclick="'updateSelectedUser(' + ${user.id} + ');'"
+                <tr th:each="user: ${user}" th:onclick="'updateSelectedUser(' + ${user.id} + ');'"
                     class="user-table-row"
                     th:id="'user-list-row-' + ${user.id}">
                     <script th:inline="javascript">
-                        users = /*[[${users}]]*/ [];
+                        user = /*[[${user}]]*/ [];
                         userManagementSetup();
                     </script>
 
@@ -80,7 +80,7 @@
         <div class="bottom-right user-editor-div">
             <div class="user-management-editor-div">
 
-                <form class="user-management-table-form" th:action="@{/users}" th:object="${userEditRequest}"
+                <form class="user-management-table-form" th:action="@{/user}" th:object="${userEditRequest}"
                       method="post">
                     <table class="user-management-table">
                         <tr>

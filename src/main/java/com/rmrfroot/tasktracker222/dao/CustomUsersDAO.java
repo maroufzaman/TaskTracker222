@@ -1,14 +1,12 @@
 package com.rmrfroot.tasktracker222.dao;
 
-import com.rmrfroot.tasktracker222.entities.DrillSchedules;
-import com.rmrfroot.tasktracker222.entities.Users;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.rmrfroot.tasktracker222.entities.User;
 
 public interface CustomUsersDAO {
 
     public Boolean hasUserData(String email);
-    public Users findUserByEmail(String email);
-    public Users findUsersById(int id);
-    public void save(Users users);
-    public Users findUserByUsername(String username);
+    public User findUserByEmail(String email);
+    public User findUsersById(int id);
+    public void save(User user);
+    public User findUserByUsername(String username);
 }

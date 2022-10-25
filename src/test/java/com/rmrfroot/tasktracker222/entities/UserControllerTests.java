@@ -2,15 +2,11 @@ package com.rmrfroot.tasktracker222.entities;
 
 import com.rmrfroot.tasktracker222.dao.CustomUsersDAO;
 import com.rmrfroot.tasktracker222.dao.UsersDAOImpl;
-import com.rmrfroot.tasktracker222.dao.UsersDao;
-import com.rmrfroot.tasktracker222.services.UsersDaoService;
 import com.rmrfroot.tasktracker222.services.UsersDaoServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +30,7 @@ public class UserControllerTests {
     private java.util.ArrayList<String> teamList =new ArrayList<>(Arrays.asList("team1", "team2"));
 
     //@Autowired
-    private Users user1 = new Users("brianfrey", "Brian", "Frey",
+    private User user1 = new User("brianfrey", "Brian", "Frey",
             "root@gov.com","email@root.edu","email@root.edu",
             "9165555555","1234", "Captain",
             "workCenter","flight",teamList);
@@ -75,7 +71,7 @@ public class UserControllerTests {
     @Test
     public void registerUserToDatabaseTest() throws Exception{
 
-        Users user2 = new Users("billy", "Brian", "Frey",
+        User user2 = new User("billy", "Brian", "Frey",
                 "root@gov.com","email@root.edu","email@root.edu",
                 "9165555555","1234", "Captain",
                 "workCenter","flight",teamList);

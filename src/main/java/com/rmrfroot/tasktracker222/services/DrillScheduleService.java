@@ -1,7 +1,6 @@
 package com.rmrfroot.tasktracker222.services;
 
 import com.rmrfroot.tasktracker222.entities.DrillSchedules;
-import com.rmrfroot.tasktracker222.entities.Users;
 
 public interface DrillScheduleService {
 

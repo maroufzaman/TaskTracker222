@@ -58,29 +58,29 @@ DELETE http://localhost:8080/drillCollection/{{$uuid}}
 //Generated http request tests for user
 //UserController
 ###
-GET http://localhost:8080/users
+GET http://localhost:8080/user
 
 <> 2022-10-06T193038.200.html
 
 ###
-GET http://localhost:8080/users/{{$uuid}}
+GET http://localhost:8080/user/{{$uuid}}
 
 <> 2022-10-06T193114.200.html
 
 ###
-GET http://localhost:8080/users/accessControl
+GET http://localhost:8080/user/accessControl
 
 <> 2022-10-06T193153.200.html
 
 ###
-GET http://localhost:8080/users/addUser
+GET http://localhost:8080/user/addUser
 
 <> 2022-10-06T193347.200.html
 
 ###
-PUT http://localhost:8080/users/{{$uuid}}
+PUT http://localhost:8080/user/{{$uuid}}
 
 ###
-DELETE http://localhost:8080/users/{{$uuid}}
+DELETE http://localhost:8080/user/{{$uuid}}
 
 <> 2022-10-06T193734.200.html

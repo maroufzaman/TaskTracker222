@@ -15,12 +15,12 @@ class DrillSchedulesTest {
 
     private java.util.ArrayList<String> teamList =new ArrayList<>(Arrays.asList("team1", "team2"));
 
-    private Users user1 = new Users("brianfrey", "Brian", "Frey",
+    private User user1 = new User("brianfrey", "Brian", "Frey",
             "root@gov.com","email@root.edu","email@root.edu",
             "9165555555","1234", "Captain",
             "workCenter","flight",teamList);
 
-    private List<Users> usersList = new ArrayList<>(Arrays.asList(user1));
+    private List<User> userList = new ArrayList<>(Arrays.asList(user1));
 
     @Test
     void getId() {
@@ -162,30 +162,30 @@ class DrillSchedulesTest {
     void getUsersList() {
 
         drillSchedules.addUsers(user1);
-        drillSchedules.setUsersList(usersList);
-        assertEquals(usersList,drillSchedules.getUsersList());
+        drillSchedules.setUsersList(userList);
+        assertEquals(userList,drillSchedules.getUsersList());
 
     }
 
     @Test
     void setUsersList() {
 
-        drillSchedules.setUsersList(usersList);
-        assertEquals(usersList,drillSchedules.getUsersList());
+        drillSchedules.setUsersList(userList);
+        assertEquals(userList,drillSchedules.getUsersList());
 
     }
 
     @Test
     void addUsers() {
 
-        Users user2 = new Users("billy", "Brian", "Frey",
+        User user2 = new User("billy", "Brian", "Frey",
                 "root@gov.com","email@root.edu","email@root.edu",
                 "9165555555","1234", "Captain",
                 "workCenter","flight",teamList);
 
         drillSchedules.addUsers(user2);
-        drillSchedules.setUsersList(usersList);
-        assertEquals(usersList,drillSchedules.getUsersList());
+        drillSchedules.setUsersList(userList);
+        assertEquals(userList,drillSchedules.getUsersList());
 
     }
 }

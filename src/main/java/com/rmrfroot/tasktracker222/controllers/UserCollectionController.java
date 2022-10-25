@@ -1,6 +1,6 @@
 package com.rmrfroot.tasktracker222.controllers;
 
-import com.rmrfroot.tasktracker222.entities.Users;
+import com.rmrfroot.tasktracker222.entities.User;
 import com.rmrfroot.tasktracker222.services.UsersDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,14 +23,14 @@ public class UserCollectionController {
     }
 
     public String main(Model model) {
-        List<Users> userList = usersDaoService.findAll();
+        List<User> userList = usersDaoService.findAll();
 
         model.addAttribute("users", userList);
         return "userCollection";
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Users> findById(@PathVariable("id") int id) {
+    public ResponseEntity<User> findById(@PathVariable("id") int id) {
         return new ResponseEntity<>(usersDaoService.findById(id), HttpStatus.OK);
     }
 
@@ -43,7 +43,7 @@ public class UserCollectionController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<Users> update(@PathVariable("id") int id, @RequestBody Users user) {
+    public ResponseEntity<User> update(@PathVariable("id") int id, @RequestBody User user) {
         return new ResponseEntity<>(usersDaoService.update(id,user), HttpStatus.OK);
     }
 

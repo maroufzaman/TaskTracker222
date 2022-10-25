@@ -43,7 +43,7 @@ public class DrillSchedules {
             joinColumns =@JoinColumn(name="drill_schedule_id"),
             inverseJoinColumns = @JoinColumn(name="users_id")
     )
-    private List<Users> usersList;
+    private List<User> userList;
 
     public DrillSchedules() {
     }
@@ -132,18 +132,18 @@ public class DrillSchedules {
         this.created_timestamp = created_timestamp;
     }
 
-    public List<Users> getUsersList() {
-        return usersList;
+    public List<User> getUsersList() {
+        return userList;
     }
 
-    public void setUsersList(List<Users> usersList) {
-        this.usersList = usersList;
+    public void setUsersList(List<User> userList) {
+        this.userList = userList;
     }
-    public void addUsers(Users users){
-        if(usersList ==null){
-            usersList=new ArrayList<>();
+    public void addUsers(User user){
+        if(userList ==null){
+            userList =new ArrayList<>();
         }
-        usersList.add(users);
+        userList.add(user);
     }
 
 }

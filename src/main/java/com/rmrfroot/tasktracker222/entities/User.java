@@ -11,7 +11,6 @@ import javax.persistence.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.time.format.DateTimeFormatter;
 import java.util.regex.Pattern;
 
 @Entity
@@ -20,7 +19,7 @@ import java.util.regex.Pattern;
         name = "team",
         typeClass = ListArrayType.class
 )
-public class Users {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,13 +77,13 @@ public class Users {
     )
     private List<DrillSchedules> drillSchedulesList;
 
-    public Users() {
+    public User() {
 
     }
 
-    public Users(String userName, String firstName, String lastName, String militaryEmail, String civilianEmail, String email,
-                 String phoneNumber, String officeNumber, String rank, String workCenter,
-                 String flight, ArrayList<String> teams) {
+    public User(String userName, String firstName, String lastName, String militaryEmail, String civilianEmail, String email,
+                String phoneNumber, String officeNumber, String rank, String workCenter,
+                String flight, ArrayList<String> teams) {
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
