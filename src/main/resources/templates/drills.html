@@ -14,24 +14,26 @@
             <thead class = "table-dark">
                 <tr>
                     <th>Event Title</th>
+                    <th>Date</th>
                     <th>Start Date</th>
-                    <th>Deadline Date</th>
+                    <th>End Date</th>
                     <th>Location</th>
                     <th>Officer Name</th>
-                    <th>Officer Email</th>
-                    <th>Note</th>
+                    <th>Participants</th>
+                    <th>Description</th>
                 </tr>
             </thead>
 
             <tbody>
                 <tr th:each="drill: ${drills}">
-                    <td th:text="${drill.title}"></td>
-                    <td th:text="${drill.startDate}"></td>
-                    <td th:text="${drill.deadlineDate}"></td>
-                    <td th:text="${drill.location}"></td>
-                    <td th:text="${drill.officerName}"></td>
-                    <td th:text="${drill.officerEmail}"></td>
-                    <td th:text="${drill.note}"></td>
+                    <td th:text="*{drill.title}"></td>
+                    <td th:text="*{#dates.format(drill.date, 'MM-dd-yyyy')}"></td>
+                    <td th:text="*{#dates.format(drill.startTime, 'HH:mm')}"></td>
+                    <td th:text="*{#dates.format(drill.endTime, 'HH:mm')}"></td>
+                    <td th:text="*{drill.location}"></td>
+                    <td th:text="*{drill.officerName}"></td>
+                    <td th:text="*{drill.participants}"></td>
+                    <td th:text="*{drill.description}"></td>
                 </tr>
             </tbody>
         </table>
