@@ -122,7 +122,7 @@ public class Users {
             this.civilianEmail = civilianEmail;
         }
         else {
-            throw new IllegalArgumentException("Not a valid email");
+            this.email = email;
         }
     }
     public String getMilitaryEmail() {
@@ -341,7 +341,6 @@ public class Users {
         return null;
     }
 
-}
 
     public ArrayList<String> getTeams() {
         return teams;

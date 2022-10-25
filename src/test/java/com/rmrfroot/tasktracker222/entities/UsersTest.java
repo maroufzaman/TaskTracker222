@@ -2,6 +2,8 @@ package com.rmrfroot.tasktracker222.entities;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UsersTest {
@@ -12,9 +14,16 @@ class UsersTest {
     String lname = "Frey";
     String reg_date = "11/11/22";
     String up_date = "2/2/23";
+    boolean admin = true;
+    String rank = "Airman";
+    String workCenter = "work center";
+    String flight = "flight";
+    ArrayList<String> teamList = new ArrayList<String>();
 
-    Users user = new Users(email,fname,lname,reg_date,up_date);
-
+    Users user = new Users(email, fname, lname,
+          reg_date, up_date,
+          admin, rank, workCenter,
+          flight, teamList);
     @Test
     void getId() {
         user.setId(id);
@@ -23,8 +32,8 @@ class UsersTest {
 
     @Test
     void setId() {
-        user.setId(22222);
-        assertEquals(22222,user.getId());
+        user.setId(222);
+        assertEquals(222,user.getId());
     }
 
     @Test
@@ -34,8 +43,9 @@ class UsersTest {
 
     @Test
     void setEmail() {
-        user.setEmail("new@root.edu");
-        assertEquals("new@root.edu",user.getEmail());
+        String newEmail = new String("newuser@csus.edu");
+        user.setEmail(newEmail);
+        assertEquals(newEmail,user.getEmail());
     }
 
     @Test
@@ -80,7 +90,50 @@ class UsersTest {
     void setUpdate_date() {
         user.setUpdate_date("5/5/25");
         assertEquals("5/5/25",user.getUpdate_date());
+    }
 
+    @Test
+    void isAdmin() {
+        assertEquals(admin,user.isAdmin());
+    }
+
+    @Test
+    void setAdmin() {
+        user.setAdmin(false);
+        assertEquals(false,user.isAdmin());
+    }
+
+    @Test
+    void getRank() {
+        assertEquals(rank,user.getRank());
+    }
+
+    @Test
+    void setRank() {
+        user.setRank("Major");
+        assertEquals("Major",user.getRank());
+    }
+
+    @Test
+    void getWorkCenter() {
+        assertEquals(workCenter,user.getWorkCenter());
+    }
+
+    @Test
+    void setWorkCenter() {
+        user.setWorkCenter("Other Center");
+        assertEquals("Other Center",user.getWorkCenter());
+    }
+
+    @Test
+    void getFlight() {
+        assertEquals(flight,user.getFlight());
+    }
+
+    @Test
+    void setFlight() {
+        user.setFlight("Other Flight");
+        assertEquals("Other Flight",user.getFlight());
     }
 
  */
