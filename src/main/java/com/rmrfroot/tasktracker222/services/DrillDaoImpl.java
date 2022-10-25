@@ -2,11 +2,12 @@ package com.rmrfroot.tasktracker222.services;
 
 
 import com.rmrfroot.tasktracker222.dao.DrillDAO;
+import com.rmrfroot.tasktracker222.entities.DrillSchedules;
 import com.rmrfroot.tasktracker222.entities.deprecated.Drill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
+import org.springframework.transaction.annotation.Transactional;
+import com.rmrfroot.tasktracker222.dao.CustomDrillSchedulesDAO;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,8 @@ public class DrillDaoImpl implements DrillDaoService{
     @Autowired
     private DrillDAO drillDAO;
 
+    @Autowired
+    private CustomDrillSchedulesDAO customDrillSchedulesDAO;
     @Override
     public List<Drill> findAll() {
         return drillDAO.findAll();
@@ -81,5 +84,17 @@ public class DrillDaoImpl implements DrillDaoService{
         drillDAO.save(updatedDrill);
         return updatedDrill;
     }
+
+    @Override
+    public Boolean hasDrillData(String title) {
+        return null;
+    }
+
+    @Override
+    public void registerDrillToDatabase(String name, String event_title, String start_date, String deadline_date, String location, String title, String admin_name, String officer_email, String created_timestamp, String note) {
+        DrillSchedules drill = new DrillSchedules(event_title, start_date, deadline_date, location, admin_name, officer_email, note, created_timestamp);
+        customDrillSchedulesDAO.save(drill);
+    }
+
 
 }

@@ -4,7 +4,6 @@ import com.rmrfroot.tasktracker222.awsCognito.PoolClientInterface;
 import com.rmrfroot.tasktracker222.entities.deprecated.Drill;
 import com.rmrfroot.tasktracker222.services.DrillDaoService;
 import com.rmrfroot.tasktracker222.validations.ValidateDrill;
-import com.rmrfroot.tasktracker222.validations.ValidateUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -98,7 +97,7 @@ public class DrillSchedulerController {
 
     @GetMapping("/drill-schedule-manager/createDrill")
     public String createDrill(Model model) {
-        Drill drill = new Drill();
+        Drill drill = new Drill(event_title, start_date, deadline_date, location, admin_name, officer_email, note, created_timestamp);
         drill.setTitle("Test title");
 
         drill.setOfficerName("Test officer");

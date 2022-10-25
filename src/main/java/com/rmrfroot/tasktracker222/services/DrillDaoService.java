@@ -1,6 +1,7 @@
 package com.rmrfroot.tasktracker222.services;
 
 import com.rmrfroot.tasktracker222.entities.deprecated.Drill;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,4 +24,6 @@ public interface DrillDaoService {
 
     public void registerDrillToDatabase(String name, String event_title, String start_date, String deadline_date,
                                  String location, String title, String admin_name, String officer_email, String created_timestamp, String note);
+
+
 }
