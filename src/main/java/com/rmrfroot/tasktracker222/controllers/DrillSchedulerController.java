@@ -100,8 +100,8 @@ public class DrillSchedulerController {
 
     @PostMapping("/create-drill")
     public String save(@ModelAttribute("drills") Drill drill) {
-        //drillDaoService.save(drill);  TODO: Uncomment this when drill submission is worked out
-        return "redirect:/drill-schedule-manager";
+        drillDaoService.save(drill);
+        return "redirect:/drill-schedule-recipient/drills";
     }
 
     @PutMapping()
