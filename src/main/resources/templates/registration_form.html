@@ -1,0 +1,127 @@
+<DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Registration page</title>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+            <!-- stylesheet -->
+            <link rel="stylesheet" href="style_for_registration_form.css">
+            <!-- Add icon library -->
+      </head>
+<style>
+
+</style>
+<form th:action="@{/register}" th:object="${newUser}" method="post" id="register-form" class="register-form" >
+
+     <div class ="container">
+
+      <h1> New User Registration</h1>
+
+         <div class = "user-details" id = "details">
+            <div class="input-box">
+                <label for = "firstName">First Name:</label>
+                <label id="asterisk">*</label>
+                <input type="text" id="name" th:name = "firstName"  placeholder="Enter your first name" required>
+            <span>
+                <label for = "lastName">Last Name:</label>
+                <label id="asterisk">*</label>
+                <input type="text" id ="name" th:name="lastName"  placeholder="Enter your last name" required>
+            </span>
+          </div>
+
+        
+            <div class="input-box">
+                <label for ="militaryEmail">Mil Email:</label>
+                <label id="asterisk">*</label>
+                <input type="email" th:name= "militaryEmail"  id="militaryMail" placeholder="Enter your military email" required minlength="8">
+             <span>
+                <label for = "civilianEmail">Civ Email:</label>
+                <label id="asterisk">*</label>
+                <input type="email" th:name= "civilianEmail"  id="civilianMail" placeholder="Enter your civilian email" required minlength="8">
+             </span>
+            </div>
+            
+            <div class="input-box">
+                <label for ="phoneNumber" >Personal Phone: </label>
+                <input type="tel" id="personal" th:name="phoneNumber"  placeholder="Enter your personal phone number"  >
+                <span>
+                    <label for ="officeNumber">Office Phone: </label>
+                    <input type="tel" id="office" th:name="officeNumber" placeholder="Enter your office phone number" >
+                </span>
+            </div>
+             <div class="input-box">
+                    <label for ="rank" id="label">Rank:</label>
+                    <label id="asterisk">*</label>
+                 <select id = "rank" th:name="rank"  style="color:gray" required>
+                    <option id="placeholder" value = "" >Select your rank</option>
+                   <option value="AB"> AB</option>
+                   <option value="Amn">Amn</option>
+                   <option value="A1C">A1C</option>
+                   <option value ="SrA">SrA</option>
+                   <option value="SSgt">SSgt</option>
+                   <option value="TSgt">TSgt</option>
+                   <option value="MSgt">MSgt</option>
+                   <option value="SMSgt">SMSgt</option>
+                   <option value="CMSgt">CMSgt</option>
+                   <option value="CCM ">CCM</option>
+                   <option value="CMSAF">CMSAF</option>
+                   <option value="2d Lt">2d Lt</option>
+                   <option value="1st Lt">1st Lt</option>
+                   <option value="Capt">Capt</option>
+                   <option value="Maj">Maj</option>
+                   <option value="Lt Col">Lt Col</option>
+                   <option value="Col"> Col</option>
+                   <option value= "Brig Gen">Brig Gen</option>
+                   <option value="Maj Gen">Maj Gen</option>
+                   <option value="Lt Gen">Lt Gen</option>
+                   <option value="Gen">Gen</option>
+                   <option value=" GOAF">GOAF</option>
+                 </select>
+              </div>
+                     <div class="input-box">
+                        <label for = "Workcenter">Workcenter:</label>
+                        <label id="asterisk">*</label>
+                        <input type="text" id = "workCenter" th:name="workCenter" placeholder="Enter your workcenter " required>
+                        <span>
+                            <label for="flight">Flight:</label>
+                            <label id="asterisk">*</label>
+                             <input type="text" id="flight" th:name="flight" placeholder="Enter your flight" required>    
+                        </span>
+                    </div>           
+         </div>
+         <div>
+            <input type="submit" value="Register">
+        </div>    
+</div>
+</form>
+<script src= "functions_for_phoneNumber_and_email.js">
+  
+</script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
