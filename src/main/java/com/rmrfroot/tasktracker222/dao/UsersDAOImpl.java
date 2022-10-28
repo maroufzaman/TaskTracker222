@@ -18,7 +18,7 @@ public class UsersDAOImpl implements CustomUsersDAO{
     @Override
     public Boolean hasUserData(String email) {
         Session cSession=entityManager.unwrap(Session.class);
-        Query<User> query=cSession.createQuery("from Users where email=:email", User.class);
+        Query<User> query=cSession.createQuery("from User where email=:email", User.class);
         query.setParameter("email",email);
         Boolean check=false;
         List<User> list=query.getResultList();
@@ -36,7 +36,7 @@ public class UsersDAOImpl implements CustomUsersDAO{
     @Override
     public User findUserByEmail(String email) {
         Session cSession=entityManager.unwrap(Session.class);
-        Query<User> query=cSession.createQuery("from Users where email=:email", User.class);
+        Query<User> query=cSession.createQuery("from User where email=:email", User.class);
         query.setParameter("email",email);
 
         User user=null;
@@ -50,7 +50,7 @@ public class UsersDAOImpl implements CustomUsersDAO{
     @Override
     public User findUsersById(int id){
         Session cSession=entityManager.unwrap(Session.class);
-        Query<User> query=cSession.createQuery("from Users where id=:id", User.class);
+        Query<User> query=cSession.createQuery("from User where id=:id", User.class);
         query.setParameter("id",id);
 
         User user=null;
@@ -70,7 +70,7 @@ public class UsersDAOImpl implements CustomUsersDAO{
     @Override
     public User findUserByUsername(String username) {
         Session cSession=entityManager.unwrap(Session.class);
-        Query<User> query=cSession.createQuery("from Users where username=:username", User.class);
+        Query<User> query=cSession.createQuery("from User where username=:username", User.class);
         query.setParameter("username",username);
 
         User user=null;

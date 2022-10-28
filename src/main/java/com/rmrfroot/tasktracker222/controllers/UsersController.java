@@ -6,10 +6,14 @@ import com.rmrfroot.tasktracker222.entities.User;
 import com.rmrfroot.tasktracker222.entities.UserEditRequest;
 import com.rmrfroot.tasktracker222.services.DrillScheduleService;
 import com.rmrfroot.tasktracker222.services.UsersDaoService;
+import com.rmrfroot.tasktracker222.validations.ValidatePassword;
 import com.rmrfroot.tasktracker222.validations.ValidateUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -133,7 +137,7 @@ public class UsersController {
 
     @GetMapping("/users/newUser")
     public String addUser(Model model,Principal principal) {
-        User user = new User();
+        /*User user = new User();
         model.addAttribute("users", user);
         DrillSchedules drillSchedules1=new DrillSchedules(
                "lorem" ,
@@ -200,7 +204,7 @@ public class UsersController {
                 "f22",
                 team
         );
-        /*drillScheduleService.save(drillSchedules1);
+        drillScheduleService.save(drillSchedules1);
         drillSchedules1.addUsers(addUser1);
         drillSchedules1.addUsers(addUser2);
         usersDaoService.save(addUser1);
@@ -235,41 +239,41 @@ public class UsersController {
     }
 
     @PostMapping("/register")
-        public String saveUser(@Valid @ModelAttribute("users")ValidateUser validateUser, BindingResult errors, Model model, Principal principal) {
-        if(errors.hasErrors()){
-            return "registration_form";
+    public String saveUser(@Valid @ModelAttribute("users")ValidateUser validateUser, BindingResult errors, Model model, Principal principal) {
+    if(errors.hasErrors()){
+        return "registration_form";
+    }
+    try {
+        List<String> userInfoList = poolClientInterface.getUserInfo(principal.getName());
+        String email = userInfoList.get(3);
+        if (!usersDaoService.hasUserData(email)) {
+            /*ArrayList<String> teams = new ArrayList<>();
+            teams.add("team1");
+            teams.add("team2");*/
+            usersDaoService.registerUserToDatabase(
+                    principal.getName(),
+                    validateUser.getFirstName(),
+                    validateUser.getLastName(),
+                    validateUser.getMilitaryEmail(),
+                    validateUser.getCivilianEmail(),
+                    email,
+                    validateUser.getPhoneNumber(),
+                    validateUser.getOfficeNumber(),
+                    validateUser.getRank(),
+                    validateUser.getWorkCenter(),
+                    validateUser.getFlight(),
+                    validateUser.getTeams()
+            );
+            System.out.println("New users just added to database: " + principal.getName());
+        }else{
+            return "redirect:/";
         }
-        try {
-            List<String> userInfoList = poolClientInterface.getUserInfo(principal.getName());
-            String email = userInfoList.get(3);
-            if (!usersDaoService.hasUserData(email)) {
-                /*ArrayList<String> teams = new ArrayList<>();
-                teams.add("team1");
-                teams.add("team2");*/
-                usersDaoService.registerUserToDatabase(
-                        principal.getName(),
-                        validateUser.getFirstName(),
-                        validateUser.getLastName(),
-                        validateUser.getMilitaryEmail(),
-                        validateUser.getCivilianEmail(),
-                        email,
-                        validateUser.getPhoneNumber(),
-                        validateUser.getOfficeNumber(),
-                        validateUser.getRank(),
-                        validateUser.getWorkCenter(),
-                        validateUser.getFlight(),
-                        validateUser.getTeams()
-                );
-                System.out.println("New users just added to database: " + principal.getName());
-            }else{
-                return "redirect:/";
-            }
-        }catch (Exception e){
-            System.out.println("Something went wrong");
-            return "redirect:/error";
-        }
-            return "redirect:/users";
-        }
+    }catch (Exception e){
+        System.out.println("Something went wrong");
+        return "redirect:/error";
+    }
+        return "redirect:/users";
+    }
 
     @PutMapping("users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") int id, User user) {
@@ -280,5 +284,36 @@ public class UsersController {
     @DeleteMapping("users/{id}")
     public void deleteUserById(@PathVariable("id") int id) {
         usersDaoService.deleteById(id);
+    }
+
+    /**
+     * this postmapping have not test on the function testing
+        @author Visoth Cheam
+        @return No template has been created for a change password controller
+     */
+    @PostMapping("/users/changePassword")
+    public String changePassword(@Valid @ModelAttribute("Password") ValidatePassword validatePassword, BindingResult errors,
+                                 Principal principal,@RegisteredOAuth2AuthorizedClient("cognito") OAuth2AuthorizedClient authorizedClient
+                                 ) {
+        if (errors.hasErrors()) {
+            return "updatePassword_form";
+        }else if(!validatePassword.getNewPassword().equals(validatePassword.getOldPassword())){
+            return "updatePassword_form";
+        }
+        try{
+            OAuth2AccessToken accessToken = authorizedClient.getAccessToken();
+            String accessTokenValue= accessToken.getTokenValue();
+            poolClientInterface.updatePassword(
+                    validatePassword.getOldPassword(),
+                    validatePassword.getNewPassword(),
+                    accessTokenValue,
+                    principal.getName()
+            );
+        }catch (Exception e){
+            System.out.println("Something went wrong");
+            return "redirect:/error";
+        }
+
+        return "redirect:/users";
     }
 }
