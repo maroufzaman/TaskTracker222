@@ -10,6 +10,7 @@ import java.util.List;
 public class DrillCollection {
     private List<Drill> drillCollection;
     private int index;
+    
 /**
  *Class Constructor create an ArrayList called drillCollection 
  *@see DrillCollection()
@@ -37,6 +38,7 @@ public class DrillCollection {
             return 0;
         return 1;
     }
+    
 /**
  * This method check how many number of drills is in the drillCollection
  * @return size of the drillCollection
@@ -45,12 +47,12 @@ public class DrillCollection {
     public int getSize() {
         return drillCollection.size();
     }
+    
     /**
      * This method is used to get the Drill from the drillCollection 
      * @return the latest Drill in the drillCollection
      * @see getDrill()
      */
-
     public Drill getDrill(){
         drillCollection.get(index);
     }
