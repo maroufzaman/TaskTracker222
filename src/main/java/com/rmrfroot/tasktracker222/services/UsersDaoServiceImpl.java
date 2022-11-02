@@ -117,4 +117,16 @@ public class UsersDaoServiceImpl implements UsersDaoService {
         customUsersDAO.save(user);
     }
 
+    @Override
+    public List<User> findUsersByWorkCenter(String workCenter) {
+        return customUsersDAO.findUsersByWorkCenter(workCenter);
+    }
+
+    @Override
+    public List<User> findUsersByFlight(String flight) {
+        return customUsersDAO.findUsersByFlight(flight);
+    }
+
+    @Override
+    public List<User> findUsersByTeam(String team) { return customUsersDAO.findUsersByTeam(team); }
 }
