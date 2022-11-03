@@ -5,11 +5,14 @@ import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 
 //import java.time.LocalDate;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -76,6 +79,8 @@ public class User {
             inverseJoinColumns = @JoinColumn(name="drill_schedule_id")
     )
     private List<DrillSchedules> drillSchedulesList;
+
+    private static final String TEAM_LIST_FILENAME = "team.txt";
 
     public User() {
 
@@ -339,6 +344,21 @@ public class User {
             System.out.println("File not found");
         }
         return null;
+    }
+
+    public static void readTeamsFromFile(){
+        try {
+            File curDir = new File(".");
+            File[] filesList = curDir.listFiles();
+            for (File f : filesList) {
+                if (f.isFile()) {
+                    System.out.println(f.getName());
+                }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
 

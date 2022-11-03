@@ -46,8 +46,8 @@ public class UsersController {
         List<User> usersToAdd = new ArrayList<>();
 
         for (User u : allUsers) {
-//            System.out.println(u.getEmail());
-            if (u.getId() >= 41 || u.getId() == 42) {
+            System.out.println(u.getEmail());
+            if (u.getId() == 41 || u.getId() == 77) {
                 usersToAdd.add(u);
             }
         }
