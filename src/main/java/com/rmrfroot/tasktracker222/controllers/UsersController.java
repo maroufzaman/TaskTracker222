@@ -21,7 +21,11 @@ import java.util.ArrayList;
 import javax.validation.Valid;
 import java.util.List;
 
-
+/**
+ * Controller class for User
+ * @author Visoth
+ * @author Noel
+ */
 @Controller
 public class UsersController {
 
@@ -39,17 +43,23 @@ public class UsersController {
         this.usersDaoService = usersDaoService;
     }
 
-
+    /**
+     * Main Page for User Management
+     * shows the list of the users in the system
+     * and allows admin to change an user's attribute
+     * @param model for the model view controller
+     * @return front-end HTML
+     */
     @GetMapping("/users")
     public String getUsersCollection(Model model) {
         List<User> allUsers = usersDaoService.findAll();
         List<User> usersToAdd = new ArrayList<>();
-        UserEditRequest userEditRequest = new UserEditRequest();
+        User userEditRequest = new User();
 
-        /*for (User u : allUsers) {
-            System.out.println(u.getEmail());
+        for (User u : allUsers) {
+            //System.out.println(u.getEmail());
                 usersToAdd.add(u);
-        }*/
+        }
 
         model.addAttribute("users", allUsers);
         //model.addAttribute("usersToAdd", usersToAdd);
@@ -57,10 +67,15 @@ public class UsersController {
         return "UserManagement";
     }
 
+    /**
+     * Updates selected user's attributes
+     * @param request User class to be changed
+     * @return to the UserManagement site
+     */
     @PostMapping(value = "/users", params = "submit")
-    public String userEditSubmit(@ModelAttribute("userEditRequest") UserEditRequest request) {
+    public String userEditSubmit(@ModelAttribute("userEditRequest") User request) {
         try {
-            User u = usersDaoService.findById(Integer.parseInt(request.getId()));
+            User u = usersDaoService.findById(request.getId());
 
             u.setFirstName(request.getFirstName());
             u.setLastName(request.getLastName());
@@ -71,7 +86,7 @@ public class UsersController {
             u.setRank(request.getRank());
             u.setWorkCenter(request.getWorkCenter());
             u.setFlight(request.getFlight());
-            //u.setTeams(request.getTeams());   //TODO - Integrate ArrayList-style team list
+            u.setTeams(request.getTeams());   //TODO - Integrate ArrayList-style team list
 
             usersDaoService.update(u.getId(), u);
 
@@ -83,11 +98,15 @@ public class UsersController {
         return null;
     }
 
+    /**
+     * Delete a user in the system
+     * @param request User to be deleted
+     * @return to UserManagement site
+     */
     @PostMapping(value = "/users", params = "delete")
-    public String userEditDelete(@ModelAttribute("userEditRequest") UserEditRequest request) {
+    public String userEditDelete(@ModelAttribute("userEditRequest") User request) {
         System.out.println("delete");
-        User u = usersDaoService.findById(Integer.parseInt(request.getId()));
-
+        User u = usersDaoService.findById(request.getId());
 
         usersDaoService.deleteById(u.getId());
         //TODO - Add functionality to delete user from database and cognito
@@ -102,13 +121,13 @@ public class UsersController {
         return "users";
     }
 
+
     /**
-     *
-     * Skeleton Code for controller access after user login
-     * depending on the role of user (officer or not)
-     *
-     * With having no way of differentiating user from another
-     * can't be used
+     * Determines the User's role
+     * and redirects to a page depending on the role
+     * @param model view controller
+     * @param principal user's credentials
+     * @return a page determined from the user's role
      */
     @GetMapping("users/accessControl")
     public String accessControl(Model model,Principal principal) {
@@ -132,6 +151,12 @@ public class UsersController {
         }
     }
 
+    /**
+     * Adds a user to the system
+     * @param model view controller
+     * @param principal user's credentials
+     * @return a registration form to collect user's information
+     */
     @GetMapping("/users/newUser")
     public String addUser(Model model,Principal principal) {
         User user = new User();
@@ -235,6 +260,14 @@ public class UsersController {
 
     }
 
+    /**
+     * Add a user to the database
+     * @param validateUser confirms user is a new user
+     * @param errors Errors for exception
+     * @param model view controller
+     * @param principal user's credentials
+     * @return to access control
+     */
     @PostMapping("/register")
         public String saveUser(@Valid @ModelAttribute("users")ValidateUser validateUser, BindingResult errors, Model model, Principal principal) {
         if(errors.hasErrors()){
@@ -263,39 +296,67 @@ public class UsersController {
                 );
                 System.out.println("New users just added to database: " + principal.getName());
             }else{
-                return "redirect:/";
+                return "redirect:/users/accessControl";
             }
         }catch (Exception e){
             System.out.println("Something went wrong");
             return "redirect:/error";
         }
-            return "redirect:/users";
-        }
+            return "redirect:/users/accessControl";
+    }
 
+    /**
+     * Test controller to see Users collected
+     * @param model view controller
+     * @param workCenter sorts Users by
+     * @return user list
+     */
     @GetMapping("users/workcenter/{workcenter}")
     public String getUsersByWorkCenter(Model model,@PathVariable("workcenter") String workCenter) {
         model.addAttribute("user",usersDaoService.findUsersByWorkCenter(workCenter));
         return "users";
     }
 
+    /**
+     * Test controller to see Users collected
+     * @param model view controller
+     * @param flight sorts Users by
+     * @return user list
+     */
     @GetMapping("users/flight/{flight}")
     public String getUsersByFlight(Model model,@PathVariable("flight") String flight) {
         model.addAttribute("user",usersDaoService.findUsersByFlight(flight));
         return "users";
     }
 
+    /**
+     * Test controller to see Users collected
+     * @param model view controller
+     * @param team sorts Users by
+     * @return user list
+     */
     @GetMapping("users/team/{team}")
     public String getUsersByTeam(Model model,@PathVariable("team") String team) {
         model.addAttribute("user",usersDaoService.findUsersByTeam(team));
         return "users";
     }
 
+    /**
+     * Generic update User from database
+     * @param id of User to be updated
+     * @param user attributes to replace old data
+     * @return HTML response code of 200
+     */
     @PutMapping("users/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") int id, User user) {
 
         return new ResponseEntity<>(usersDaoService.update(id, user), HttpStatus.OK);
     }
 
+    /**
+     * Generic delete a user from database
+     * @param id of user to be deleted
+     */
     @DeleteMapping("users/{id}")
     public void deleteUserById(@PathVariable("id") int id) {
         usersDaoService.deleteById(id);
