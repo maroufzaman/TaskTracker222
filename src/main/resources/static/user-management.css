@@ -1,6 +1,7 @@
 
 .user-management-main {
     display: flex;
+    overflow: hidden;
 }
 
 .user-editor-div {
@@ -100,12 +101,13 @@
 }
 
 .user-management-value-cell {
+    width: 75%;
     align-content: center;
     vertical-align: middle;
 }
 
 .user-management-value {
-    width: 100%;
+    width: 90%;
 
     /*display: block;*/
 

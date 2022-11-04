@@ -137,7 +137,7 @@ public class User {
     public void setMilitaryEmail(String militaryEmail) {
         String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-        if(isValidEmailAddrRegex(regexPattern, militaryEmail)) {
+        if(isValidEmailAddrRegex(regexPattern, militaryEmail) || militaryEmail.isBlank()) {
             this.militaryEmail = militaryEmail;
         }
         else {
@@ -211,21 +211,22 @@ public class User {
     }
 
     public void setRank(String rank) throws FileNotFoundException {
-        File fileText = new File("rank.txt");
-        Scanner s = new Scanner(fileText);
-        int r = 0;
-
-        while(s.hasNextLine()){
-            if(rank.equals(s.nextLine().trim())){
-                r += 1;
-            }
-        }
-        if (r == 1) {
-            this.rank = rank;
-        }
-        else {
-            throw new IllegalArgumentException("Not a valid Rank.");
-        }
+//        File fileText = new File("rank.txt");
+//        Scanner s = new Scanner(fileText);
+//        int r = 0;
+//
+//        while(s.hasNextLine()){
+//            if(rank.equals(s.nextLine().trim())){
+//                r += 1;
+//            }
+//        }
+//        if (r == 1) {
+//            this.rank = rank;
+//        }
+//        else {
+//            throw new IllegalArgumentException("Not a valid Rank.");
+//        }
+        this.rank = rank;
     }
 
     public String getWorkCenter() {
@@ -233,21 +234,22 @@ public class User {
     }
 
     public void setWorkCenter(String workCenter) throws FileNotFoundException {
-        File fileText = new File("workcenter.txt");
-        Scanner s = new Scanner(fileText);
-        int w = 0;
-
-        while(s.hasNextLine()){
-            if(workCenter.equals(s.nextLine().trim())){
-                w += 1;
-            }
-        }
-        if (w == 1) {
-            this.workCenter = workCenter;
-        }
-        else {
-            throw new IllegalArgumentException("Not a valid workcenter.");
-        }
+//        File fileText = new File("workcenter.txt");
+//        Scanner s = new Scanner(fileText);
+//        int w = 0;
+//
+//        while(s.hasNextLine()){
+//            if(workCenter.equals(s.nextLine().trim())){
+//                w += 1;
+//            }
+//        }
+//        if (w == 1) {
+//            this.workCenter = workCenter;
+//        }
+//        else {
+//            throw new IllegalArgumentException("Not a valid workcenter.");
+//        }
+        this.workCenter = workCenter;
     }
 
     public String getFlight() {
@@ -255,21 +257,22 @@ public class User {
     }
 
     public void setFlight(String flight) throws FileNotFoundException {
-        File fileText = new File("flight.txt");
-        Scanner s = new Scanner(fileText);
-        int f = 0;
-
-        while(s.hasNextLine()){
-            if(flight.equals(s.nextLine().trim())){
-                f += 1;
-            }
-        }
-        if (f == 1) {
-            this.flight = flight;
-        }
-        else {
-            throw new IllegalArgumentException("Not a valid flight.");
-        }
+//        File fileText = new File("flight.txt");
+//        Scanner s = new Scanner(fileText);
+//        int f = 0;
+//
+//        while(s.hasNextLine()){
+//            if(flight.equals(s.nextLine().trim())){
+//                f += 1;
+//            }
+//        }
+//        if (f == 1) {
+//            this.flight = flight;
+//        }
+//        else {
+//            throw new IllegalArgumentException("Not a valid flight.");
+//        }
+        this.flight = flight;
     }
 
 //    public ArrayList<String> getTeamList() {

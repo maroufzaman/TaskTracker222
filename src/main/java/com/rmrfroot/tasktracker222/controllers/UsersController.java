@@ -2,6 +2,7 @@ package com.rmrfroot.tasktracker222.controllers;
 
 import com.rmrfroot.tasktracker222.awsCognito.PoolClientInterface;
 import com.rmrfroot.tasktracker222.entities.DrillSchedules;
+import com.rmrfroot.tasktracker222.entities.Group;
 import com.rmrfroot.tasktracker222.entities.User;
 import com.rmrfroot.tasktracker222.entities.UserEditRequest;
 import com.rmrfroot.tasktracker222.services.DrillScheduleService;
@@ -46,14 +47,14 @@ public class UsersController {
         List<User> usersToAdd = new ArrayList<>();
 
         for (User u : allUsers) {
-            System.out.println(u.getEmail());
-            if (u.getId() == 41 || u.getId() == 77) {
+            if (u.getId() == 86 || u.getId() == 87 || u.getId() == 88) {
                 usersToAdd.add(u);
             }
         }
 
         model.addAttribute("users", usersToAdd);
         model.addAttribute("userEditRequest", new UserEditRequest());
+        model.addAttribute("teams", Group.getTeams());
         return "UserManagement";
     }
 
@@ -71,8 +72,8 @@ public class UsersController {
             u.setRank(request.getRank());
             u.setWorkCenter(request.getWorkCenter());
             u.setFlight(request.getFlight());
-//        u.setTeams(request.getTeams());   //TODO - Integrate ArrayList-style team list
-
+            u.setTeams(request.getTeams());   //TODO - Integrate ArrayList-style team list
+            System.out.println(request.getTeams());
             usersDaoService.update(u.getId(), u);
 
             return "redirect:/users";

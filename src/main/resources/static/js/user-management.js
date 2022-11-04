@@ -28,6 +28,8 @@ function updateSelectedUser(id) {
     updateFieldValue("input-teams", selected_user.teams);
     updateFieldValue("input-id", selected_user.id);
 
+    $('select').val(selected_user.teams).trigger('chosen:updated');
+
     if (users !== null) {
         for (let index in users) {
             if (users[index].id === selected_user_id) {
