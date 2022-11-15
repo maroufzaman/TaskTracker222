@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
         name = "team",
         typeClass = ListArrayType.class
 )
-public class User {
+public class User implements Comparable<User>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -103,6 +103,10 @@ public class User {
         //this.teamList = teamList;
         //this.team = team;
         this.teams = teams;
+    }
+
+    @Override public int compareTo(User comparedUser){
+        return this.getFirstName().compareTo(comparedUser.getFirstName());
     }
 
     public int getId() {
