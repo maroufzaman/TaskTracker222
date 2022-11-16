@@ -74,6 +74,19 @@
                         </tr>
 
                         <tr>
+                            <th class="drill-management-entry">Color</th>
+                            <td class="drill-management-value-cell">
+                                <select id='input-color' class="drill-management-value" th:name="color">
+                                    <option selected disabled style="display: none">Select one...</option>
+                                    <option style="background-color: #F89EB9" value="#F89EB9">Red</option>
+                                    <option style="background-color: #ECD583" value="#ECD583">Yellow</option>
+                                    <option style="background-color: #AEE583" value="#AEE583">Green</option>
+                                    <option style="background-color: #A6D4FF" value="#A6D4FF">Blue</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
                             <th class="drill-management-entry">Date</th>
                             <td class="drill-management-value-cell">
                                 <input id="drill-date" class="drill-management-value" type="date" th:name="date">
