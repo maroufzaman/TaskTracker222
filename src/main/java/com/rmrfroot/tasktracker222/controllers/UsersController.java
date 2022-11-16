@@ -134,20 +134,18 @@ public class UsersController {
         try {
             User user=usersDaoService.findUserByUsername(principal.getName());
             model.addAttribute("user", user);
-            DrillSchedules drillSchedules=drillScheduleService.findDrillSchedulesById(59);
-            /*if(!user.findDrillScheduleById(59)){
-                System.out.println("Something went wrong ");
-                return "redirect:/error";
-            }else */
-                if(user.getEmail().equals(drillSchedules.getOfficer_email())) {
+            if(user.isAdmin()) {
                 System.out.println("manager-page");
                 return "redirect:/drill-schedule-manager";
-            } else
-                System.out.println("recipient-page");
-            return "redirect:/drill-schedule-recipient";
-        }catch (Exception e){
-            System.out.println("Something went wrong ");
-            return "redirect:/error";
+            }
+            else{
+               System.out.println("recipient-page");
+                return "redirect:/drill-schedule-recipient";
+            }
+        }
+        catch (Exception e){
+            System.out.println("No user found");
+            return "redirect:/users/newUser";
         }
     }
 
@@ -161,96 +159,7 @@ public class UsersController {
     public String addUser(Model model,Principal principal) {
         User user = new User();
         model.addAttribute("newUser", user);
-        DrillSchedules drillSchedules1=new DrillSchedules(
-               "lorem" ,
-                "start_date",
-                "deadline_date",
-                "location",
-                "admin_name",
-                "officer_email",
-                "note",
-                "create_timestamp"
-        );
-        DrillSchedules drillSchedules2=new DrillSchedules(
-                "lorem" ,
-                "start_date",
-                "deadline_date",
-                "location",
-                "admin_name",
-                "officer_email",
-                "note",
-                "create_timestamp"
-        );
-        ArrayList<String> team =new ArrayList<>();
-        team.add("team1");
-        team.add("team2");
-        User addUser1=new User(
-                "visoth99",
-                "visoth",
-                "cheam",
-                "visoth99@gmail.com",
-                "visothMili@gmail.com",
-                "visothMili@gmail.com",
-                "912431234892349",
-                "23432",
-                "Lorem",
-                "Clafornia branch",
-                "f22",
-                team
-                );
-        User addUser2=new User(
-                "visoth99",
-                "visoth",
-                "cheam",
-                "visoth99@gmail.com",
-                "visothMili@gmail.com",
-                "visothMili@gmail.com",
-                "912431234892349",
-                "23432",
-                "Lorem",
-                "Clafornia branch",
-                "f22",
-                team
-        );
-        User addUserAdmin=new User(
-                "adderUserAdmin",
-                "visoth",
-                "cheam",
-                "visoth99@gmail.com",
-                "visothMili@gmail.com",
-                "visothMili@gmail.com",
-                "912431234892349",
-                "23432",
-                "Lorem",
-                "Clafornia branch",
-                "f22",
-                team
-        );
-        /*drillScheduleService.save(drillSchedules1);
-        drillSchedules1.addUsers(addUser1);
-        drillSchedules1.addUsers(addUser2);
-        usersDaoService.save(addUser1);
-        usersDaoService.save(addUser2);
 
-        //create new users and add to exist drill_schedules
-        DrillSchedules drillSchedules=drillScheduleService.findDrillSchedulesById(53);
-        drillSchedules.addUsers(addUser1);
-        drillSchedules.addUsers(addUser2);
-        usersDaoService.save(addUser1);
-        usersDaoService.save(addUser2);
-
-        //exist users with exist drill_schedules
-        DrillSchedules drillSchedules=drillScheduleService.findDrillSchedulesById(54);
-        Users usersExist=usersDaoService.findById(77);
-        drillSchedules.addUsers(usersExist);
-        usersDaoService.save(usersExist);
-
-        //a new drill_schedule with exists an admin user, and recipient users
-        Users usersExist=usersDaoService.findById(77);
-        drillSchedules1.addUsers(usersDaoService.findUsersById(78));
-        drillSchedules1.addUsers(usersDaoService.findUsersById(79));
-        usersExist.addDrillSchedule(drillSchedules1);
-        usersDaoService.save(usersExist);*/
         List<String> userInfoList = poolClientInterface.getUserInfo(principal.getName());
         String email = userInfoList.get(3);
         if (usersDaoService.hasUserData(email)) {
@@ -270,9 +179,9 @@ public class UsersController {
      */
     @PostMapping("/register")
         public String saveUser(@Valid @ModelAttribute("users")ValidateUser validateUser, BindingResult errors, Model model, Principal principal) {
-        if(errors.hasErrors()){
+        /*if(errors.hasErrors()){
             return "registration_form";
-        }
+        }*/
         try {
             List<String> userInfoList = poolClientInterface.getUserInfo(principal.getName());
             String email = userInfoList.get(3);

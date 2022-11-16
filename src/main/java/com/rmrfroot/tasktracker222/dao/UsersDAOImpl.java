@@ -70,7 +70,8 @@ public class UsersDAOImpl implements CustomUsersDAO{
 
     @Override
     public void update(User user) {
-
+        Session cSession=entityManager.unwrap(Session.class);
+        cSession.update(user);
     }
 
     @Override
@@ -91,16 +92,15 @@ public class UsersDAOImpl implements CustomUsersDAO{
     @Override
     public List<User> findAll() {
         Session cSession=entityManager.unwrap(Session.class);
-        Query<User> query=cSession.createQuery("select User from User", User.class);
+        Query<User> query=cSession.createQuery("from User", User.class);
 
-        List<User> users;
-        try {
-            users = query.getResultList();
+        List<User> user;
+        try{
+            user=query.getResultList();
+        }catch (Exception e){
+            user=null;
         }
-        catch (Exception e) {
-            users = null;
-        }
-        return users;
+        return user;
     }
 
     @Override
