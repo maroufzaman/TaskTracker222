@@ -49,7 +49,7 @@ public class Group {
             return words;
         }
         catch (FileNotFoundException e) {
-            System.out.println("File not found");
+            System.out.println("File not found: " + file);
         }
         return null;
     }
