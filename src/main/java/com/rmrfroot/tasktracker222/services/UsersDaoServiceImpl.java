@@ -1,5 +1,6 @@
 package com.rmrfroot.tasktracker222.services;
 
+import com.rmrfroot.tasktracker222.dao.CustomUsersDAO;
 import com.rmrfroot.tasktracker222.dao.UsersDao;
 import com.rmrfroot.tasktracker222.entities.User;
 import org.hibernate.Session;
@@ -234,16 +235,16 @@ public class UsersDaoServiceImpl implements UsersDaoService {
         return users;
     }
 
-    @Override
-    public List<User> findUsersByWorkCenter(String workCenter) {
-        return customUsersDAO.findUsersByWorkCenter(workCenter);
-    }
-
-    @Override
-    public List<User> findUsersByFlight(String flight) {
-        return customUsersDAO.findUsersByFlight(flight);
-    }
-
-    @Override
-    public List<User> findUsersByTeam(String team) { return customUsersDAO.findUsersByTeam(team); }
+//    @Override
+//    public List<User> findUsersByWorkCenter(String workCenter) {
+//        return customUsersDAO.findUsersByWorkCenter(workCenter);
+//    }
+//
+//    @Override
+//    public List<User> findUsersByFlight(String flight) {
+//        return customUsersDAO.findUsersByFlight(flight);
+//    }
+//
+//    @Override
+//    public List<User> findUsersByTeam(String team) { return customUsersDAO.findUsersByTeam(team); }
 }

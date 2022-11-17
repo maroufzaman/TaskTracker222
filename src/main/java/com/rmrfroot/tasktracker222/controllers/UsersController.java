@@ -85,12 +85,12 @@ public class UsersController {
             User u = usersDaoService.findById(request.getId());
 
             // Translate blank values to null since POST does not allow null values
-            if(request.rank.equals(""))
-                request.rank = null;
-            if(request.flight.equals(""))
-                request.flight = null;
-            if(request.workCenter.equals(""))
-                request.workCenter = null;
+            if(request.getRank().equals(""))
+                request.setRank(null);
+            if(request.getFlight().equals(""))
+                request.setFlight(null);
+            if(request.getWorkCenter().equals(""))
+                request.setWorkCenter(null);
 
 
             u.setFirstName(request.getFirstName());
@@ -259,11 +259,11 @@ public class UsersController {
         return "users";
     }
 
-    @GetMapping("users/team/{team}")
-    public String getUsersByTeam(Model model,@PathVariable("team") String team) {
-        model.addAttribute("user",usersDaoService.findUsersByTeam(team));
-        return "users";
-    }
+//    @GetMapping("users/team/{team}")
+//    public String getUsersByTeam(Model model,@PathVariable("team") String team) {
+//        model.addAttribute("user",usersDaoService.findUsersByTeam(team));
+//        return "users";
+//    }
 
     /**
      * Test controller to see Users collected
