@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DrillScheduleTest {
 
-    String event_title = "event";
+    /*String event_title = "event";
     String location = "location";
     String officer_name = "Brian Frey";
     String officer_email = "bf@root.edu";
@@ -50,7 +50,6 @@ class DrillScheduleTest {
     @Test
     void getDeadline_date() {
         assertEquals(deadline_date, drillSchedule.getDeadline_date());
-    }
+    }*/
 
-     */
 }
