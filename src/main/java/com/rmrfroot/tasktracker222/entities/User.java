@@ -5,11 +5,14 @@ import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 
 //import java.time.LocalDate;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -25,7 +28,7 @@ import java.util.regex.Pattern;
         name = "team",
         typeClass = ListArrayType.class
 )
-public class User {
+public class User implements Comparable<User>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -86,6 +89,8 @@ public class User {
     )
     private List<DrillSchedules> drillSchedulesList;
 
+    private static final String TEAM_LIST_FILENAME = "team.txt";
+
     public User() {
 
     }
@@ -124,7 +129,11 @@ public class User {
         this.teams = teams;
     }
 
-    /**
+    @Override public int compareTo(User comparedUser){
+        return this.getFirstName().compareTo(comparedUser.getFirstName());
+    }
+
+     /**
      * Get user id
      * @return user id
      */
@@ -188,7 +197,7 @@ public class User {
     public void setMilitaryEmail(String militaryEmail) {
         String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-        if(isValidEmailAddrRegex(regexPattern, militaryEmail)) {
+        if(isValidEmailAddrRegex(regexPattern, militaryEmail) || militaryEmail.isBlank()) {
             this.militaryEmail = militaryEmail;
         }
         else {
@@ -305,21 +314,22 @@ public class User {
      * @throws FileNotFoundException if there wasn't a valid rank in the file
      */
     public void setRank(String rank) throws FileNotFoundException {
-        File fileText = new File("rank.txt");
-        Scanner s = new Scanner(fileText);
-        int r = 0;
-
-        while(s.hasNextLine()){
-            if(rank.equals(s.nextLine().trim())){
-                r += 1;
-            }
-        }
-        if (r == 1) {
-            this.rank = rank;
-        }
-        else {
-            throw new IllegalArgumentException("Not a valid Rank.");
-        }
+//        File fileText = new File("rank.txt");
+//        Scanner s = new Scanner(fileText);
+//        int r = 0;
+//
+//        while(s.hasNextLine()){
+//            if(rank.equals(s.nextLine().trim())){
+//                r += 1;
+//            }
+//        }
+//        if (r == 1) {
+//            this.rank = rank;
+//        }
+//        else {
+//            throw new IllegalArgumentException("Not a valid Rank.");
+//        }
+        this.rank = rank;
     }
 
     /**
@@ -336,21 +346,22 @@ public class User {
      * @throws FileNotFoundException if there wasn't a valid workcenter in the file
      */
     public void setWorkCenter(String workCenter) throws FileNotFoundException {
-        File fileText = new File("workcenter.txt");
-        Scanner s = new Scanner(fileText);
-        int w = 0;
-
-        while(s.hasNextLine()){
-            if(workCenter.equals(s.nextLine().trim())){
-                w += 1;
-            }
-        }
-        if (w == 1) {
-            this.workCenter = workCenter;
-        }
-        else {
-            throw new IllegalArgumentException("Not a valid workcenter.");
-        }
+//        File fileText = new File("workcenter.txt");
+//        Scanner s = new Scanner(fileText);
+//        int w = 0;
+//
+//        while(s.hasNextLine()){
+//            if(workCenter.equals(s.nextLine().trim())){
+//                w += 1;
+//            }
+//        }
+//        if (w == 1) {
+//            this.workCenter = workCenter;
+//        }
+//        else {
+//            throw new IllegalArgumentException("Not a valid workcenter.");
+//        }
+        this.workCenter = workCenter;
     }
 
     /**
@@ -367,21 +378,22 @@ public class User {
      * @throws FileNotFoundException if there wasn't a valid flight in the file
      */
     public void setFlight(String flight) throws FileNotFoundException {
-        File fileText = new File("flight.txt");
-        Scanner s = new Scanner(fileText);
-        int f = 0;
-
-        while(s.hasNextLine()){
-            if(flight.equals(s.nextLine().trim())){
-                f += 1;
-            }
-        }
-        if (f == 1) {
-            this.flight = flight;
-        }
-        else {
-            throw new IllegalArgumentException("Not a valid flight.");
-        }
+//        File fileText = new File("flight.txt");
+//        Scanner s = new Scanner(fileText);
+//        int f = 0;
+//
+//        while(s.hasNextLine()){
+//            if(flight.equals(s.nextLine().trim())){
+//                f += 1;
+//            }
+//        }
+//        if (f == 1) {
+//            this.flight = flight;
+//        }
+//        else {
+//            throw new IllegalArgumentException("Not a valid flight.");
+//        }
+        this.flight = flight;
     }
 
 
@@ -465,6 +477,22 @@ public class User {
         }
         return null;
     }
+
+    public static void readTeamsFromFile(){
+        try {
+            File curDir = new File(".");
+            File[] filesList = curDir.listFiles();
+            for (File f : filesList) {
+                if (f.isFile()) {
+                    System.out.println(f.getName());
+                }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Gets user's team list
      * @return user's team list

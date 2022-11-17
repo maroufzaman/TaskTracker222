@@ -51,8 +51,7 @@ public class DrillDaoImpl implements DrillDaoService{
             d = result.get();
         }
         else {
-            //drill not found
-            throw new RuntimeException("Did not find drill id - " + id);
+            return null;
         }
         return d;
     }
@@ -105,13 +104,14 @@ public class DrillDaoImpl implements DrillDaoService{
         Drill updatedDrill;
         if(result.isPresent()) {
             updatedDrill = result.get();
-            drillDAO.deleteById(id);
+//            drillDAO.deleteById(id);
         }
         else {
             //drill not found
             throw new RuntimeException("Did not find drill id - " + id);
         }
         updatedDrill.setTitle(drill.getTitle());
+        updatedDrill.setColor(drill.getColor());
         updatedDrill.setDate(drill.getDate());
         updatedDrill.setStartTime(drill.getStartTime());
         updatedDrill.setEndTime(drill.getEndTime());
