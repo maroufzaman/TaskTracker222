@@ -105,14 +105,16 @@ public class UsersController {
     }
 
     @PostMapping(value = "/users", params = "delete")
-    public String userEditDelete(@ModelAttribute("userEditRequest") UserEditRequest request) {
-        System.out.println("delete");
-        User u = usersDaoService.findById(Integer.parseInt(request.getId()));
-
-
-        usersDaoService.deleteById(u.getId());
-        //TODO - Add functionality to delete user from database and cognito
-
+    public String userEditDelete(@ModelAttribute("userEditRequest") UserEditRequest request,Principal principal) {
+        //DONE - Add functionality to delete user from database and cognito
+        try{
+            User userById=usersDaoService.findUserByUsername(principal.getName());
+            usersDaoService.deleteById(userById.getId());
+            poolClientInterface.deleteUserByUsername(principal.getName());
+        }catch (Exception e){
+            System.out.println("Something went wrong");
+            return "redirect:/error";
+        }
         return "redirect:/users";
     }
 
