@@ -1,25 +1,36 @@
 package com.rmrfroot.tasktracker222.controllers;
 
+import com.rmrfroot.tasktracker222.dao.DrillSchedulesImpl;
 import com.rmrfroot.tasktracker222.entities.DrillSchedules;
 import com.rmrfroot.tasktracker222.entities.deprecated.Drill;
 import com.rmrfroot.tasktracker222.services.DrillDaoService;
 import com.rmrfroot.tasktracker222.services.DrillScheduleService;
+import com.rmrfroot.tasktracker222.services.DrillScheduleServiceImpl;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Calendar;
 import java.util.Date;
 
+import static org.hamcrest.Matchers.any;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(DrillEditController.class)
 class DrillEditControllerTest {
@@ -29,6 +40,16 @@ class DrillEditControllerTest {
 
     @MockBean
     private DrillScheduleService drillScheduleService;
+
+    //@MockBean
+    //private DrillSchedulesImpl drillSchedulesImpl;
+
+    @MockBean
+    private DrillScheduleServiceImpl drillScheduleServiceImpl;
+
+    //@InjectMocks
+    @MockBean
+    private DrillEditController drillEditController;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -51,14 +72,30 @@ class DrillEditControllerTest {
 
     @WithMockUser(username = "admin",roles={"USER","ADMIN"})
     @Test
-    void editDrill() {
+    void editDrill() throws Exception {
 
         //given(drillScheduleService.save(drillSchedules)).willReturn(drillSchedules);
+        //given(drillScheduleServiceImpl.save(drillSchedules)).willReturn(redirectedUrl("/drill-schedule-recipient/drills");
+        //mockMvc.perform(drillEditController.editDrill(drillSchedules)).andExpect(redirectedUrl("/drill-schedule-recipient/drills");
+        given(drillEditController.editDrill(drillSchedules))
+                .willReturn(String.valueOf(redirectedUrl("/drill-schedule-recipient/drills")));
+
+        MockHttpServletResponse response = mockMvc.perform(
+                        post("/drill-schedule-recipient/drills")
+                                .accept(MediaType.APPLICATION_JSON))
+                .andReturn().getResponse();
 
     }
 
+    @WithMockUser(username = "admin",roles={"USER","ADMIN"})
     @Test
-    void deleteDrillById() {
+    void deleteDrillById() throws Exception {
+
+        //mockMvc.perform( MockMvcRequestBuilders.delete("/drills/{id}", 1) ).andExpect(status().isAccepted());
+        //Mockito.verify(drillDaoService, Mockito.times(1)).deleteById(id);
+
+        int id = 1;
+        Mockito.doNothing().when(drillDaoService).deleteById(id);
 
 
     }

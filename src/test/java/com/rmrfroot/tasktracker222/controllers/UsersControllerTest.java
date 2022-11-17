@@ -4,6 +4,7 @@ import com.rmrfroot.tasktracker222.awsCognito.PoolClientInterface;
 import com.rmrfroot.tasktracker222.dao.CustomUsersDAO;
 import com.rmrfroot.tasktracker222.dao.UsersDao;
 import com.rmrfroot.tasktracker222.entities.User;
+import com.rmrfroot.tasktracker222.entities.UserEditRequest;
 import com.rmrfroot.tasktracker222.services.DrillScheduleService;
 import com.rmrfroot.tasktracker222.services.UsersDaoService;
 import org.hamcrest.Matchers;
@@ -38,6 +39,7 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UsersController.class)
@@ -69,6 +71,8 @@ class UsersControllerTest {
     MockMvc mockMvc;
 
     private java.util.ArrayList<String> teamList =new ArrayList<>(Arrays.asList("team1", "team2"));
+
+    private UserEditRequest userEditRequest;
 
     @Before
     public void setup() {
@@ -134,8 +138,12 @@ class UsersControllerTest {
 
     }
 
+    @WithMockUser(username = "admin",roles={"USER","ADMIN"})
     @Test
-    void userEditDelete() {
+    void userEditDelete() throws Exception {
+        //userEditRequest.setId(String.valueOf(1));
+        //this.mockMvc.perform(MockMvcRequestBuilders.post("/users")).andExpect(redirectedUrl("/users"));
+        //this.mockMvc.perform(MockMvcRequestBuilders.post("/users")).andExpect(redirectedUrl("http://localhost:8080/login/oauth2/code/cognito"));
     }
 
     @Test
