@@ -22,7 +22,7 @@
             <div class="input-box">
                 <label for = "firstName">First Name:</label>
                 <label id="asterisk">*</label>
-                <input type="text" id="name" th:name = "firstName"  placeholder="Enter your first name" required>
+             <input type="text" id="name" th:name = "firstName"  placeholder="Enter your first name" required>
             <span>
                 <label for = "lastName">Last Name:</label>
                 <label id="asterisk">*</label>
@@ -82,11 +82,24 @@
                      <div class="input-box">
                         <label for = "Workcenter">Workcenter:</label>
                         <label id="asterisk">*</label>
-                        <input type="text" id = "workCenter" th:name="workCenter" placeholder="Enter your workcenter " required>
+                      <select id = "workCenter" th:name="workCenter" required>
+                            <option value = "">Select your workcenter</option>
+                            <option value = "SCOP">SCOP</option>
+                            <option value = "SCOS">SCOS</option>
+                            <option value = "SCOX">SCOX</option>
+                            <option value ="SCOI">SCOI</option>
+                            <option value ="SCOT">SCOT</option>
+                    </select>
                         <span>
                             <label for="flight">Flight:</label>
                             <label id="asterisk">*</label>
-                             <input type="text" id="flight" th:name="flight" placeholder="Enter your flight" required>    
+                             <select id="flight" th:name="flight" required>
+                                <option value ="">Select your flight</option> 
+                                <option value ="CMD">CMD</option>
+                                <option value = "SCO1">SCO1</option> 
+                                <option value = "SCO2">SCO2</option>
+                                <option value = "SCP">SCP</option>  
+                             </select> 
                         </span>
                     </div>           
          </div>
