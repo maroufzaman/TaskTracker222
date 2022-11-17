@@ -16,7 +16,7 @@ class DrillScheduleTest {
     LocalDate start_date =  LocalDate.of(2012, 6, 30);;
     LocalDate deadline_date =  LocalDate.of(2023, 6, 30);;
     int id = 123;
-
+    /*
     DrillSchedule drillSchedule= new DrillSchedule(id, officer_name,
             officer_email, event_title, location,
             note, start_date, deadline_date);
@@ -51,4 +51,5 @@ class DrillScheduleTest {
     void getDeadline_date() {
         assertEquals(deadline_date, drillSchedule.getDeadline_date());
     }*/
+
 }
