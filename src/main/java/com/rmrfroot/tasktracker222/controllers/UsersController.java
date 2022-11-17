@@ -4,7 +4,6 @@ import com.rmrfroot.tasktracker222.awsCognito.PoolClientInterface;
 import com.rmrfroot.tasktracker222.entities.DrillSchedules;
 import com.rmrfroot.tasktracker222.entities.Group;
 import com.rmrfroot.tasktracker222.entities.User;
-import com.rmrfroot.tasktracker222.entities.UserEditRequest;
 import com.rmrfroot.tasktracker222.services.DrillScheduleService;
 import com.rmrfroot.tasktracker222.services.UsersDaoService;
 import com.rmrfroot.tasktracker222.validations.ValidatePassword;
@@ -120,7 +119,7 @@ public class UsersController {
      * @return to UserManagement site
      */
     @PostMapping(value = "/users", params = "delete")
-    public String userEditDelete(@ModelAttribute("userEditRequest") UserEditRequest request,Principal principal) {
+    public String userEditDelete(@ModelAttribute("userEditRequest") User request,Principal principal) {
         //DONE - Add functionality to delete user from database and cognito
         try{
             User userById=usersDaoService.findUserByUsername(principal.getName());
