@@ -88,6 +88,14 @@ public class Drill {
         return title;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public Date getDate() {
         return date;
     }
@@ -137,13 +145,7 @@ public class Drill {
         this.description = description;
     }
 
-    public String getColor() {
-        return color;
-    }
 
-    public void setColor(String color) {
-        this.color = color;
-    }
 
     public ArrayList<String> getParticipants() {
         return participants;
