@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+
 import java.util.List;
 
 @Repository
@@ -68,6 +69,11 @@ public class UsersDAOImpl implements CustomUsersDAO{
     }
 
     @Override
+    public void update(User user) {
+
+    }
+
+    @Override
     public User findUserByUsername(String username) {
         Session cSession=entityManager.unwrap(Session.class);
         Query<User> query=cSession.createQuery("from User where username=:username", User.class);
@@ -80,6 +86,70 @@ public class UsersDAOImpl implements CustomUsersDAO{
             user=null;
         }
         return user;
+    }
+
+    @Override
+    public List<User> findAll() {
+        Session cSession=entityManager.unwrap(Session.class);
+        Query<User> query=cSession.createQuery("select User from User", User.class);
+
+        List<User> users;
+        try {
+            users = query.getResultList();
+        }
+        catch (Exception e) {
+            users = null;
+        }
+        return users;
+    }
+
+    @Override
+    public List<User> findUsersByWorkCenter(String workCenter) {
+        Session cSession=entityManager.unwrap(Session.class);
+        Query<User> query=cSession.createQuery("from User where workCenter = :workCenter", User.class);
+        query.setParameter("workCenter", workCenter);
+
+        List<User> users;
+        try {
+            users = query.getResultList();
+        }
+        catch (Exception e) {
+            users = null;
+        }
+        return users;
+    }
+
+    @Override
+    public List<User> findUsersByFlight(String flight) {
+        Session cSession=entityManager.unwrap(Session.class);
+        Query<User> query=cSession.createQuery("from User where flight = :flight", User.class);
+        query.setParameter("flight", flight);
+
+        List<User> users;
+        try {
+            users = query.getResultList();
+        }
+        catch (Exception e) {
+            users = null;
+        }
+        return users;
+    }
+
+    @Override
+    public List<User> findUsersByTeam(String team) {
+        Session cSession=entityManager.unwrap(Session.class);
+
+        Query<User> query= cSession.createQuery("from User where cast(teams as string) like concat('%',:team,'%') ", User.class);
+        query.setParameter("team", team);
+
+        List<User> users;
+        try {
+            users = query.getResultList();
+        }
+        catch (Exception e) {
+            users = null;
+        }
+        return users;
     }
 
 }

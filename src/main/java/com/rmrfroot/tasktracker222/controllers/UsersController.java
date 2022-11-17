@@ -50,6 +50,8 @@ public class UsersController {
     public String getUsersCollection(Model model) {
         List<User> allUsers = usersDaoService.findAll();
         List<User> usersToAdd = new ArrayList<>();
+        UserEditRequest userEditRequest = new UserEditRequest();
+
 
         for (User u : allUsers) {
             if (u.getId() !=  78) {
@@ -66,6 +68,7 @@ public class UsersController {
         model.addAttribute("flights", Group.getFlights());
         model.addAttribute("workcenters", Group.getWorkcenters());
         model.addAttribute("teams", Group.getTeams());
+        
         return "UserManagement";
     }
 
@@ -92,8 +95,10 @@ public class UsersController {
             u.setRank(request.getRank());
             u.setWorkCenter(request.getWorkCenter());
             u.setFlight(request.getFlight());
+
             u.setTeams(request.getTeams());   //TODO - Integrate ArrayList-style team list
             System.out.println(request.getTeams());
+
             usersDaoService.update(u.getId(), u);
 
             return "redirect:/users";
@@ -121,7 +126,7 @@ public class UsersController {
 
     @GetMapping("/users/{id}")
     public String findById(@PathVariable("id") int id, Model model) {
-        model.addAttribute("users", usersDaoService.findById(id));
+        model.addAttribute("user", usersDaoService.findById(id));
         return "users";
     }
 
@@ -137,12 +142,13 @@ public class UsersController {
     public String accessControl(Model model,Principal principal) {
         try {
             User user=usersDaoService.findUserByUsername(principal.getName());
-            model.addAttribute("users", user);
+            model.addAttribute("user", user);
             DrillSchedules drillSchedules=drillScheduleService.findDrillSchedulesById(59);
-            if(!user.findDrillScheduleById(59)){
+            /*if(!user.findDrillScheduleById(59)){
                 System.out.println("Something went wrong ");
                 return "redirect:/error";
-            }else if(user.getEmail().equals(drillSchedules.getOfficer_email())) {
+            }else */
+                if(user.getEmail().equals(drillSchedules.getOfficer_email())) {
                 System.out.println("manager-page");
                 return "redirect:/drill-schedule-manager";
             } else
@@ -156,7 +162,8 @@ public class UsersController {
 
     @GetMapping("/users/newUser")
     public String addUser(Model model,Principal principal) {
-        /*User user = new User();
+        
+        User user = new User();
         model.addAttribute("users", user);
         DrillSchedules drillSchedules1=new DrillSchedules(
                "lorem" ,
@@ -292,6 +299,24 @@ public class UsersController {
         return "redirect:/error";
     }
         return "redirect:/users";
+    }
+
+    @GetMapping("users/workcenter/{workcenter}")
+    public String getUsersByWorkCenter(Model model,@PathVariable("workcenter") String workCenter) {
+        model.addAttribute("user",usersDaoService.findUsersByWorkCenter(workCenter));
+        return "users";
+    }
+
+    @GetMapping("users/flight/{flight}")
+    public String getUsersByFlight(Model model,@PathVariable("flight") String flight) {
+        model.addAttribute("user",usersDaoService.findUsersByFlight(flight));
+        return "users";
+    }
+
+    @GetMapping("users/team/{team}")
+    public String getUsersByTeam(Model model,@PathVariable("team") String team) {
+        model.addAttribute("user",usersDaoService.findUsersByTeam(team));
+        return "users";
     }
 
     @PutMapping("users/{id}")
