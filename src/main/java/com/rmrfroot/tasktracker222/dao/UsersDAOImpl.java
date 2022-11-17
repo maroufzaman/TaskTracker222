@@ -70,7 +70,8 @@ public class UsersDAOImpl implements CustomUsersDAO{
 
     @Override
     public void update(User user) {
-
+        Session cSession=entityManager.unwrap(Session.class);
+        cSession.update(user);
     }
 
     @Override

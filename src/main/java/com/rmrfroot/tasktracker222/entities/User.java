@@ -1,6 +1,7 @@
 package com.rmrfroot.tasktracker222.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
@@ -38,6 +39,9 @@ public class User implements Comparable<User>{
     @Column(name = "username")
     private String userName;
 
+    @Column(name = "admin")
+    private boolean admin;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -72,9 +76,11 @@ public class User implements Comparable<User>{
     @Column(name = "teams", columnDefinition = "text[]")
     private ArrayList<String> teams;
 
+    
     /**
      * Joining tables many to many
      */
+    @JsonIgnore
     @ManyToMany(
             fetch=FetchType.LAZY,
             cascade = {CascadeType.PERSIST,
@@ -124,9 +130,8 @@ public class User implements Comparable<User>{
         this.rank = rank;
         this.workCenter = workCenter;
         this.flight = flight;
-        //this.teamList = teamList;
-        //this.team = team;
         this.teams = teams;
+        this.admin = false;
     }
 
     @Override public int compareTo(User comparedUser){
@@ -308,27 +313,7 @@ public class User implements Comparable<User>{
         return rank;
     }
 
-    /**
-     * Set user's rank
-     * @param rank string containing user's rank
-     * @throws FileNotFoundException if there wasn't a valid rank in the file
-     */
-    public void setRank(String rank) throws FileNotFoundException {
-//        File fileText = new File("rank.txt");
-//        Scanner s = new Scanner(fileText);
-//        int r = 0;
-//
-//        while(s.hasNextLine()){
-//            if(rank.equals(s.nextLine().trim())){
-//                r += 1;
-//            }
-//        }
-//        if (r == 1) {
-//            this.rank = rank;
-//        }
-//        else {
-//            throw new IllegalArgumentException("Not a valid Rank.");
-//        }
+    public void setRank(String rank){
         this.rank = rank;
     }
 
@@ -340,27 +325,7 @@ public class User implements Comparable<User>{
         return workCenter;
     }
 
-    /**
-     * Set user's workcenter
-     * @param workCenter string containing user's workcenter
-     * @throws FileNotFoundException if there wasn't a valid workcenter in the file
-     */
-    public void setWorkCenter(String workCenter) throws FileNotFoundException {
-//        File fileText = new File("workcenter.txt");
-//        Scanner s = new Scanner(fileText);
-//        int w = 0;
-//
-//        while(s.hasNextLine()){
-//            if(workCenter.equals(s.nextLine().trim())){
-//                w += 1;
-//            }
-//        }
-//        if (w == 1) {
-//            this.workCenter = workCenter;
-//        }
-//        else {
-//            throw new IllegalArgumentException("Not a valid workcenter.");
-//        }
+    public void setWorkCenter(String workCenter) {
         this.workCenter = workCenter;
     }
 
@@ -372,27 +337,7 @@ public class User implements Comparable<User>{
         return flight;
     }
 
-    /**
-     * Set user's flight
-     * @param flight string containing user's flight
-     * @throws FileNotFoundException if there wasn't a valid flight in the file
-     */
-    public void setFlight(String flight) throws FileNotFoundException {
-//        File fileText = new File("flight.txt");
-//        Scanner s = new Scanner(fileText);
-//        int f = 0;
-//
-//        while(s.hasNextLine()){
-//            if(flight.equals(s.nextLine().trim())){
-//                f += 1;
-//            }
-//        }
-//        if (f == 1) {
-//            this.flight = flight;
-//        }
-//        else {
-//            throw new IllegalArgumentException("Not a valid flight.");
-//        }
+    public void setFlight(String flight){
         this.flight = flight;
     }
 
@@ -500,8 +445,9 @@ public class User implements Comparable<User>{
     public ArrayList<String> getTeams() {
         return teams;
     }
+
     /**
-     * Sets user's teal list
+     * Sets user's team list
      * @param teams arraylist containing user's team list
      */
     public void setTeams(ArrayList<String> teams) {
@@ -613,4 +559,9 @@ public class User implements Comparable<User>{
         }
         return check;
     }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
 }
