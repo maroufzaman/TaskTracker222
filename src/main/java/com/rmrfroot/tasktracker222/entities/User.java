@@ -5,21 +5,30 @@ import com.vladmihalcea.hibernate.type.array.ListArrayType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
 
 //import java.time.LocalDate;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.regex.Pattern;
 
+/**
+ * User class
+ * @author Anish
+ * @author Noel
+ * @author Visoth
+ */
 @Entity
 @Table(name = "users")
 @TypeDef(
         name = "team",
         typeClass = ListArrayType.class
 )
-public class User {
+public class User implements Comparable<User>{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,6 +72,9 @@ public class User {
     @Column(name = "teams", columnDefinition = "text[]")
     private ArrayList<String> teams;
 
+    /**
+     * Joining tables many to many
+     */
     @ManyToMany(
             fetch=FetchType.LAZY,
             cascade = {CascadeType.PERSIST,
@@ -77,10 +89,27 @@ public class User {
     )
     private List<DrillSchedules> drillSchedulesList;
 
+    private static final String TEAM_LIST_FILENAME = "team.txt";
+
     public User() {
 
     }
 
+    /**
+     * Creates User with all its attribute
+     * @param userName User's username to login
+     * @param firstName User's first name
+     * @param lastName User's last name
+     * @param militaryEmail User's military email (ie. .mil)
+     * @param civilianEmail User's civilian email (ie. gmail, yahoo, ...)
+     * @param email User's email
+     * @param phoneNumber User's phone number
+     * @param officeNumber User's office phone number
+     * @param rank User's rank
+     * @param workCenter User's work center
+     * @param flight User's flight number
+     * @param teams List of team the user is a part of
+     */
     public User(String userName, String firstName, String lastName, String militaryEmail, String civilianEmail, String email,
                 String phoneNumber, String officeNumber, String rank, String workCenter,
                 String flight, ArrayList<String> teams) {
@@ -100,21 +129,48 @@ public class User {
         this.teams = teams;
     }
 
+    @Override public int compareTo(User comparedUser){
+        return this.getFirstName().compareTo(comparedUser.getFirstName());
+    }
+
+     /**
+     * Get user id
+     * @return user id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets user id
+     * @param id int containing user id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * email validation using regular expression
+     * @param emailAddrToValidate check to see if the email matches the pattern
+     * @param emailValidationRegex check to see if the email matches the pattern
+     */
     public static boolean isValidEmailAddrRegex(String emailValidationRegex, String emailAddrToValidate) {
         return Pattern.matches(emailValidationRegex, emailAddrToValidate);
     }
+
+    /**
+     * Get civilian email for user
+     * @return user civilian email
+     */
     public String getCivilianEmail() {
         return civilianEmail;
     }
 
+    /**
+     * Set user civilian email
+     * @param civilianEmail string containing valid email address
+     * @throws IllegalArgumentException email has to fulfill email requirements or else it won't take the email
+     */
     public void setCivilianEmail(String civilianEmail) {
         String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
@@ -122,17 +178,26 @@ public class User {
             this.civilianEmail = civilianEmail;
         }
         else {
-            this.email = email;
+            throw new IllegalArgumentException("Not a valid email");
         }
     }
+    /**
+     * Get military email for user
+     * @return user military email
+     */
     public String getMilitaryEmail() {
         return militaryEmail;
     }
 
+    /**
+     * Set user military email
+     * @param militaryEmail string containing valid email address
+     * @throws IllegalArgumentException email has to fulfill email requirements or else it won't take the email
+     */
     public void setMilitaryEmail(String militaryEmail) {
         String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-        if(isValidEmailAddrRegex(regexPattern, militaryEmail)) {
+        if(isValidEmailAddrRegex(regexPattern, militaryEmail) || militaryEmail.isBlank()) {
             this.militaryEmail = militaryEmail;
         }
         else {
@@ -140,10 +205,19 @@ public class User {
         }
     }
 
+    /**
+     * Get user's first name
+     * @return user's first name
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Set User's first name
+     * @param firstName string containing user's first name
+     * @throws IllegalArgumentException throws illegal argument exception if first name doesn't fulfill requirements
+     */
     public void setFirstName(String firstName) {
         if(firstName.matches("[a-zA-Z]+")) {
             this.firstName = firstName;
@@ -152,11 +226,19 @@ public class User {
             throw new IllegalArgumentException("Not a valid name. First name should only contain letters");
         }
     }
-
+    /**
+     * Get user's last name
+     * @return user's last name
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Set User's last name
+     * @param lastName string containing user's first name
+     * @throws IllegalArgumentException throws illegal argument exception if last name doesn't fulfill requirements
+     */
     public void setLastName(String lastName) {
         if(lastName.matches("[a-zA-Z]+")) {
             this.lastName = lastName;
@@ -167,11 +249,20 @@ public class User {
     }
 
 
+    /**
+     * Get user registration date
+     * @return users registration date
+     */
 
 //    public String getRegister_date() {
 //        return register_date;
 //}
 
+    /**
+     * Set users registration date
+     * @param register_date string containing registration date
+     * @throws IllegalArgumentException if date is not in valid format, MM/DD/YYYY
+     */
 //    public void setRegister_date(String register_date) {
 //        still working to fix this to work properly
 //        String datePattern = "\\d{1,2}-\\d{1,2}-\\d{4}";
@@ -184,10 +275,19 @@ public class User {
 //        this.register_date = register_date;
 //   }
 
+    /**
+     * Get user update date
+     * @return users update date
+     */
 //    public String getUpdate_date() {
 //        return update_date;
 //   }
 
+    /**
+     * Set users update date
+     * @param update_date string containing update date
+     * @throws IllegalArgumentException if date is not in valid format, MM/DD/YYYY
+     */
 //    public void setUpdate_date(String update_date) {
 //        still working to fix this to work properly
 //        String datePattern = "\\d{1,2}-\\d{1,2}-\\d{4}";
@@ -200,77 +300,109 @@ public class User {
 //        this.update_date = update_date;
 //    }
 
-
+    /**
+     * Get user's rank
+     * @return user's rank
+     */
     public String getRank() {
         return rank;
     }
 
+    /**
+     * Set user's rank
+     * @param rank string containing user's rank
+     * @throws FileNotFoundException if there wasn't a valid rank in the file
+     */
     public void setRank(String rank) throws FileNotFoundException {
-        File fileText = new File("rank.txt");
-        Scanner s = new Scanner(fileText);
-        int r = 0;
-
-        while(s.hasNextLine()){
-            if(rank.equals(s.nextLine().trim())){
-                r += 1;
-            }
-        }
-        if (r == 1) {
-            this.rank = rank;
-        }
-        else {
-            throw new IllegalArgumentException("Not a valid Rank.");
-        }
+//        File fileText = new File("rank.txt");
+//        Scanner s = new Scanner(fileText);
+//        int r = 0;
+//
+//        while(s.hasNextLine()){
+//            if(rank.equals(s.nextLine().trim())){
+//                r += 1;
+//            }
+//        }
+//        if (r == 1) {
+//            this.rank = rank;
+//        }
+//        else {
+//            throw new IllegalArgumentException("Not a valid Rank.");
+//        }
+        this.rank = rank;
     }
 
+    /**
+     * Gets user's work center
+     * @return user's work center
+     */
     public String getWorkCenter() {
         return workCenter;
     }
 
+    /**
+     * Set user's workcenter
+     * @param workCenter string containing user's workcenter
+     * @throws FileNotFoundException if there wasn't a valid workcenter in the file
+     */
     public void setWorkCenter(String workCenter) throws FileNotFoundException {
-        File fileText = new File("workcenter.txt");
-        Scanner s = new Scanner(fileText);
-        int w = 0;
-
-        while(s.hasNextLine()){
-            if(workCenter.equals(s.nextLine().trim())){
-                w += 1;
-            }
-        }
-        if (w == 1) {
-            this.workCenter = workCenter;
-        }
-        else {
-            throw new IllegalArgumentException("Not a valid workcenter.");
-        }
+//        File fileText = new File("workcenter.txt");
+//        Scanner s = new Scanner(fileText);
+//        int w = 0;
+//
+//        while(s.hasNextLine()){
+//            if(workCenter.equals(s.nextLine().trim())){
+//                w += 1;
+//            }
+//        }
+//        if (w == 1) {
+//            this.workCenter = workCenter;
+//        }
+//        else {
+//            throw new IllegalArgumentException("Not a valid workcenter.");
+//        }
+        this.workCenter = workCenter;
     }
 
+    /**
+     * Gets user's flight
+     * @return user's flight
+     */
     public String getFlight() {
         return flight;
     }
 
+    /**
+     * Set user's flight
+     * @param flight string containing user's flight
+     * @throws FileNotFoundException if there wasn't a valid flight in the file
+     */
     public void setFlight(String flight) throws FileNotFoundException {
-        File fileText = new File("flight.txt");
-        Scanner s = new Scanner(fileText);
-        int f = 0;
-
-        while(s.hasNextLine()){
-            if(flight.equals(s.nextLine().trim())){
-                f += 1;
-            }
-        }
-        if (f == 1) {
-            this.flight = flight;
-        }
-        else {
-            throw new IllegalArgumentException("Not a valid flight.");
-        }
+//        File fileText = new File("flight.txt");
+//        Scanner s = new Scanner(fileText);
+//        int f = 0;
+//
+//        while(s.hasNextLine()){
+//            if(flight.equals(s.nextLine().trim())){
+//                f += 1;
+//            }
+//        }
+//        if (f == 1) {
+//            this.flight = flight;
+//        }
+//        else {
+//            throw new IllegalArgumentException("Not a valid flight.");
+//        }
+        this.flight = flight;
     }
+
 
 //    public ArrayList<String> getTeamList() {
 //        return teamList;
 //    }
 //
+
+
 //    public void setTeamList(ArrayList<String> teamList) {
 //        this.teamList = teamList;
 //    }
@@ -310,7 +442,12 @@ public class User {
         UUID uuid = UUID.randomUUID();
     }
 
-  
+    /**
+     * this functions reads users group from a text file
+     * @param file read user's groups from a file
+     * @return user's groups
+     */
+
     //figured out a way to read user groups from text file, but not sure
     //how to implement to the project.
     //    public static void main (String[] args) {
@@ -341,61 +478,131 @@ public class User {
         return null;
     }
 
+    public static void readTeamsFromFile(){
+        try {
+            File curDir = new File(".");
+            File[] filesList = curDir.listFiles();
+            for (File f : filesList) {
+                if (f.isFile()) {
+                    System.out.println(f.getName());
+                }
+            }
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * Gets user's team list
+     * @return user's team list
+     */
     public ArrayList<String> getTeams() {
         return teams;
     }
-
+    /**
+     * Sets user's teal list
+     * @param teams arraylist containing user's team list
+     */
     public void setTeams(ArrayList<String> teams) {
         this.teams = teams;
     }
 
+    /**
+     * get user's phone number
+     * @return user's phone number
+     */
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
+    /**
+     * Set users phone number
+     * @param phoneNumber int containing user's phone number
+     */
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
+    /**
+     * Gets users office phone number
+     * @return user's office phone number
+     */
     public String getOfficeNumber() {
         return officeNumber;
     }
 
+    /**
+     * Sets user's phone number
+     * @param officeNumber string containing user's phone number
+     */
     public void setOfficeNumber(String officeNumber) {
         this.officeNumber = officeNumber;
     }
 
+    /**
+     * Gets user's username
+     * @return user's username
+     */
     public String getUserName() {
         return userName;
     }
 
+    /**
+     * Sets user's username
+     * @param userName string containing user's username
+     */
     public void setUserName(String userName) {
         this.userName = userName;
     }
 
+    /**
+     * Gets user's drill schedule
+     * @return user's drill schedule
+     */
     public List<DrillSchedules> getDrillSchedulesList() {
         return drillSchedulesList;
     }
 
+    /**
+     * Sets user's drill schedule
+     * @param drillSchedulesList list containing all the drill schedule of a user
+     */
     public void setDrillSchedulesList(List<DrillSchedules> drillSchedulesList) {
         this.drillSchedulesList = drillSchedulesList;
     }
 
+    /**
+     * gets user's email
+     * @return user's email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets user's email
+     * @param email string containing user's email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * adds drill schedule to the drill-schedule list
+     */
     public void addDrillSchedule(DrillSchedules drillSchedules){
         if(drillSchedulesList ==null){
             drillSchedulesList=new ArrayList<>();
         }
         drillSchedulesList.add(drillSchedules);
     }
+
+    /**
+     * finds drill according to the id
+     * @param id int which tries to match with the users
+     * @return if id matched or not
+     */
     public boolean findDrillScheduleById(int id){
         boolean check=false;
         for(DrillSchedules drillSchedules:getDrillSchedulesList()){
