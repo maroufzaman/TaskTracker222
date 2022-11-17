@@ -142,14 +142,14 @@ h3 {
 .left {
     display: flex;
     flex-direction: column;
-    width: 30rem;
+    width: 50vw;
     height: 100%;
 }
 .top-left {
     background: var(--color-dark-variant);
-    display: flex;
+    display: flex;    
+    position: fixed;
     align-items: center;
-    justify-content: space-between;
     width: 100%;
     height: 5rem;
     border-bottom: solid var(--text-secondary) 2px;
@@ -184,24 +184,6 @@ h3 {
     height: calc(100% - 5rem);
     margin-top: auto;
 }
-
-/* week selector */
-.week-nav-button {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    transition: 200ms;
-}
-.week-nav-button:hover {
-    background: var(--color-light);
-    color: var(--color-info-light)
-}
-
-.date input[type="date"] {
-    background: transparent;
-}
-
 
 /* calendar */
 .calendarContainer {

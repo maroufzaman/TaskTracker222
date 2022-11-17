@@ -2,14 +2,19 @@ package com.rmrfroot.tasktracker222.controllers;
 
 import com.rmrfroot.tasktracker222.awsCognito.PoolClientInterface;
 import com.rmrfroot.tasktracker222.entities.DrillSchedules;
+import com.rmrfroot.tasktracker222.entities.Group;
 import com.rmrfroot.tasktracker222.entities.User;
 import com.rmrfroot.tasktracker222.entities.UserEditRequest;
 import com.rmrfroot.tasktracker222.services.DrillScheduleService;
 import com.rmrfroot.tasktracker222.services.UsersDaoService;
+import com.rmrfroot.tasktracker222.validations.ValidatePassword;
 import com.rmrfroot.tasktracker222.validations.ValidateUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +25,7 @@ import java.util.ArrayList;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.*;
 
 /**
  * Controller class for User
@@ -56,14 +62,15 @@ public class UsersController {
         List<User> usersToAdd = new ArrayList<>();
         User userEditRequest = new User();
 
-        for (User u : allUsers) {
-            //System.out.println(u.getEmail());
-                usersToAdd.add(u);
-        }
-
+        Collections.sort(allUsers);
         model.addAttribute("users", allUsers);
-        //model.addAttribute("usersToAdd", usersToAdd);
         model.addAttribute("userEditRequest", userEditRequest);
+
+        model.addAttribute("ranks", Group.getRanks());
+        model.addAttribute("flights", Group.getFlights());
+        model.addAttribute("workcenters", Group.getWorkcenters());
+        model.addAttribute("teams", Group.getTeams());
+        
         return "UserManagement";
     }
 
@@ -76,6 +83,15 @@ public class UsersController {
     public String userEditSubmit(@ModelAttribute("userEditRequest") User request) {
         try {
             User u = usersDaoService.findById(request.getId());
+
+            // Translate blank values to null since POST does not allow null values
+            if(request.rank.equals(""))
+                request.rank = null;
+            if(request.flight.equals(""))
+                request.flight = null;
+            if(request.workCenter.equals(""))
+                request.workCenter = null;
+
 
             u.setFirstName(request.getFirstName());
             u.setLastName(request.getLastName());
@@ -104,13 +120,16 @@ public class UsersController {
      * @return to UserManagement site
      */
     @PostMapping(value = "/users", params = "delete")
-    public String userEditDelete(@ModelAttribute("userEditRequest") User request) {
-        System.out.println("delete");
-        User u = usersDaoService.findById(request.getId());
-
-        usersDaoService.deleteById(u.getId());
-        //TODO - Add functionality to delete user from database and cognito
-
+    public String userEditDelete(@ModelAttribute("userEditRequest") UserEditRequest request,Principal principal) {
+        //DONE - Add functionality to delete user from database and cognito
+        try{
+            User userById=usersDaoService.findUserByUsername(principal.getName());
+            usersDaoService.deleteById(userById.getId());
+            poolClientInterface.deleteUserByUsername(principal.getName());
+        }catch (Exception e){
+            System.out.println("Something went wrong");
+            return "redirect:/error";
+        }
         return "redirect:/users";
     }
 
@@ -157,6 +176,7 @@ public class UsersController {
      */
     @GetMapping("/users/newUser")
     public String addUser(Model model,Principal principal) {
+        
         User user = new User();
         model.addAttribute("newUser", user);
 
@@ -220,6 +240,7 @@ public class UsersController {
      * @param workCenter sorts Users by
      * @return user list
      */
+
     @GetMapping("users/workcenter/{workcenter}")
     public String getUsersByWorkCenter(Model model,@PathVariable("workcenter") String workCenter) {
         model.addAttribute("user",usersDaoService.findUsersByWorkCenter(workCenter));
@@ -235,6 +256,12 @@ public class UsersController {
     @GetMapping("users/flight/{flight}")
     public String getUsersByFlight(Model model,@PathVariable("flight") String flight) {
         model.addAttribute("user",usersDaoService.findUsersByFlight(flight));
+        return "users";
+    }
+
+    @GetMapping("users/team/{team}")
+    public String getUsersByTeam(Model model,@PathVariable("team") String team) {
+        model.addAttribute("user",usersDaoService.findUsersByTeam(team));
         return "users";
     }
 
@@ -269,5 +296,36 @@ public class UsersController {
     @DeleteMapping("users/{id}")
     public void deleteUserById(@PathVariable("id") int id) {
         usersDaoService.deleteById(id);
+    }
+
+    /**
+     * this postmapping have not test on the function testing
+        @author Visoth Cheam
+        @return No template has been created for a change password controller
+     */
+    @PostMapping("/users/changePassword")
+    public String changePassword(@Valid @ModelAttribute("Password") ValidatePassword validatePassword, BindingResult errors,
+                                 Principal principal,@RegisteredOAuth2AuthorizedClient("cognito") OAuth2AuthorizedClient authorizedClient
+                                 ) {
+        if (errors.hasErrors()) {
+            return "updatePassword_form";
+        }else if(!validatePassword.getNewPassword().equals(validatePassword.getOldPassword())){
+            return "updatePassword_form";
+        }
+        try{
+            OAuth2AccessToken accessToken = authorizedClient.getAccessToken();
+            String accessTokenValue= accessToken.getTokenValue();
+            poolClientInterface.updatePassword(
+                    validatePassword.getOldPassword(),
+                    validatePassword.getNewPassword(),
+                    accessTokenValue,
+                    principal.getName()
+            );
+        }catch (Exception e){
+            System.out.println("Something went wrong");
+            return "redirect:/error";
+        }
+
+        return "redirect:/users";
     }
 }

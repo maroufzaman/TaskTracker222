@@ -77,7 +77,7 @@ public class UsersDAOImpl implements CustomUsersDAO{
     @Override
     public User findUserByUsername(String username) {
         Session cSession=entityManager.unwrap(Session.class);
-        Query<User> query=cSession.createQuery("from User where userName=:username", User.class);
+        Query<User> query=cSession.createQuery("from User where username=:username", User.class);
         query.setParameter("username",username);
 
         User user=null;
@@ -92,15 +92,16 @@ public class UsersDAOImpl implements CustomUsersDAO{
     @Override
     public List<User> findAll() {
         Session cSession=entityManager.unwrap(Session.class);
-        Query<User> query=cSession.createQuery("from User", User.class);
+        Query<User> query=cSession.createQuery("select User from User", User.class);
 
-        List<User> user;
-        try{
-            user=query.getResultList();
-        }catch (Exception e){
-            user=null;
+        List<User> users;
+        try {
+            users = query.getResultList();
         }
-        return user;
+        catch (Exception e) {
+            users = null;
+        }
+        return users;
     }
 
     @Override
