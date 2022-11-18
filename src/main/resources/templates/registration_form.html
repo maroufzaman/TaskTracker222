@@ -1,12 +1,13 @@
-<DOCTYPE html>
-    <html>
+<!DOCTYPE html>
+    <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Registration page</title>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
             <!-- stylesheet -->
-            <link rel="stylesheet" href="style_for_registration_form.css">
+            <link rel="stylesheet" th:href="@{/style_for_registration_form.css}">
+            <link rel="stylesheet" th:href="@{/style.css}">
             <!-- Add icon library -->
       </head>
 <style>
@@ -22,32 +23,32 @@
             <div class="input-box">
                 <label for = "firstName">First Name:</label>
                 <label id="asterisk">*</label>
-             <input type="text" id="name" th:name = "firstName"  placeholder="Enter your first name" required>
+                <input type="text" id="firstName" th:name = "firstName"  placeholder="Enter your first name" required>
             <span>
                 <label for = "lastName">Last Name:</label>
                 <label id="asterisk">*</label>
-                <input type="text" id ="name" th:name="lastName"  placeholder="Enter your last name" required>
+                <input type="text" id ="lastName" th:name="lastName"  placeholder="Enter your last name" required>
             </span>
           </div>
 
-        
+
             <div class="input-box">
                 <label for ="militaryEmail">Mil Email:</label>
                 <label id="asterisk">*</label>
-                <input type="email" th:name= "militaryEmail"  id="militaryMail" placeholder="Enter your military email" required minlength="8">
+                <input type="email" th:name= "militaryEmail"  id="militaryEmail" placeholder="Enter your military email" required minlength="8">
              <span>
                 <label for = "civilianEmail">Civ Email:</label>
                 <label id="asterisk">*</label>
-                <input type="email" th:name= "civilianEmail"  id="civilianMail" placeholder="Enter your civilian email" required minlength="8">
+                <input type="email" th:name= "civilianEmail"  id="civilianEmail" placeholder="Enter your civilian email" required minlength="8">
              </span>
             </div>
-            
+
             <div class="input-box">
                 <label for ="phoneNumber" >Personal Phone: </label>
-                <input type="tel" id="personal" th:name="phoneNumber"  placeholder="Enter your personal phone number"  >
+                <input type="tel" id="phoneNumber" th:name="phoneNumber"  placeholder="Enter your personal phone number"  >
                 <span>
                     <label for ="officeNumber">Office Phone: </label>
-                    <input type="tel" id="office" th:name="officeNumber" placeholder="Enter your office phone number" >
+                    <input type="tel" id="officeNumber" th:name="officeNumber" placeholder="Enter your office phone number" >
                 </span>
             </div>
              <div class="input-box">
@@ -101,11 +102,11 @@
                                 <option value = "SCP">SCP</option>  
                              </select> 
                         </span>
-                    </div>           
+                    </div>
          </div>
          <div>
             <input type="submit" value="Register">
-        </div>    
+        </div>
 </div>
 </form>
  <script = "functions_for_phoneNumber_and_email.js" >
